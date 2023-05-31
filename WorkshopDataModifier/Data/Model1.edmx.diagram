@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="396f62c0819a43789c28050940504d01" Name="Diagram1">
+        <EntityTypeShape EntityType="WarsztatModel.klienci" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarsztatModel.naprawiane_samochody" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarsztatModel.naprawy" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarsztatModel.nazwy_czynnosci" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarsztatModel.pracownicy" Width="1.5" PointX="9.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarsztatModel.rodzaje_silnika" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WarsztatModel.wykonana_praca" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="WarsztatModel.Oddaje" ManuallyRouted="false" />
+        <AssociationConnector Association="WarsztatModel.Charakteryzuje_silnik" ManuallyRouted="false" />
+        <AssociationConnector Association="WarsztatModel.Wykonana_na" ManuallyRouted="false" />
+        <AssociationConnector Association="WarsztatModel.Kieruje" ManuallyRouted="false" />
+        <AssociationConnector Association="WarsztatModel.Wchodzi_w_sklad" ManuallyRouted="false" />
+        <AssociationConnector Association="WarsztatModel.Nazywa_prace" ManuallyRouted="false" />
+        <AssociationConnector Association="WarsztatModel.wykonawcy_pracy" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

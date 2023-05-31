@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WarsztatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="klienci">
+          <Key>
+            <PropertyRef Name="idKlienta" />
+          </Key>
+          <Property Name="idKlienta" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imie" Type="varchar" MaxLength="30" />
+          <Property Name="nazwisko" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="adres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PESEL" Type="char" MaxLength="11" Nullable="false" />
+        </EntityType>
+        <EntityType Name="naprawiane_samochody">
+          <Key>
+            <PropertyRef Name="idSamochodu" />
+          </Key>
+          <Property Name="idSamochodu" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="marka" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="model" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="rodzaj_silnika" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="rejestracja" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="wlasciciel" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="naprawy">
+          <Key>
+            <PropertyRef Name="idNaprawy" />
+          </Key>
+          <Property Name="idNaprawy" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kwotaZaplaty" Type="decimal" Precision="19" Scale="3" Nullable="false" />
+          <Property Name="dataOddania" Type="date" Nullable="false" />
+          <Property Name="dataOdbioru" Type="date" />
+          <Property Name="kierownik" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="nazwy_czynnosci">
+          <Key>
+            <PropertyRef Name="nazwa" />
+          </Key>
+          <Property Name="nazwa" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pracownicy">
+          <Key>
+            <PropertyRef Name="idPracownika" />
+          </Key>
+          <Property Name="idPracownika" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imie" Type="varchar" MaxLength="30" />
+          <Property Name="nazwisko" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="adres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PESEL" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="dataZatrudnienia" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="rodzaje_silnika">
+          <Key>
+            <PropertyRef Name="oznaczenie_silnika" />
+          </Key>
+          <Property Name="oznaczenie_silnika" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="wykonana_praca">
+          <Key>
+            <PropertyRef Name="idPracy" />
+            <PropertyRef Name="idNaprawy" />
+          </Key>
+          <Property Name="idPracy" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="opis" Type="varchar" MaxLength="100" />
+          <Property Name="czasWykonania" Type="int" />
+          <Property Name="koszt" Type="decimal" Precision="19" Scale="3" Nullable="false" />
+          <Property Name="idNaprawy" Type="bigint" Nullable="false" />
+          <Property Name="nazwa" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="wykonawcy_pracy">
+          <Key>
+            <PropertyRef Name="idPracy" />
+            <PropertyRef Name="idNaprawy" />
+            <PropertyRef Name="idPracownika" />
+          </Key>
+          <Property Name="idPracy" Type="bigint" Nullable="false" />
+          <Property Name="idNaprawy" Type="bigint" Nullable="false" />
+          <Property Name="idPracownika" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="Charakteryzuje_prace">
+          <End Role="wykonana_praca" Type="Self.wykonana_praca" Multiplicity="1" />
+          <End Role="wykonawcy_pracy" Type="Self.wykonawcy_pracy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="wykonana_praca">
+              <PropertyRef Name="idPracy" />
+              <PropertyRef Name="idNaprawy" />
+            </Principal>
+            <Dependent Role="wykonawcy_pracy">
+              <PropertyRef Name="idPracy" />
+              <PropertyRef Name="idNaprawy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Charakteryzuje_silnik">
+          <End Role="rodzaje_silnika" Type="Self.rodzaje_silnika" Multiplicity="1" />
+          <End Role="naprawiane_samochody" Type="Self.naprawiane_samochody" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rodzaje_silnika">
+              <PropertyRef Name="oznaczenie_silnika" />
+            </Principal>
+            <Dependent Role="naprawiane_samochody">
+              <PropertyRef Name="rodzaj_silnika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Charakteryzuje_wykonawce">
+          <End Role="pracownicy" Type="Self.pracownicy" Multiplicity="1" />
+          <End Role="wykonawcy_pracy" Type="Self.wykonawcy_pracy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pracownicy">
+              <PropertyRef Name="idPracownika" />
+            </Principal>
+            <Dependent Role="wykonawcy_pracy">
+              <PropertyRef Name="idPracownika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Kieruje">
+          <End Role="pracownicy" Type="Self.pracownicy" Multiplicity="1" />
+          <End Role="naprawy" Type="Self.naprawy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pracownicy">
+              <PropertyRef Name="idPracownika" />
+            </Principal>
+            <Dependent Role="naprawy">
+              <PropertyRef Name="kierownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Nazywa_prace">
+          <End Role="nazwy_czynnosci" Type="Self.nazwy_czynnosci" Multiplicity="1" />
+          <End Role="wykonana_praca" Type="Self.wykonana_praca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nazwy_czynnosci">
+              <PropertyRef Name="nazwa" />
+            </Principal>
+            <Dependent Role="wykonana_praca">
+              <PropertyRef Name="nazwa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Oddaje">
+          <End Role="klienci" Type="Self.klienci" Multiplicity="1" />
+          <End Role="naprawiane_samochody" Type="Self.naprawiane_samochody" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="klienci">
+              <PropertyRef Name="idKlienta" />
+            </Principal>
+            <Dependent Role="naprawiane_samochody">
+              <PropertyRef Name="wlasciciel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Wchodzi_w_sklad">
+          <End Role="naprawy" Type="Self.naprawy" Multiplicity="1" />
+          <End Role="wykonana_praca" Type="Self.wykonana_praca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="naprawy">
+              <PropertyRef Name="idNaprawy" />
+            </Principal>
+            <Dependent Role="wykonana_praca">
+              <PropertyRef Name="idNaprawy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Wykonana_na">
+          <End Role="naprawiane_samochody" Type="Self.naprawiane_samochody" Multiplicity="1" />
+          <End Role="naprawy" Type="Self.naprawy" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="naprawiane_samochody">
+              <PropertyRef Name="idSamochodu" />
+            </Principal>
+            <Dependent Role="naprawy">
+              <PropertyRef Name="idNaprawy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WarsztatModelStoreContainer">
+          <EntitySet Name="klienci" EntityType="Self.klienci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="naprawiane_samochody" EntityType="Self.naprawiane_samochody" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="naprawy" EntityType="Self.naprawy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nazwy_czynnosci" EntityType="Self.nazwy_czynnosci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pracownicy" EntityType="Self.pracownicy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rodzaje_silnika" EntityType="Self.rodzaje_silnika" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="wykonana_praca" EntityType="Self.wykonana_praca" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="wykonawcy_pracy" EntityType="Self.wykonawcy_pracy" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Charakteryzuje_prace" Association="Self.Charakteryzuje_prace">
+            <End Role="wykonana_praca" EntitySet="wykonana_praca" />
+            <End Role="wykonawcy_pracy" EntitySet="wykonawcy_pracy" />
+          </AssociationSet>
+          <AssociationSet Name="Charakteryzuje_silnik" Association="Self.Charakteryzuje_silnik">
+            <End Role="rodzaje_silnika" EntitySet="rodzaje_silnika" />
+            <End Role="naprawiane_samochody" EntitySet="naprawiane_samochody" />
+          </AssociationSet>
+          <AssociationSet Name="Charakteryzuje_wykonawce" Association="Self.Charakteryzuje_wykonawce">
+            <End Role="pracownicy" EntitySet="pracownicy" />
+            <End Role="wykonawcy_pracy" EntitySet="wykonawcy_pracy" />
+          </AssociationSet>
+          <AssociationSet Name="Kieruje" Association="Self.Kieruje">
+            <End Role="pracownicy" EntitySet="pracownicy" />
+            <End Role="naprawy" EntitySet="naprawy" />
+          </AssociationSet>
+          <AssociationSet Name="Nazywa_prace" Association="Self.Nazywa_prace">
+            <End Role="nazwy_czynnosci" EntitySet="nazwy_czynnosci" />
+            <End Role="wykonana_praca" EntitySet="wykonana_praca" />
+          </AssociationSet>
+          <AssociationSet Name="Oddaje" Association="Self.Oddaje">
+            <End Role="klienci" EntitySet="klienci" />
+            <End Role="naprawiane_samochody" EntitySet="naprawiane_samochody" />
+          </AssociationSet>
+          <AssociationSet Name="Wchodzi_w_sklad" Association="Self.Wchodzi_w_sklad">
+            <End Role="naprawy" EntitySet="naprawy" />
+            <End Role="wykonana_praca" EntitySet="wykonana_praca" />
+          </AssociationSet>
+          <AssociationSet Name="Wykonana_na" Association="Self.Wykonana_na">
+            <End Role="naprawiane_samochody" EntitySet="naprawiane_samochody" />
+            <End Role="naprawy" EntitySet="naprawy" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WarsztatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="klienci">
+          <Key>
+            <PropertyRef Name="idKlienta" />
+          </Key>
+          <Property Name="idKlienta" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imie" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="nazwisko" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="adres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PESEL" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="naprawiane_samochody" Relationship="Self.Oddaje" FromRole="klienci" ToRole="naprawiane_samochody" />
+        </EntityType>
+        <EntityType Name="naprawiane_samochody">
+          <Key>
+            <PropertyRef Name="idSamochodu" />
+          </Key>
+          <Property Name="idSamochodu" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="marka" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rodzaj_silnika" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rejestracja" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="wlasciciel" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="klienci" Relationship="Self.Oddaje" FromRole="naprawiane_samochody" ToRole="klienci" />
+          <NavigationProperty Name="rodzaje_silnika" Relationship="Self.Charakteryzuje_silnik" FromRole="naprawiane_samochody" ToRole="rodzaje_silnika" />
+          <NavigationProperty Name="naprawy" Relationship="Self.Wykonana_na" FromRole="naprawiane_samochody" ToRole="naprawy" />
+        </EntityType>
+        <EntityType Name="naprawy">
+          <Key>
+            <PropertyRef Name="idNaprawy" />
+          </Key>
+          <Property Name="idNaprawy" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kwotaZaplaty" Type="Decimal" Precision="19" Scale="3" Nullable="false" />
+          <Property Name="dataOddania" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dataOdbioru" Type="DateTime" Precision="0" />
+          <Property Name="kierownik" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="naprawiane_samochody" Relationship="Self.Wykonana_na" FromRole="naprawy" ToRole="naprawiane_samochody" />
+          <NavigationProperty Name="pracownicy" Relationship="Self.Kieruje" FromRole="naprawy" ToRole="pracownicy" />
+          <NavigationProperty Name="wykonana_praca" Relationship="Self.Wchodzi_w_sklad" FromRole="naprawy" ToRole="wykonana_praca" />
+        </EntityType>
+        <EntityType Name="nazwy_czynnosci">
+          <Key>
+            <PropertyRef Name="nazwa" />
+          </Key>
+          <Property Name="nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="wykonana_praca" Relationship="Self.Nazywa_prace" FromRole="nazwy_czynnosci" ToRole="wykonana_praca" />
+        </EntityType>
+        <EntityType Name="pracownicy">
+          <Key>
+            <PropertyRef Name="idPracownika" />
+          </Key>
+          <Property Name="idPracownika" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imie" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="nazwisko" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="adres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PESEL" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="dataZatrudnienia" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="naprawies" Relationship="Self.Kieruje" FromRole="pracownicy" ToRole="naprawy" />
+          <NavigationProperty Name="wykonana_praca" Relationship="Self.wykonawcy_pracy" FromRole="pracownicy" ToRole="wykonana_praca" />
+        </EntityType>
+        <EntityType Name="rodzaje_silnika">
+          <Key>
+            <PropertyRef Name="oznaczenie_silnika" />
+          </Key>
+          <Property Name="oznaczenie_silnika" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="naprawiane_samochody" Relationship="Self.Charakteryzuje_silnik" FromRole="rodzaje_silnika" ToRole="naprawiane_samochody" />
+        </EntityType>
+        <EntityType Name="wykonana_praca">
+          <Key>
+            <PropertyRef Name="idPracy" />
+            <PropertyRef Name="idNaprawy" />
+          </Key>
+          <Property Name="idPracy" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="opis" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="czasWykonania" Type="Int32" />
+          <Property Name="koszt" Type="Decimal" Precision="19" Scale="3" Nullable="false" />
+          <Property Name="idNaprawy" Type="Int64" Nullable="false" />
+          <Property Name="nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="naprawy" Relationship="Self.Wchodzi_w_sklad" FromRole="wykonana_praca" ToRole="naprawy" />
+          <NavigationProperty Name="nazwy_czynnosci" Relationship="Self.Nazywa_prace" FromRole="wykonana_praca" ToRole="nazwy_czynnosci" />
+          <NavigationProperty Name="pracownicies" Relationship="Self.wykonawcy_pracy" FromRole="wykonana_praca" ToRole="pracownicy" />
+        </EntityType>
+        <Association Name="Oddaje">
+          <End Role="klienci" Type="Self.klienci" Multiplicity="1" />
+          <End Role="naprawiane_samochody" Type="Self.naprawiane_samochody" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="klienci">
+              <PropertyRef Name="idKlienta" />
+            </Principal>
+            <Dependent Role="naprawiane_samochody">
+              <PropertyRef Name="wlasciciel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Charakteryzuje_silnik">
+          <End Role="rodzaje_silnika" Type="Self.rodzaje_silnika" Multiplicity="1" />
+          <End Role="naprawiane_samochody" Type="Self.naprawiane_samochody" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rodzaje_silnika">
+              <PropertyRef Name="oznaczenie_silnika" />
+            </Principal>
+            <Dependent Role="naprawiane_samochody">
+              <PropertyRef Name="rodzaj_silnika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Wykonana_na">
+          <End Role="naprawiane_samochody" Type="Self.naprawiane_samochody" Multiplicity="1" />
+          <End Role="naprawy" Type="Self.naprawy" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="naprawiane_samochody">
+              <PropertyRef Name="idSamochodu" />
+            </Principal>
+            <Dependent Role="naprawy">
+              <PropertyRef Name="idNaprawy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Kieruje">
+          <End Role="pracownicy" Type="Self.pracownicy" Multiplicity="1" />
+          <End Role="naprawy" Type="Self.naprawy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pracownicy">
+              <PropertyRef Name="idPracownika" />
+            </Principal>
+            <Dependent Role="naprawy">
+              <PropertyRef Name="kierownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Wchodzi_w_sklad">
+          <End Role="naprawy" Type="Self.naprawy" Multiplicity="1" />
+          <End Role="wykonana_praca" Type="Self.wykonana_praca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="naprawy">
+              <PropertyRef Name="idNaprawy" />
+            </Principal>
+            <Dependent Role="wykonana_praca">
+              <PropertyRef Name="idNaprawy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Nazywa_prace">
+          <End Role="nazwy_czynnosci" Type="Self.nazwy_czynnosci" Multiplicity="1" />
+          <End Role="wykonana_praca" Type="Self.wykonana_praca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nazwy_czynnosci">
+              <PropertyRef Name="nazwa" />
+            </Principal>
+            <Dependent Role="wykonana_praca">
+              <PropertyRef Name="nazwa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="wykonawcy_pracy">
+          <End Role="wykonana_praca" Type="Self.wykonana_praca" Multiplicity="*" />
+          <End Role="pracownicy" Type="Self.pracownicy" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="WarsztatEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="kliencis" EntityType="Self.klienci" />
+          <EntitySet Name="naprawiane_samochody" EntityType="Self.naprawiane_samochody" />
+          <EntitySet Name="naprawies" EntityType="Self.naprawy" />
+          <EntitySet Name="nazwy_czynnosci" EntityType="Self.nazwy_czynnosci" />
+          <EntitySet Name="pracownicies" EntityType="Self.pracownicy" />
+          <EntitySet Name="rodzaje_silnika" EntityType="Self.rodzaje_silnika" />
+          <EntitySet Name="wykonana_praca" EntityType="Self.wykonana_praca" />
+          <AssociationSet Name="Oddaje" Association="Self.Oddaje">
+            <End Role="klienci" EntitySet="kliencis" />
+            <End Role="naprawiane_samochody" EntitySet="naprawiane_samochody" />
+          </AssociationSet>
+          <AssociationSet Name="Charakteryzuje_silnik" Association="Self.Charakteryzuje_silnik">
+            <End Role="rodzaje_silnika" EntitySet="rodzaje_silnika" />
+            <End Role="naprawiane_samochody" EntitySet="naprawiane_samochody" />
+          </AssociationSet>
+          <AssociationSet Name="Wykonana_na" Association="Self.Wykonana_na">
+            <End Role="naprawiane_samochody" EntitySet="naprawiane_samochody" />
+            <End Role="naprawy" EntitySet="naprawies" />
+          </AssociationSet>
+          <AssociationSet Name="Kieruje" Association="Self.Kieruje">
+            <End Role="pracownicy" EntitySet="pracownicies" />
+            <End Role="naprawy" EntitySet="naprawies" />
+          </AssociationSet>
+          <AssociationSet Name="Wchodzi_w_sklad" Association="Self.Wchodzi_w_sklad">
+            <End Role="naprawy" EntitySet="naprawies" />
+            <End Role="wykonana_praca" EntitySet="wykonana_praca" />
+          </AssociationSet>
+          <AssociationSet Name="Nazywa_prace" Association="Self.Nazywa_prace">
+            <End Role="nazwy_czynnosci" EntitySet="nazwy_czynnosci" />
+            <End Role="wykonana_praca" EntitySet="wykonana_praca" />
+          </AssociationSet>
+          <AssociationSet Name="wykonawcy_pracy" Association="Self.wykonawcy_pracy">
+            <End Role="wykonana_praca" EntitySet="wykonana_praca" />
+            <End Role="pracownicy" EntitySet="pracownicies" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WarsztatModelStoreContainer" CdmEntityContainer="WarsztatEntities">
+          <EntitySetMapping Name="kliencis">
+            <EntityTypeMapping TypeName="WarsztatModel.klienci">
+              <MappingFragment StoreEntitySet="klienci">
+                <ScalarProperty Name="idKlienta" ColumnName="idKlienta" />
+                <ScalarProperty Name="imie" ColumnName="imie" />
+                <ScalarProperty Name="nazwisko" ColumnName="nazwisko" />
+                <ScalarProperty Name="adres" ColumnName="adres" />
+                <ScalarProperty Name="PESEL" ColumnName="PESEL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="naprawiane_samochody">
+            <EntityTypeMapping TypeName="WarsztatModel.naprawiane_samochody">
+              <MappingFragment StoreEntitySet="naprawiane_samochody">
+                <ScalarProperty Name="idSamochodu" ColumnName="idSamochodu" />
+                <ScalarProperty Name="marka" ColumnName="marka" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="rodzaj_silnika" ColumnName="rodzaj_silnika" />
+                <ScalarProperty Name="rejestracja" ColumnName="rejestracja" />
+                <ScalarProperty Name="wlasciciel" ColumnName="wlasciciel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="naprawies">
+            <EntityTypeMapping TypeName="WarsztatModel.naprawy">
+              <MappingFragment StoreEntitySet="naprawy">
+                <ScalarProperty Name="idNaprawy" ColumnName="idNaprawy" />
+                <ScalarProperty Name="kwotaZaplaty" ColumnName="kwotaZaplaty" />
+                <ScalarProperty Name="dataOddania" ColumnName="dataOddania" />
+                <ScalarProperty Name="dataOdbioru" ColumnName="dataOdbioru" />
+                <ScalarProperty Name="kierownik" ColumnName="kierownik" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nazwy_czynnosci">
+            <EntityTypeMapping TypeName="WarsztatModel.nazwy_czynnosci">
+              <MappingFragment StoreEntitySet="nazwy_czynnosci">
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pracownicies">
+            <EntityTypeMapping TypeName="WarsztatModel.pracownicy">
+              <MappingFragment StoreEntitySet="pracownicy">
+                <ScalarProperty Name="idPracownika" ColumnName="idPracownika" />
+                <ScalarProperty Name="imie" ColumnName="imie" />
+                <ScalarProperty Name="nazwisko" ColumnName="nazwisko" />
+                <ScalarProperty Name="adres" ColumnName="adres" />
+                <ScalarProperty Name="PESEL" ColumnName="PESEL" />
+                <ScalarProperty Name="dataZatrudnienia" ColumnName="dataZatrudnienia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rodzaje_silnika">
+            <EntityTypeMapping TypeName="WarsztatModel.rodzaje_silnika">
+              <MappingFragment StoreEntitySet="rodzaje_silnika">
+                <ScalarProperty Name="oznaczenie_silnika" ColumnName="oznaczenie_silnika" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="wykonana_praca">
+            <EntityTypeMapping TypeName="WarsztatModel.wykonana_praca">
+              <MappingFragment StoreEntitySet="wykonana_praca">
+                <ScalarProperty Name="idPracy" ColumnName="idPracy" />
+                <ScalarProperty Name="opis" ColumnName="opis" />
+                <ScalarProperty Name="czasWykonania" ColumnName="czasWykonania" />
+                <ScalarProperty Name="koszt" ColumnName="koszt" />
+                <ScalarProperty Name="idNaprawy" ColumnName="idNaprawy" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="wykonawcy_pracy" TypeName="WarsztatModel.wykonawcy_pracy" StoreEntitySet="wykonawcy_pracy">
+            <EndProperty Name="wykonana_praca">
+              <ScalarProperty Name="idPracy" ColumnName="idPracy" />
+              <ScalarProperty Name="idNaprawy" ColumnName="idNaprawy" />
+            </EndProperty>
+            <EndProperty Name="pracownicy">
+              <ScalarProperty Name="idPracownika" ColumnName="idPracownika" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
