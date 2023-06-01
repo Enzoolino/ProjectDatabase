@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WorkshopDataModifier"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:uc="clr-namespace:WorkshopDataModifier.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="740" Width="1280" WindowStartupLocation="CenterScreen"
         WindowStyle="None" AllowsTransparency="True"
@@ -15,7 +16,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        
+
         <!--Left Menu-->
         <Border CornerRadius="10 0 0 10">
             <Border.Background>
@@ -24,39 +25,105 @@
                     <GradientStop Color="#27396b" Offset="1"/>
                 </LinearGradientBrush>
             </Border.Background>
-        
+
 
             <StackPanel>
-            <!--UserNameCorner-->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 35 0 0">
-                <Border CornerRadius="10" Width="40" Height="40">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                            <GradientStop Color="#7f7cf1" Offset="0"/>
-                            <GradientStop Color="#d3b7ff" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
+                <!--UserNameCorner-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 35 0 0">
+                    <Border CornerRadius="10" Width="40" Height="40">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                                <GradientStop Color="#7f7cf1" Offset="0"/>
+                                <GradientStop Color="#d3b7ff" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
 
-                    <TextBlock Text="00" Foreground="White" FontSize="22" FontWeight="SemiBold"
+                        <TextBlock Text="00" Foreground="White" FontSize="22" FontWeight="SemiBold"
                                TextAlignment="Center" VerticalAlignment="Center" Margin="3 0 0 2"
                                Name="Username_Initials"/>
-                </Border>
-                
-                <StackPanel Margin="10 0 0 0" VerticalAlignment="Center">
-                    <TextBlock Text="Babaluga" FontSize="15" Margin="0 0 0 5" Foreground="#c2cfff"
+                    </Border>
+
+                    <StackPanel Margin="10 0 0 0" VerticalAlignment="Center">
+                        <TextBlock Text="Babaluga" FontSize="15" Margin="0 0 0 5" Foreground="#c2cfff"
                                Name ="Username_Full"/>
-                    
-                    <TextBlock Text="Version 1.0" FontSize="11" Foreground="#7788bf"/>
+
+                        <TextBlock Text="Version 1.0" FontSize="11" Foreground="#7788bf"/>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
 
                 <Separator Height="0.8" Margin="20 30" Background="#46558a"/>
-                
+
                 <!--Menu Buttons-->
-                <Button>
+                <Button Style="{StaticResource MenuButtonTheme}">
                     <StackPanel Orientation="Horizontal">
-                        <fa:IconImage Icon="Home"/>
-                        <TextBlock Text="Home"/>
+                        <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIconTheme}"/>
+                        <TextBlock Text="Home" Style="{StaticResource MenuButtonTextTheme}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource MenuButtonTheme}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="UserGroup" Style="{StaticResource MenuButtonIconTheme}"/>
+                        <TextBlock Text="Clients" Style="{StaticResource MenuButtonTextTheme}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource MenuButtonTheme}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Car" Style="{StaticResource MenuButtonIconTheme}"/>
+                        <TextBlock Text="Cars" Style="{StaticResource MenuButtonTextTheme}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource MenuButtonTheme}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Tasks" Style="{StaticResource MenuButtonIconTheme}"/>
+                        <TextBlock Text="Tasks" Style="{StaticResource MenuButtonTextTheme}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource MenuButtonTheme}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Briefcase" Style="{StaticResource MenuButtonIconTheme}"/>
+                        <TextBlock Text="Workers" Style="{StaticResource MenuButtonTextTheme}"/>
+                    </StackPanel>
+                </Button>
+
+                <TextBlock Text="Admin Adjustments" 
+                           HorizontalAlignment="Left" 
+                           Foreground="#8a98d1"
+                           FontSize="15"
+                           Margin="40 20 0 0"/>
+
+                <Separator Height="0.8" Margin="20 10" Background="#46558a"/>
+
+                <Button Style="{StaticResource MenuButtonTheme}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Gears" Style="{StaticResource MenuButtonIconTheme}"/>
+                        <TextBlock Text="Engine Codes" Style="{StaticResource MenuButtonTextTheme}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource MenuButtonTheme}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="List" Style="{StaticResource MenuButtonIconTheme}"/>
+                        <TextBlock Text="Task Names" Style="{StaticResource MenuButtonTextTheme}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource MenuButtonTheme}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="IdCard" Style="{StaticResource MenuButtonIconTheme}"/>
+                        <TextBlock Text="User List" Style="{StaticResource MenuButtonTextTheme}"/>
+                    </StackPanel>
+                </Button>
+
+                <Separator Height="0.8" Margin="20 30" Background="#46558a"/>
+
+                <Button Style="{StaticResource MenuButtonTheme}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="PowerOff"  Style="{StaticResource MenuButtonIconTheme}"/>
+                        <TextBlock Text="Logout" Style="{StaticResource MenuButtonTextTheme}"/>
                     </StackPanel>
                 </Button>
 
@@ -73,7 +140,40 @@
             </Border.Background>
 
 
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!--Top Menu-->
+                <TextBlock Text="Welcome, Babaluga" FontSize="26" Foreground="#ccd7ff" HorizontalAlignment="Left" Margin="50 35 0 20"/>
+                
+                <!--Info Card-->
+                <Grid Grid.Row="1" Margin="50 20 15 40">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <uc:InfoCard Grid.Column="0" Title="Cars in repair" Number="To implement" Icon="CarCrash" Background1="#827bff" Background2="#d9b5ff"
+                                 EllipseBackground1="#b298fd" EllipseBackground2="#e4bbff"/>
+
+                    <uc:InfoCard Grid.Column="1" Title="Assigned tasks" Number="To implement" Icon="ListAlt" Background1="#fd8a87" Background2="#f3ab92"
+                                 EllipseBackground1="#fbd5a8" EllipseBackground2="#fdb89b"/>
+
+                    <uc:InfoCard Grid.Column="2" Title="Supervising tasks" Number="To implement" Icon="HandPointRight" Background1="#fc84cb" Background2="#fc8fae"
+                                 EllipseBackground1="#fc8fae" EllipseBackground2="#ffabe6"/>
+
+
+                </Grid>
+            </Grid>
+            
+            
+
         </Border>
+
     </Grid>
-    
 </Window>
