@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WorkshopDataModifier"
              xmlns:fa="clr-namespace:FontAwesome.Sharp;assembly=FontAwesome.Sharp"
+             xmlns:viewModel="clr-namespace:WorkshopDataModifier.MVVM.ViewModel"
+             xmlns:view="clr-namespace:WorkshopDataModifier.MVVM.View"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -11,8 +13,18 @@
                 <ResourceDictionary Source="Theme/MenuButton/MenuButtonIconTheme.xaml"/>
                 <ResourceDictionary Source="Theme/MenuButton/MenuButtonTextTheme.xaml"/>
                 <ResourceDictionary Source="Theme/MenuButton/MenuButtonActiveTheme.xaml"/>
+                <ResourceDictionary Source="Theme/TextBoxSearchTheme.xaml"/>
+                <ResourceDictionary Source="Theme/ValueAddButtonTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-    
-    </ResourceDictionary>
+
+            <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
+                <view:HomeView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:ClientsViewModel}">
+                <view:ClientsView/>
+            </DataTemplate>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

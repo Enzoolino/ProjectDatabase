@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="MenuButtonActiveTheme" TargetType="Button">
+
+    <Style x:Key="MenuButtonActiveTheme" TargetType="RadioButton">
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
@@ -17,7 +18,7 @@
         <Setter Property="Tag" Value="#7071f0"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="RadioButton">
                     <Border Background="{TemplateBinding Background}" BorderThickness="4 0 0 0" BorderBrush="#a5a1f5">
                         <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                     </Border>
@@ -25,4 +26,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+
 </ResourceDictionary>
