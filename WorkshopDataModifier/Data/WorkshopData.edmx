@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WarsztatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="WorkshopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="klienci">
           <Key>
             <PropertyRef Name="idKlienta" />
@@ -30,7 +30,7 @@
           <Key>
             <PropertyRef Name="idNaprawy" />
           </Key>
-          <Property Name="idNaprawy" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idNaprawy" Type="bigint" Nullable="false" />
           <Property Name="kwotaZaplaty" Type="decimal" Precision="19" Scale="3" Nullable="false" />
           <Property Name="dataOddania" Type="date" Nullable="false" />
           <Property Name="dataOdbioru" Type="date" />
@@ -179,7 +179,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="WarsztatModelStoreContainer">
+        <EntityContainer Name="WorkshopModelStoreContainer">
           <EntitySet Name="klienci" EntityType="Self.klienci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="naprawiane_samochody" EntityType="Self.naprawiane_samochody" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="naprawy" EntityType="Self.naprawy" Schema="dbo" store:Type="Tables" />
@@ -225,7 +225,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="WarsztatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="WorkshopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="klienci">
           <Key>
             <PropertyRef Name="idKlienta" />
@@ -255,7 +255,7 @@
           <Key>
             <PropertyRef Name="idNaprawy" />
           </Key>
-          <Property Name="idNaprawy" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idNaprawy" Type="Int64" Nullable="false" />
           <Property Name="kwotaZaplaty" Type="Decimal" Precision="19" Scale="3" Nullable="false" />
           <Property Name="dataOddania" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="dataOdbioru" Type="DateTime" Precision="0" />
@@ -281,7 +281,7 @@
           <Property Name="adres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PESEL" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="dataZatrudnienia" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="naprawies" Relationship="Self.Kieruje" FromRole="pracownicy" ToRole="naprawy" />
+          <NavigationProperty Name="naprawy" Relationship="Self.Kieruje" FromRole="pracownicy" ToRole="naprawy" />
           <NavigationProperty Name="wykonana_praca" Relationship="Self.wykonawcy_pracy" FromRole="pracownicy" ToRole="wykonana_praca" />
         </EntityType>
         <EntityType Name="rodzaje_silnika">
@@ -304,7 +304,7 @@
           <Property Name="nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="naprawy" Relationship="Self.Wchodzi_w_sklad" FromRole="wykonana_praca" ToRole="naprawy" />
           <NavigationProperty Name="nazwy_czynnosci" Relationship="Self.Nazywa_prace" FromRole="wykonana_praca" ToRole="nazwy_czynnosci" />
-          <NavigationProperty Name="pracownicies" Relationship="Self.wykonawcy_pracy" FromRole="wykonana_praca" ToRole="pracownicy" />
+          <NavigationProperty Name="pracownicy" Relationship="Self.wykonawcy_pracy" FromRole="wykonana_praca" ToRole="pracownicy" />
         </EntityType>
         <Association Name="Oddaje">
           <End Role="klienci" Type="Self.klienci" Multiplicity="1" />
@@ -382,16 +382,16 @@
           <End Role="wykonana_praca" Type="Self.wykonana_praca" Multiplicity="*" />
           <End Role="pracownicy" Type="Self.pracownicy" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="WarsztatEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="kliencis" EntityType="Self.klienci" />
+        <EntityContainer Name="ConString" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="klienci" EntityType="Self.klienci" />
           <EntitySet Name="naprawiane_samochody" EntityType="Self.naprawiane_samochody" />
-          <EntitySet Name="naprawies" EntityType="Self.naprawy" />
+          <EntitySet Name="naprawy" EntityType="Self.naprawy" />
           <EntitySet Name="nazwy_czynnosci" EntityType="Self.nazwy_czynnosci" />
-          <EntitySet Name="pracownicies" EntityType="Self.pracownicy" />
+          <EntitySet Name="pracownicy" EntityType="Self.pracownicy" />
           <EntitySet Name="rodzaje_silnika" EntityType="Self.rodzaje_silnika" />
           <EntitySet Name="wykonana_praca" EntityType="Self.wykonana_praca" />
           <AssociationSet Name="Oddaje" Association="Self.Oddaje">
-            <End Role="klienci" EntitySet="kliencis" />
+            <End Role="klienci" EntitySet="klienci" />
             <End Role="naprawiane_samochody" EntitySet="naprawiane_samochody" />
           </AssociationSet>
           <AssociationSet Name="Charakteryzuje_silnik" Association="Self.Charakteryzuje_silnik">
@@ -400,14 +400,14 @@
           </AssociationSet>
           <AssociationSet Name="Wykonana_na" Association="Self.Wykonana_na">
             <End Role="naprawiane_samochody" EntitySet="naprawiane_samochody" />
-            <End Role="naprawy" EntitySet="naprawies" />
+            <End Role="naprawy" EntitySet="naprawy" />
           </AssociationSet>
           <AssociationSet Name="Kieruje" Association="Self.Kieruje">
-            <End Role="pracownicy" EntitySet="pracownicies" />
-            <End Role="naprawy" EntitySet="naprawies" />
+            <End Role="pracownicy" EntitySet="pracownicy" />
+            <End Role="naprawy" EntitySet="naprawy" />
           </AssociationSet>
           <AssociationSet Name="Wchodzi_w_sklad" Association="Self.Wchodzi_w_sklad">
-            <End Role="naprawy" EntitySet="naprawies" />
+            <End Role="naprawy" EntitySet="naprawy" />
             <End Role="wykonana_praca" EntitySet="wykonana_praca" />
           </AssociationSet>
           <AssociationSet Name="Nazywa_prace" Association="Self.Nazywa_prace">
@@ -416,7 +416,7 @@
           </AssociationSet>
           <AssociationSet Name="wykonawcy_pracy" Association="Self.wykonawcy_pracy">
             <End Role="wykonana_praca" EntitySet="wykonana_praca" />
-            <End Role="pracownicy" EntitySet="pracownicies" />
+            <End Role="pracownicy" EntitySet="pracownicy" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -424,9 +424,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="WarsztatModelStoreContainer" CdmEntityContainer="WarsztatEntities">
-          <EntitySetMapping Name="kliencis">
-            <EntityTypeMapping TypeName="WarsztatModel.klienci">
+        <EntityContainerMapping StorageEntityContainer="WorkshopModelStoreContainer" CdmEntityContainer="ConString">
+          <EntitySetMapping Name="klienci">
+            <EntityTypeMapping TypeName="WorkshopModel.klienci">
               <MappingFragment StoreEntitySet="klienci">
                 <ScalarProperty Name="idKlienta" ColumnName="idKlienta" />
                 <ScalarProperty Name="imie" ColumnName="imie" />
@@ -437,7 +437,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="naprawiane_samochody">
-            <EntityTypeMapping TypeName="WarsztatModel.naprawiane_samochody">
+            <EntityTypeMapping TypeName="WorkshopModel.naprawiane_samochody">
               <MappingFragment StoreEntitySet="naprawiane_samochody">
                 <ScalarProperty Name="idSamochodu" ColumnName="idSamochodu" />
                 <ScalarProperty Name="marka" ColumnName="marka" />
@@ -448,8 +448,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="naprawies">
-            <EntityTypeMapping TypeName="WarsztatModel.naprawy">
+          <EntitySetMapping Name="naprawy">
+            <EntityTypeMapping TypeName="WorkshopModel.naprawy">
               <MappingFragment StoreEntitySet="naprawy">
                 <ScalarProperty Name="idNaprawy" ColumnName="idNaprawy" />
                 <ScalarProperty Name="kwotaZaplaty" ColumnName="kwotaZaplaty" />
@@ -460,14 +460,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="nazwy_czynnosci">
-            <EntityTypeMapping TypeName="WarsztatModel.nazwy_czynnosci">
+            <EntityTypeMapping TypeName="WorkshopModel.nazwy_czynnosci">
               <MappingFragment StoreEntitySet="nazwy_czynnosci">
                 <ScalarProperty Name="nazwa" ColumnName="nazwa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="pracownicies">
-            <EntityTypeMapping TypeName="WarsztatModel.pracownicy">
+          <EntitySetMapping Name="pracownicy">
+            <EntityTypeMapping TypeName="WorkshopModel.pracownicy">
               <MappingFragment StoreEntitySet="pracownicy">
                 <ScalarProperty Name="idPracownika" ColumnName="idPracownika" />
                 <ScalarProperty Name="imie" ColumnName="imie" />
@@ -479,14 +479,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="rodzaje_silnika">
-            <EntityTypeMapping TypeName="WarsztatModel.rodzaje_silnika">
+            <EntityTypeMapping TypeName="WorkshopModel.rodzaje_silnika">
               <MappingFragment StoreEntitySet="rodzaje_silnika">
                 <ScalarProperty Name="oznaczenie_silnika" ColumnName="oznaczenie_silnika" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="wykonana_praca">
-            <EntityTypeMapping TypeName="WarsztatModel.wykonana_praca">
+            <EntityTypeMapping TypeName="WorkshopModel.wykonana_praca">
               <MappingFragment StoreEntitySet="wykonana_praca">
                 <ScalarProperty Name="idPracy" ColumnName="idPracy" />
                 <ScalarProperty Name="opis" ColumnName="opis" />
@@ -497,7 +497,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="wykonawcy_pracy" TypeName="WarsztatModel.wykonawcy_pracy" StoreEntitySet="wykonawcy_pracy">
+          <AssociationSetMapping Name="wykonawcy_pracy" TypeName="WorkshopModel.wykonawcy_pracy" StoreEntitySet="wykonawcy_pracy">
             <EndProperty Name="wykonana_praca">
               <ScalarProperty Name="idPracy" ColumnName="idPracy" />
               <ScalarProperty Name="idNaprawy" ColumnName="idNaprawy" />
@@ -520,7 +520,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

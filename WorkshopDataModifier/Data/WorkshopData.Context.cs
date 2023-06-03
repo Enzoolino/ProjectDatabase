@@ -13,10 +13,10 @@ namespace WorkshopDataModifier.Data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class WarsztatEntities : DbContext
+    public partial class ConString : DbContext
     {
-        public WarsztatEntities()
-            : base("name=WarsztatEntities")
+        public ConString()
+            : base("name=ConString")
         {
         }
     
@@ -25,11 +25,11 @@ namespace WorkshopDataModifier.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<klienci> kliencis { get; set; }
+        public virtual DbSet<klienci> klienci { get; set; }
         public virtual DbSet<naprawiane_samochody> naprawiane_samochody { get; set; }
-        public virtual DbSet<naprawy> naprawies { get; set; }
+        public virtual DbSet<naprawy> naprawy { get; set; }
         public virtual DbSet<nazwy_czynnosci> nazwy_czynnosci { get; set; }
-        public virtual DbSet<pracownicy> pracownicies { get; set; }
+        public virtual DbSet<pracownicy> pracownicy { get; set; }
         public virtual DbSet<rodzaje_silnika> rodzaje_silnika { get; set; }
         public virtual DbSet<wykonana_praca> wykonana_praca { get; set; }
     }

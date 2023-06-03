@@ -7,18 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WorkshopDataModifier.Data
+namespace WorkshopDataModifier
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class pracownicy
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public pracownicy()
         {
-            this.naprawies = new HashSet<naprawy>();
-            this.wykonana_praca = new HashSet<wykonana_praca>();
+            this.naprawy = new ObservableCollection<naprawy>();
+            this.wykonana_praca = new ObservableCollection<wykonana_praca>();
         }
     
         public long idPracownika { get; set; }
@@ -29,8 +29,8 @@ namespace WorkshopDataModifier.Data
         public System.DateTime dataZatrudnienia { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<naprawy> naprawies { get; set; }
+        public virtual ObservableCollection<naprawy> naprawy { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<wykonana_praca> wykonana_praca { get; set; }
+        public virtual ObservableCollection<wykonana_praca> wykonana_praca { get; set; }
     }
 }

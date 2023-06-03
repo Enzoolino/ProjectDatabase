@@ -1,25 +1,20 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="TextBoxSearchTheme" TargetType="TextBox">
-        <Setter Property="Foreground" Value="#b0b9c6"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Padding" Value="15 6"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="0 10"/>
+    <Style x:Key="TextBoxFilterTheme" TargetType="TextBox" BasedOn="{StaticResource TextBoxSearchTheme}">
+        <Setter Property="Padding" Value="10 5"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
                     <Grid>
-                    <Border x:Name="border"
-                                CornerRadius="20"
+                        <Border x:Name="border"
+                                CornerRadius="7"
                                 BorderBrush="#e0e6ed"
                                 BorderThickness="1"
                                 Background="{TemplateBinding Background}"
                                 SnapsToDevicePixels="True"/>
 
-                    <TextBlock x:Name="watermark"
+                        <TextBlock x:Name="watermark"
                                Text="{TemplateBinding Tag}"
                                Foreground="#b0b9c6"
                                Margin="20 0"
@@ -28,7 +23,7 @@
                                IsHitTestVisible="False"
                                Panel.ZIndex="1"/>
 
-                    <ScrollViewer x:Name="PART_ContentHost"
+                        <ScrollViewer x:Name="PART_ContentHost"
                                       Margin="{TemplateBinding Padding}"
                                       HorizontalScrollBarVisibility="Hidden"
                                       VerticalScrollBarVisibility="Hidden"

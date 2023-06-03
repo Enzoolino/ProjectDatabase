@@ -7,17 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WorkshopDataModifier.Data
+namespace WorkshopDataModifier
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class klienci
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public klienci()
         {
-            this.naprawiane_samochody = new HashSet<naprawiane_samochody>();
+            this.naprawiane_samochody = new ObservableCollection<naprawiane_samochody>();
         }
     
         public long idKlienta { get; set; }
@@ -27,6 +27,6 @@ namespace WorkshopDataModifier.Data
         public string PESEL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<naprawiane_samochody> naprawiane_samochody { get; set; }
+        public virtual ObservableCollection<naprawiane_samochody> naprawiane_samochody { get; set; }
     }
 }

@@ -8,7 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="740" d:DesignWidth="1030">
 
-
+    <UserControl.Resources>
+        <local:InitialsConverter x:Key="InitialsConverter"/>
+    </UserControl.Resources>
  
     <Border CornerRadius="0 10 10 0">
         <Border.Background>
@@ -33,7 +35,7 @@
             <!--Search Textbox-->
             <Grid Width="300" HorizontalAlignment="Left">
                 
-                <TextBox x:Name="txtSearchClients"
+                <TextBox x:Name="txtSearch"
                          Margin="30 20 20 20"
                          Tag="Search..."
                          Style="{StaticResource TextBoxSearchTheme}"/>
@@ -44,18 +46,130 @@
             </Grid>
 
             <!--Page Title-->
-            <TextBlock Text="Clients" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0"
-                       HorizontalAlignment="Left" Foreground="#121518"/>
+            <TextBlock Text="Clients" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="20 20 0 0"
+                       HorizontalAlignment="Left" Foreground="#ffffff"/>
             
             <!--Add Button-->
-            <Button Style="{StaticResource ValueAddButtonTemplate}">
+            <Button Style="{StaticResource ValueAddButtonTemplate}"
+                    Margin="0 20 10 0">
                 <StackPanel Orientation="Horizontal">
                     <fa:IconImage Icon="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
                     <TextBlock Text="Add New Client"/>
                 </StackPanel>
             </Button>
 
-            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="10 -1 0 10"/>
+            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="10 6 0 10"/>
+            
+            <!--Counter Title-->
+            <TextBlock Name="ClientsCounter" Grid.Row="4" FontSize="18" FontWeight="SemiBold"
+                       Foreground="#ffffff" HorizontalAlignment="Left" VerticalAlignment="Center"
+                       Margin="20 0 0 10"/>
+
+            <!--Filter TextBox-->
+            <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontWeight="SemiBold" Margin="0 0 215 10"
+                       Foreground="#ffffff" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+            <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
+                <TextBox x:Name="txtSearchClients"
+                         Margin="0 10 20 20"
+                         Tag="Search in Clients..."
+                         Style="{StaticResource TextBoxFilterTheme}"/>
+
+            </Grid>
+            
+            <!--Clients DataGrid-->
+            <DataGrid Name="ClientsDataGrid"
+                      Style="{DynamicResource DataGridStyle1}" 
+                      CellStyle="{DynamicResource DataGridCellStyle1}" 
+                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                      RowStyle="{DynamicResource DataGridRowStyle1}"  Grid.Row="5">
+
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn CanUserResize="False" Width="auto">
+                        <DataGridCheckBoxColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <CheckBox/>
+                            </DataTemplate>
+                        </DataGridCheckBoxColumn.HeaderTemplate>
+                    </DataGridCheckBoxColumn>
+
+                    <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding idKlienta}"/>
+
+                    <!--
+                    <DataGridTemplateColumn Header="Name" IsReadOnly="True" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="Red">
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1">
+                                            <TextBlock.Text>
+                                                <MultiBinding Converter="{StaticResource InitialsConverter}">
+                                                    <Binding Path="imie"/>
+                                                    <Binding Path="nazwisko"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock> 
+                                    </Border>
+                                    <TextBlock Text="{Binding imie}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    -->
+
+                    <DataGridTextColumn Header="Name" IsReadOnly="True" Width="*" Binding="{Binding imie}"/>
+                    <DataGridTextColumn Header="Surname" IsReadOnly="True" Width="*" Binding="{Binding nazwisko}"/>
+                    <DataGridTextColumn Header="Addres" IsReadOnly="True" Width="*" Binding="{Binding adres}"/>
+                    <DataGridTextColumn Header="PESEL" IsReadOnly="True" Width="*" Binding="{Binding PESEL}"/>
+
+                    <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource GridEditButtonTemplate}">
+                                        <fa:IconImage Icon="Pencil" Style="{StaticResource GridButtonIconTheme}"/>
+                                    </Button>
+                                    <Button Style="{StaticResource GridRemoveButtonTemplate}">
+                                        <fa:IconImage Icon="TrashCan" Style="{StaticResource GridButtonIconTheme}"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+            
+            <!--Pagination Section-->
+            <Border Grid.Row="6" HorizontalAlignment="Right" BorderBrush="#dee4ec" BorderThickness="1"
+                    CornerRadius="5" Padding="5" Background="White" Margin="0 10 10 10">
+                
+                <StackPanel Orientation="Horizontal">
+
+                    <Button Style="{StaticResource PagingButtonTemplate}">
+                        <fa:IconImage Icon="ChevronLeft" Style="{StaticResource PagingButtonIconTemplate}"/>
+                    </Button>
+
+                    <Rectangle Width="1" Fill="#dee4ec" Margin="3 7"/>
+
+                    <Button Style="{StaticResource PagingButtonTemplate}" Content="1"/>
+                    <Button Style="{StaticResource PagingButtonTemplate}" Content="2" Background="#7950f2" Foreground="#ffffff"/>
+                    <Button Style="{StaticResource PagingButtonTemplate}" Content="3"/>
+
+                    <TextBlock Text="..." Foreground="#6c7682" VerticalAlignment="Center" FontSize="15" Margin="10 0"/>
+
+                    <Button Style="{StaticResource PagingButtonTemplate}" Content="7"/>
+                    <Button Style="{StaticResource PagingButtonTemplate}" Content="8"/>
+                    <Button Style="{StaticResource PagingButtonTemplate}" Content="9"/>
+
+                    <Button Style="{StaticResource PagingButtonTemplate}">
+                        <fa:IconImage Icon="ChevronRight" Style="{StaticResource PagingButtonIconTemplate}"/>
+                    </Button>
+                </StackPanel>
+                
+            </Border>
+            
+            
 
         </Grid>
         
