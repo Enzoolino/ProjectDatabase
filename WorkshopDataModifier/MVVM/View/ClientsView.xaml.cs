@@ -4,20 +4,16 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Data.Entity;
-using WorkshopDataModifier.MVVM.ViewModel;
-using WorkshopDataModifier;
 using System.Globalization;
 using System.ComponentModel;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using WorkshopDataModifier.Core;
 using System.Data.Entity.Validation;
 using System.Text;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.Windows.Controls.Primitives;
 
 namespace WorkshopDataModifier.MVVM.View
 {
@@ -26,9 +22,7 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public partial class ClientsView : UserControl, INotifyPropertyChanged
     {
-
-        //Counter of the current clients (dynamic)
-        #region
+        #region Counter of the current clients (dynamic)
         private int _rowCount;
         public int RowCount
         {
@@ -48,8 +42,7 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        //Multi select
-        #region
+        #region Multi Select
         private void SelectAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
             bool isChecked = ((CheckBox)sender).IsChecked == true;
@@ -71,10 +64,12 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        //Edit Section
-        #region
-        static List<klienci> selectedRows = new List<klienci>();
+        #region Data Modification
+
+        //List of all selected rows (Initialized with button click)
+        static List<klienci> selectedRows = new List<klienci>(); 
         
+        #region Edit Section
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (klienci rowData in ClientsDataGrid.Items)
@@ -161,8 +156,7 @@ namespace WorkshopDataModifier.MVVM.View
                         }
                     }
 
-                    context.SaveChanges();
-
+                    context.SaveChanges(); 
                     ClientsDataGrid.ItemsSource = context.klienci.ToList();
                 }
 
@@ -209,38 +203,75 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        //Delete section
-
-        #region
+        #region Delete Section
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            //Initialize button
+            foreach (klienci rowData in ClientsDataGrid.Items)
+            {
+                if (rowData.IsSelected)
+                {
+                    selectedRows.Add(rowData);
+                }
+            }
+
             Button removeButton = (Button)sender;
             klienci row = (klienci)removeButton.DataContext;
 
-            //Assign the row to the outer variable
-            connectRowWithClick = row;
+            if (selectedRows.Count == 0)
+                selectedRows.Add(row);
 
-            DeletePopup.IsOpen = true;
+            if (!selectedRows.Contains(row))
+            {
+                selectedRows.Clear();
+                return;
+            }
+
+            if (selectedRows.Count == 0)
+            {
+                throw new Exception("Row was not selected or something went wrong");
+            }
+            else if (selectedRows.Count == 1)
+            {
+                DeletePopup.IsOpen = true;
+            }
+            else
+            {
+                DeletePopup.DataContext = selectedRows;
+                DeletePopup.IsOpen = true;
+            }
         }
-
-        static klienci connectRowWithClick;
 
         private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                //Delete row from database
-                _dbContext.klienci.Remove(connectRowWithClick);
-                _dbContext.SaveChanges();
+                using (var context = new ClientsDbContext())
+                {
+                    if (selectedRows.Count == 0)
+                    {
+                        throw new Exception("Row was not selected or something went wrong");
+                    }
+                    else if (selectedRows.Count == 1)
+                    {
+                        klienci selectedRow = context.klienci.Find(selectedRows[0].idKlienta);
+                        context.klienci.Remove(selectedRow);
+                    }
+                    else
+                    {
+                        foreach (klienci dataRow in selectedRows)
+                        {
+                            klienci selectedRow = context.klienci.Find(dataRow.idKlienta);
+                            context.klienci.Remove(selectedRow);
+                        }
+                    }
 
-                //Update DataGrid to show changes
-                ClientsDataGrid.ItemsSource = _dbContext.klienci.ToList();
-
-                //Change the outer variable back (it has to be done because it's static).
-                connectRowWithClick = null;
+                    //Update DataGrid to show changes
+                    context.SaveChanges();
+                    ClientsDataGrid.ItemsSource = context.klienci.ToList();
+                }
 
                 DeletePopup.IsOpen = false;
+                selectedRows.Clear();
             }
             catch (DbUpdateException ex)
             {
@@ -271,17 +302,101 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            selectedRows.Clear();
             DeletePopup.IsOpen = false;
+        }
+        #endregion
+
+        #region Add Section
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddPopup.IsOpen = true;
+        }
+
+        private void ConfirmAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var context = new ClientsDbContext())
+                {
+                    klienci newClient = new klienci
+                    {
+                        imie = AddName.Text,
+                        nazwisko = AddSurname.Text,
+                        adres = AddAddress.Text,
+                        PESEL = AddPesel.Text
+                    };
+
+                    context.klienci.Add(newClient);
+                    context.SaveChanges();
+
+                    ClientsDataGrid.ItemsSource = context.klienci.ToList();
+                }
+
+                AddPopup.IsOpen = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while adding the client: {ex.Message}", "Add Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+            }
+        }
+
+        private void CancelAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddName.Text = "";
+            AddSurname.Text = "";
+            AddAddress.Text = "";
+            AddPesel.Text = "";
+
+            AddPopup.IsOpen = false;
         }
 
         #endregion
 
-        //Draggable popup
-        #region
+        #endregion 
+
+        #region Draggable Popups
+
         private bool isDraggingPopup = false;
         private Point startPoint;
 
-        private void Popup_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        #region Add Popup
+        private void AddPopup_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                isDraggingPopup = true;
+                startPoint = e.GetPosition(AddPopup);
+            }
+        }
+
+        private void AddPopup_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDraggingPopup)
+            {
+                Point currentPoint = e.GetPosition(AddPopup);
+                double offsetX = currentPoint.X - startPoint.X;
+                double offsetY = currentPoint.Y - startPoint.Y;
+
+                AddPopup.HorizontalOffset += offsetX;
+                AddPopup.VerticalOffset += offsetY;
+
+                startPoint = currentPoint;
+            }
+        }
+
+        private void AddPopup_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                isDraggingPopup = false;
+            }
+        }
+        #endregion
+
+        #region Edit Popup
+        private void EditPopup_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
@@ -290,7 +405,7 @@ namespace WorkshopDataModifier.MVVM.View
             }
         }
 
-        private void Popup_MouseMove(object sender, MouseEventArgs e)
+        private void EditPopup_MouseMove(object sender, MouseEventArgs e)
         {
             if (isDraggingPopup)
             {
@@ -305,13 +420,49 @@ namespace WorkshopDataModifier.MVVM.View
             }
         }
 
-        private void Popup_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void EditPopup_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
                 isDraggingPopup = false;
             }
         }
+        #endregion
+
+        #region Delete Popup
+        private void DeletePopup_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                isDraggingPopup = true;
+                startPoint = e.GetPosition(DeletePopup);
+            }
+        }
+
+        private void DeletePopup_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDraggingPopup)
+            {
+                Point currentPoint = e.GetPosition(DeletePopup);
+                double offsetX = currentPoint.X - startPoint.X;
+                double offsetY = currentPoint.Y - startPoint.Y;
+
+                DeletePopup.HorizontalOffset += offsetX;
+                DeletePopup.VerticalOffset += offsetY;
+
+                startPoint = currentPoint;
+            }
+        }
+
+        private void DeletePopup_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                isDraggingPopup = false;
+            }
+        }
+        #endregion
+
         #endregion
 
 
@@ -332,6 +483,9 @@ namespace WorkshopDataModifier.MVVM.View
         }
     }
 
+    /// <summary>
+    /// Gets context of clients tab from the connected DataBase
+    /// </summary>
     public class ClientsDbContext : DbContext
     {
         public DbSet<klienci> klienci { get; set; } //DbSet dla tabeli "klienci"
@@ -341,7 +495,7 @@ namespace WorkshopDataModifier.MVVM.View
         }
     }
 
-    //Take initials from name and surname
+    //Take initials from name and surname //UNUSED//
     #region
     public class InitialsConverter : IMultiValueConverter
     {
