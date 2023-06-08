@@ -8,9 +8,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="740" d:DesignWidth="1030">
 
+
     <UserControl.Resources>
         <local:InitialsConverter x:Key="InitialsConverter"/>
     </UserControl.Resources>
+
+    
  
     <Border CornerRadius="0 10 10 0">
         <Border.Background>
@@ -61,9 +64,10 @@
             <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="10 6 0 10"/>
             
             <!--Counter Title-->
-            <TextBlock Name="ClientsCounter" Grid.Row="4" FontSize="18" FontWeight="SemiBold"
+            <TextBlock Text="ClientsCounter" Name="ClientsCounter" Grid.Row="4" FontSize="18" FontWeight="SemiBold"
                        Foreground="#ffffff" HorizontalAlignment="Left" VerticalAlignment="Center"
                        Margin="20 0 0 10"/>
+
 
             <!--Filter TextBox-->
             <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontWeight="SemiBold" Margin="0 0 215 10"
@@ -76,7 +80,7 @@
                          Style="{StaticResource TextBoxFilterTheme}"/>
 
             </Grid>
-            
+
             <!--Clients DataGrid-->
             <DataGrid Name="ClientsDataGrid"
                       Style="{DynamicResource DataGridStyle1}" 
@@ -85,13 +89,18 @@
                       RowStyle="{DynamicResource DataGridRowStyle1}"  Grid.Row="5">
 
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn CanUserResize="False" Width="auto">
-                        <DataGridCheckBoxColumn.HeaderTemplate>
+                    <DataGridTemplateColumn CanUserResize="False" Width="auto">
+                        <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
-                                <CheckBox/>
+                                <CheckBox Name="SelectAllCheckBox" Style="{StaticResource CheckBoxStyle1}" Click="SelectAllCheckBox_Click"/>
                             </DataTemplate>
-                        </DataGridCheckBoxColumn.HeaderTemplate>
-                    </DataGridCheckBoxColumn>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Style="{StaticResource CheckBoxStyle1}" IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="RowCheckBox_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
                     <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding idKlienta}"/>
 
@@ -126,10 +135,10 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Style="{StaticResource GridEditButtonTemplate}">
+                                    <Button Style="{StaticResource GridEditButtonTemplate}" Click="EditButton_Click">
                                         <fa:IconImage Icon="Pencil" Style="{StaticResource GridButtonIconTheme}"/>
                                     </Button>
-                                    <Button Style="{StaticResource GridRemoveButtonTemplate}">
+                                    <Button Style="{StaticResource GridRemoveButtonTemplate}" Margin="5 0 0 0" Click="RemoveButton_Click">
                                         <fa:IconImage Icon="TrashCan" Style="{StaticResource GridButtonIconTheme}"/>
                                     </Button>
                                 </StackPanel>
@@ -139,7 +148,74 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-            
+
+            <!--Edit Popup Window-->
+            <Popup Name="EditPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto">
+                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+                        MouseLeftButtonDown="Popup_MouseLeftButtonDown" MouseMove="Popup_MouseMove" MouseLeftButtonUp="Popup_MouseLeftButtonUp">
+                    <StackPanel>
+                        <!--Title TextBox-->
+                        <TextBlock Foreground="Black" Text="Edit Window" 
+                                   Margin="0 10 0 10" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
+                        <TextBlock Name="MultiEditionWarning" Foreground="Red" Text="Be careful while editing multiple rows at once !" 
+                                   FontSize="12" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0 0 0 30"/>
+
+                        <!--Input Boxes-->
+                        <TextBlock Foreground="DimGray" Text="Edit name of selected client:" FontFamily="/Fonts/#Poppins"/>
+                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Name"  
+                                 Name="EditName"/>
+                        <TextBlock Foreground="DimGray" Text="Edit surname of selected client:" FontFamily="/Fonts/#Poppins"/>
+                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Surname" 
+                                 Name="EditSurname"/>
+                        <TextBlock Foreground="DimGray" Text="Edit address of selected client:" FontFamily="/Fonts/#Poppins"/>
+                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Addres"
+                                 Name="EditAddress"/>
+                        <TextBlock Foreground="DimGray" Text="Edit PESEL of selected client:" FontFamily="/Fonts/#Poppins"/>
+                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="PESEL"
+                                 Name="EditPesel"/>
+
+                        <!--Rules TextBlocks-->
+                        <TextBlock Foreground="Black" Text="Rules:" Margin="0 10 0 10" FontSize="18" FontFamily="/Fonts/#Poppins"/>
+
+                        <TextBlock Name="EditInfo" Foreground="Black" FontFamily="/Fonts/#Poppins" Text="* Leave the input unchanged if you do not wish for the row to be edited." Visibility="Visible"/>
+                        <TextBlock Foreground="Black" FontFamily="/Fonts/#Poppins">
+                            * Name    = max 30 symbols. <LineBreak/>
+                            * Surname = max 30 symbols. <LineBreak/>
+                            * Addres  = max 50 symbols. <LineBreak/>
+                            * PESEL   = 11 numbers.
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
+                            <Button Content="Save" Style="{StaticResource GridEditButtonTemplate}" Margin="0 10 40 0"
+                                    Width="100" Click="ConfirmEditButton_Click"/>
+                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTemplate}" Margin="0 10 0 0"
+                                    Width="100" Click="CancelEditButton_Click"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </Border>
+            </Popup>
+
+            <!--Delete Popup Window-->
+            <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto">
+                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+                        MouseLeftButtonDown="Popup_MouseLeftButtonDown" MouseMove="Popup_MouseMove" MouseLeftButtonUp="Popup_MouseLeftButtonUp">
+                    <StackPanel>
+                        <!--Information-->
+                        <TextBlock Foreground="Black" FontSize="16" Margin="0 10 0 20" HorizontalAlignment="Center">
+                            Are you sure you want to delete selected customers ?
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button  Content="Confirm" Style="{StaticResource GridEditButtonTemplate}"  Margin="0 0 20 0" 
+                                     Width="150" Click="ConfirmRemoveButton_Click" />
+                            <Button  Content="Cancel" Style="{StaticResource GridRemoveButtonTemplate}"  
+                                     Width="150" Click="CancelRemoveButton_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                </Border>
+            </Popup>
+
             <!--Pagination Section-->
             <Border Grid.Row="6" HorizontalAlignment="Right" BorderBrush="#dee4ec" BorderThickness="1"
                     CornerRadius="5" Padding="5" Background="White" Margin="0 10 10 10">

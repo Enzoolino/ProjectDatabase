@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using WorkshopDataModifier.MVVM.View;
 
 
 namespace WorkshopDataModifier
@@ -15,6 +16,8 @@ namespace WorkshopDataModifier
             InitializeComponent();
         }
 
+
+        
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
