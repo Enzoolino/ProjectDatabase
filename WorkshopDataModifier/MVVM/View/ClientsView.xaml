@@ -6,7 +6,8 @@
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:local="clr-namespace:WorkshopDataModifier.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="740" d:DesignWidth="1030">
+             d:DesignHeight="740" d:DesignWidth="1030"
+             MouseDown="ClientsWindow_MouseDown">
 
 
     <UserControl.Resources>
@@ -118,7 +119,9 @@
                 <TextBox x:Name="txtSearchClients"
                          Margin="0 10 20 20"
                          Tag="Search in Clients..."
-                         Style="{StaticResource TextBoxFilterTheme}"/>
+                         Style="{StaticResource TextBoxFilterTheme}"
+                         TextChanged="SearchTextBox_TextChanged"
+                         GotKeyboardFocus="txtSearchClients_GotKeyboardFocus"/>
 
             </Grid>
 

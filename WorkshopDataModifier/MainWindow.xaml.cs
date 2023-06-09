@@ -17,7 +17,6 @@ namespace WorkshopDataModifier
         }
 
 
-        
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)

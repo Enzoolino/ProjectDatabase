@@ -9,6 +9,7 @@ using System.Globalization;
 using System.ComponentModel;
 using System.Windows.Input;
 using WorkshopDataModifier.Core;
+using WorkshopDataModifier.Data;
 using System.Data.Entity.Validation;
 using System.Text;
 using System.Data.Entity.Infrastructure;
@@ -261,7 +262,7 @@ namespace WorkshopDataModifier.MVVM.View
                         foreach (klienci dataRow in selectedRows)
                         {
                             klienci selectedRow = context.klienci.Find(dataRow.idKlienta);
-                            context.klienci.Remove(selectedRow);
+                            context.Entry(selectedRow).State = EntityState.Deleted;
                         }
                     }
 
@@ -269,6 +270,9 @@ namespace WorkshopDataModifier.MVVM.View
                     context.SaveChanges();
                     ClientsDataGrid.ItemsSource = context.klienci.ToList();
                 }
+
+                RowCount = ClientsDataGrid.Items.Count;
+                ClientsCounter.Text = $"Current Saved Clients: {RowCount}";
 
                 DeletePopup.IsOpen = false;
                 selectedRows.Clear();
@@ -334,6 +338,8 @@ namespace WorkshopDataModifier.MVVM.View
                     ClientsDataGrid.ItemsSource = context.klienci.ToList();
                 }
 
+                RowCount = ClientsDataGrid.Items.Count;
+                ClientsCounter.Text = $"Current Saved Clients: {RowCount}";
                 AddPopup.IsOpen = false;
             }
             catch (Exception ex)
@@ -465,6 +471,67 @@ namespace WorkshopDataModifier.MVVM.View
 
         #endregion
 
+        #region Pagination
+
+
+        #endregion
+
+        #region Search
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtSearchClients.Text != "Search in Clients...")
+            {
+
+                string searchText = txtSearchClients.Text.ToLower();
+
+
+                ClientsDataGrid.Items.Filter = item =>
+                {
+                    if (item is klienci dataItem)
+                    {
+                        return dataItem.imie.ToLower().Contains(searchText) ||
+                               dataItem.nazwisko.ToLower().Contains(searchText) ||
+                               dataItem.adres.ToLower().Contains(searchText) ||
+                               dataItem.PESEL.ToLower().Contains(searchText);
+                    }
+
+                    return false;
+                };
+
+                ClientsDataGrid.Items.Refresh();
+            }
+        }
+
+        #endregion
+
+        #region Focus Settings
+
+        private void ClientsWindow_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (txtSearchClients.Text == "")
+            {
+                Keyboard.ClearFocus();
+                txtSearchClients.Text = "Search in Clients...";
+            }
+            else
+            {
+                Keyboard.ClearFocus();
+            }
+        }
+
+        private void txtSearchClients_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (txtSearchClients.Text == "Search in Clients...")
+            {
+                txtSearchClients.Text = "";
+            }
+        }
+
+        
+
+       
+        #endregion
 
         private ClientsDbContext _dbContext;
 

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WorkshopDataModifier
+namespace WorkshopDataModifier.Data
 {
     using System;
     using System.Collections.ObjectModel;
@@ -15,19 +15,17 @@ namespace WorkshopDataModifier
 
     public partial class klienci : ObservableObject
     {
-
         private bool _isSelected;
 
         public bool IsSelected
         {
             get { return _isSelected; }
-            set 
-            { 
+            set
+            {
                 _isSelected = value;
                 OnPropertyChanged();
             }
         }
-
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public klienci()

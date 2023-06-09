@@ -131,14 +131,38 @@
     <Compile Include="Data\wykonana_praca.cs">
       <DependentUpon>WorkshopData.tt</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\ViewModel\CarsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ClientsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\EngineCodesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\TaskNamesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\TasksViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\UsersViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\WorkersViewModel.cs" />
+    <Compile Include="MVVM\View\CarsView.xaml.cs">
+      <DependentUpon>CarsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\ClientsView.xaml.cs">
       <DependentUpon>ClientsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\EngineCodesView.xaml.cs">
+      <DependentUpon>EngineCodesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\TaskNamesView.xaml.cs">
+      <DependentUpon>TaskNamesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\TasksView.xaml.cs">
+      <DependentUpon>TasksView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\UsersView.xaml.cs">
+      <DependentUpon>UsersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\WorkersView.xaml.cs">
+      <DependentUpon>WorkersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\InfoCard.xaml.cs">
       <DependentUpon>InfoCard.xaml</DependentUpon>
@@ -155,11 +179,35 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MVVM\View\CarsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\ClientsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\EngineCodesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\TaskNamesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\TasksView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\UsersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\WorkersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -191,11 +239,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Theme\PagingButtonIconTemplate.xaml">
+    <Page Include="Theme\Paging\PagingButtonIconTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Theme\PagingButtonTemplate.xaml">
+    <Page Include="Theme\Paging\PagingButtonTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

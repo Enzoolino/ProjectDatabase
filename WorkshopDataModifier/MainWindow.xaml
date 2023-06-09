@@ -61,7 +61,7 @@
 
                 <!--Menu Buttons-->
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                        Command="{Binding HomeViewCommand}">
+                             Command="{Binding HomeViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Home" Style="{StaticResource MenuButtonTextTheme}"/>
@@ -69,31 +69,26 @@
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                        Command="{Binding ClientsViewCommand}">
+                             Command="{Binding ClientsViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="UserGroup" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Clients" Style="{StaticResource MenuButtonTextTheme}"/>
                     </StackPanel>
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource MenuButtonTheme}">
+                <RadioButton Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding CarsViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Car" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Cars" Style="{StaticResource MenuButtonTextTheme}"/>
                     </StackPanel>
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource MenuButtonTheme}">
+                <RadioButton Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding TasksViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Tasks" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Tasks" Style="{StaticResource MenuButtonTextTheme}"/>
-                    </StackPanel>
-                </RadioButton>
-
-                <RadioButton Style="{StaticResource MenuButtonTheme}">
-                    <StackPanel Orientation="Horizontal">
-                        <fa:IconImage Icon="Briefcase" Style="{StaticResource MenuButtonIconTheme}"/>
-                        <TextBlock Text="Workers" Style="{StaticResource MenuButtonTextTheme}"/>
                     </StackPanel>
                 </RadioButton>
 
@@ -105,24 +100,35 @@
 
                 <Separator Height="0.8" Margin="20 10" Background="#46558a"/>
 
-                <RadioButton Style="{StaticResource MenuButtonTheme}">
+                <RadioButton Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding WorkersViewCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Briefcase" Style="{StaticResource MenuButtonIconTheme}"/>
+                        <TextBlock Text="Workers" Style="{StaticResource MenuButtonTextTheme}"/>
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding EngineCodesViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Gears" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Engine Codes" Style="{StaticResource MenuButtonTextTheme}"/>
                     </StackPanel>
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource MenuButtonTheme}">
+                <RadioButton Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding TaskNamesViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="List" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Task Names" Style="{StaticResource MenuButtonTextTheme}"/>
                     </StackPanel>
                 </RadioButton>
 
-                <RadioButton Style="{StaticResource MenuButtonTheme}">
+                <RadioButton Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding UsersViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="IdCard" Style="{StaticResource MenuButtonIconTheme}"/>
-                        <TextBlock Text="User List" Style="{StaticResource MenuButtonTextTheme}"/>
+                        <TextBlock Text="Users" Style="{StaticResource MenuButtonTextTheme}"/>
                     </StackPanel>
                 </RadioButton>
 

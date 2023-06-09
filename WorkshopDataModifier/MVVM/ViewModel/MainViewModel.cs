@@ -13,9 +13,22 @@ namespace WorkshopDataModifier.MVVM.ViewModel
 
         public RelayCommand HomeViewCommand { get; set; }
         public RelayCommand ClientsViewCommand { get; set; }
+        public RelayCommand CarsViewCommand { get; set; }
+        public RelayCommand TasksViewCommand { get; set; }
+        public RelayCommand WorkersViewCommand { get; set; }
+        public RelayCommand EngineCodesViewCommand { get; set; }
+        public RelayCommand TaskNamesViewCommand { get; set; }
+        public RelayCommand UsersViewCommand { get; set; }
+
 
         public HomeViewModel HomeVM { get; set; }
         public ClientsViewModel ClientsVM { get; set; }
+        public CarsViewModel CarsVM { get; set; }
+        public TasksViewModel TasksVM { get; set; }
+        public WorkersViewModel WorkersVM { get; set; }
+        public EngineCodesViewModel EngineCodesVM { get; set; }
+        public TaskNamesViewModel TaskNamesVM { get; set; }
+        public UsersViewModel UsersVM { get; set; }
 
         private object _currentView;
 
@@ -33,6 +46,13 @@ namespace WorkshopDataModifier.MVVM.ViewModel
         {
             HomeVM = new HomeViewModel();
             ClientsVM = new ClientsViewModel();
+            CarsVM = new CarsViewModel();
+            TasksVM = new TasksViewModel();
+            WorkersVM = new WorkersViewModel();
+            EngineCodesVM = new EngineCodesViewModel();
+            TaskNamesVM = new TaskNamesViewModel();
+            UsersVM = new UsersViewModel();
+            
 
             CurrentView = HomeVM;
 
@@ -46,6 +66,35 @@ namespace WorkshopDataModifier.MVVM.ViewModel
                 CurrentView = ClientsVM;
             });
 
+            CarsViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = CarsVM;
+            });
+
+            TasksViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = TasksVM;
+            });
+
+            WorkersViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = WorkersVM;
+            });
+
+            EngineCodesViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = EngineCodesVM;
+            });
+
+            TaskNamesViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = TaskNamesVM;
+            });
+
+            UsersViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = UsersVM;
+            });
 
         }
     }
