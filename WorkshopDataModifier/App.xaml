@@ -10,18 +10,24 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                
+                <ResourceDictionary Source="Theme/DataGrid/GridEditButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DataGrid/GridRemoveButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DataGrid/GridButtonIconTheme.xaml"/>
+                
                 <ResourceDictionary Source="Theme/MenuButton/MenuButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/MenuButton/MenuButtonIconTheme.xaml"/>
                 <ResourceDictionary Source="Theme/MenuButton/MenuButtonTextTheme.xaml"/>
                 <ResourceDictionary Source="Theme/MenuButton/MenuButtonActiveTheme.xaml"/>
+
+                <ResourceDictionary Source="Theme/Paging/PagingButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/Paging/PagingButtonIconTheme.xaml"/>
+
                 <ResourceDictionary Source="Theme/TextBoxSearchTheme.xaml"/>
-                <ResourceDictionary Source="Theme/ValueAddButtonTemplate.xaml"/>
+                <ResourceDictionary Source="Theme/ValueAddButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/TextBoxFilterTheme.xaml"/>
-                <ResourceDictionary Source="Theme/Paging/PagingButtonTemplate.xaml"/>
-                <ResourceDictionary Source="Theme/Paging/PagingButtonIconTemplate.xaml"/>
-                <ResourceDictionary Source="Theme/DataGrid/GridEditButtonTemplate.xaml"/>
-                <ResourceDictionary Source="Theme/DataGrid/GridRemoveButtonTemplate.xaml"/>
-                <ResourceDictionary Source="Theme/DataGrid/GridButtonIconTheme.xaml"/>
+                <ResourceDictionary Source="Theme/FilterByDateButtonTheme.xaml"/>
+                
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">

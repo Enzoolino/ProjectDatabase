@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="GridRemoveButtonTemplate" TargetType="Button" BasedOn="{StaticResource GridEditButtonTemplate}">
+    <Style x:Key="GridRemoveButtonTheme" TargetType="Button" BasedOn="{StaticResource GridEditButtonTheme}">
         <Setter Property="Background" Value="#d32f2f"/>
         <Setter Property="BorderBrush" Value="#b71c1c"/>
         

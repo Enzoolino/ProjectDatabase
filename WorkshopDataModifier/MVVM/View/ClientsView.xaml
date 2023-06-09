@@ -94,16 +94,24 @@
                         </TextBlock>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
-                            <Button Content="Confirm" Style="{StaticResource GridEditButtonTemplate}" Margin="0 10 40 0"
+                            <Button Content="Confirm" Style="{StaticResource GridEditButtonTheme}" Margin="0 10 40 0"
                                     Width="100" Click="ConfirmAddButton_Click"/>
-                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTemplate}" Margin="0 10 0 0"
+                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
                                     Width="100" Click="CancelAddButton_Click"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
             </Popup>
+            
+            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 -1 0 10"/>
+            
+            <!--Filter by Date Buttons-->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 10 0 0">
+                <Button Content="Day" Style="{StaticResource FilterByDateButtonTheme}"/>
+                <Button Content="Week" Style="{StaticResource FilterByDateButtonTheme}"/>
+                <Button Content="Month" Style="{StaticResource FilterByDateButtonTheme}"/>
 
-            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="10 6 0 10"/>
+            </StackPanel>
             
             <!--Counter Title-->
             <TextBlock Text="ClientsCounter" Name="ClientsCounter" Grid.Row="4" FontSize="18" FontWeight="SemiBold"
@@ -179,10 +187,10 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Style="{StaticResource GridEditButtonTemplate}" Click="EditButton_Click">
+                                    <Button Style="{StaticResource GridEditButtonTheme}" Click="EditButton_Click">
                                         <fa:IconImage Icon="Pencil" Style="{StaticResource GridButtonIconTheme}"/>
                                     </Button>
-                                    <Button Style="{StaticResource GridRemoveButtonTemplate}" Margin="5 0 0 0" Click="RemoveButton_Click">
+                                    <Button Style="{StaticResource GridRemoveButtonTheme}" Margin="5 0 0 0" Click="RemoveButton_Click">
                                         <fa:IconImage Icon="TrashCan" Style="{StaticResource GridButtonIconTheme}"/>
                                     </Button>
                                 </StackPanel>
@@ -230,9 +238,9 @@
                         </TextBlock>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
-                            <Button Content="Confirm" Style="{StaticResource GridEditButtonTemplate}" Margin="0 10 40 0"
+                            <Button Content="Confirm" Style="{StaticResource GridEditButtonTheme}" Margin="0 10 40 0"
                                     Width="100" Click="ConfirmEditButton_Click"/>
-                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTemplate}" Margin="0 10 0 0"
+                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
                                     Width="100" Click="CancelEditButton_Click"/>
                         </StackPanel>
 
@@ -250,9 +258,9 @@
                             Are you sure you want to delete selected customers ?
                         </TextBlock>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button  Content="Confirm" Style="{StaticResource GridEditButtonTemplate}"  Margin="0 0 20 0" 
+                            <Button  Content="Confirm" Style="{StaticResource GridEditButtonTheme}"  Margin="0 0 20 0" 
                                      Width="150" Click="ConfirmRemoveButton_Click" />
-                            <Button  Content="Cancel" Style="{StaticResource GridRemoveButtonTemplate}"  
+                            <Button  Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}"  
                                      Width="150" Click="CancelRemoveButton_Click"/>
                         </StackPanel>
                     </StackPanel>
@@ -266,24 +274,24 @@
                 
                 <StackPanel Orientation="Horizontal">
 
-                    <Button Style="{StaticResource PagingButtonTemplate}">
-                        <fa:IconImage Icon="ChevronLeft" Style="{StaticResource PagingButtonIconTemplate}"/>
+                    <Button Style="{StaticResource PagingButtonTheme}">
+                        <fa:IconImage Icon="ChevronLeft" Style="{StaticResource PagingButtonIconTheme}"/>
                     </Button>
 
                     <Rectangle Width="1" Fill="#dee4ec" Margin="3 7"/>
 
-                    <Button Style="{StaticResource PagingButtonTemplate}" Content="1"/>
-                    <Button Style="{StaticResource PagingButtonTemplate}" Content="2" Background="#7950f2" Foreground="#ffffff"/>
-                    <Button Style="{StaticResource PagingButtonTemplate}" Content="3"/>
+                    <Button Style="{StaticResource PagingButtonTheme}" Content="1"/>
+                    <Button Style="{StaticResource PagingButtonTheme}" Content="2" Background="#7950f2" Foreground="#ffffff"/>
+                    <Button Style="{StaticResource PagingButtonTheme}" Content="3"/>
 
                     <TextBlock Text="..." Foreground="#6c7682" VerticalAlignment="Center" FontSize="15" Margin="10 0"/>
 
-                    <Button Style="{StaticResource PagingButtonTemplate}" Content="7"/>
-                    <Button Style="{StaticResource PagingButtonTemplate}" Content="8"/>
-                    <Button Style="{StaticResource PagingButtonTemplate}" Content="9"/>
+                    <Button Style="{StaticResource PagingButtonTheme}" Content="7"/>
+                    <Button Style="{StaticResource PagingButtonTheme}" Content="8"/>
+                    <Button Style="{StaticResource PagingButtonTheme}" Content="9"/>
 
-                    <Button Style="{StaticResource PagingButtonTemplate}">
-                        <fa:IconImage Icon="ChevronRight" Style="{StaticResource PagingButtonIconTemplate}"/>
+                    <Button Style="{StaticResource PagingButtonTheme}">
+                        <fa:IconImage Icon="ChevronRight" Style="{StaticResource PagingButtonIconTheme}"/>
                     </Button>
                 </StackPanel>
                 
