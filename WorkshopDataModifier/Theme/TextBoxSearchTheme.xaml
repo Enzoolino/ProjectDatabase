@@ -7,7 +7,8 @@
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="15 6"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="0 10"/>
+        <Setter Property="Margin" Value="20 10"/>
+        <Setter Property="FontFamily" Value="/Fonts/#Poppins"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
@@ -22,11 +23,13 @@
                     <TextBlock x:Name="watermark"
                                Text="{TemplateBinding Tag}"
                                Foreground="#b0b9c6"
-                               Margin="20 0"
+                               Margin="30 6 0 6"
                                Visibility="Collapsed"
                                VerticalAlignment="Center"
                                IsHitTestVisible="False"
-                               Panel.ZIndex="1"/>
+                               Panel.ZIndex="1"
+                               FontFamily="/Fonts/#Poppins"
+                               FontSize="12"/>
 
                     <ScrollViewer x:Name="PART_ContentHost"
                                       Margin="{TemplateBinding Padding}"

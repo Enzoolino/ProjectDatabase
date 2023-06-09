@@ -518,6 +518,16 @@ namespace WorkshopDataModifier.MVVM.View
             {
                 Keyboard.ClearFocus();
             }
+
+            if (txtSearch.Text == "")
+            {
+                Keyboard.ClearFocus();
+                txtSearch.Text = "Search...";
+            }
+            else
+            {
+                Keyboard.ClearFocus();
+            }
         }
 
         private void txtSearchClients_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -525,6 +535,14 @@ namespace WorkshopDataModifier.MVVM.View
             if (txtSearchClients.Text == "Search in Clients...")
             {
                 txtSearchClients.Text = "";
+            }
+        }
+
+        private void txtSearch_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (txtSearch.Text == "Search...")
+            {
+                txtSearch.Text = "";
             }
         }
 

@@ -17,11 +17,12 @@
                         <TextBlock x:Name="watermark"
                                Text="{TemplateBinding Tag}"
                                Foreground="#b0b9c6"
-                               Margin="20 0"
+                               Margin="20 10"
                                Visibility="Collapsed"
                                VerticalAlignment="Center"
                                IsHitTestVisible="False"
-                               Panel.ZIndex="1"/>
+                               Panel.ZIndex="1"
+                               FontFamily="/Fonts/#Poppins"/>
 
                         <ScrollViewer x:Name="PART_ContentHost"
                                       Margin="{TemplateBinding Padding}"
