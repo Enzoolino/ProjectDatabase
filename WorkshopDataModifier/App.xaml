@@ -5,8 +5,8 @@
              xmlns:fa="clr-namespace:FontAwesome.Sharp;assembly=FontAwesome.Sharp"
              xmlns:viewModel="clr-namespace:WorkshopDataModifier.MVVM.ViewModel"
              xmlns:view="clr-namespace:WorkshopDataModifier.MVVM.View"
-             StartupUri="MainWindow.xaml"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+             xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+    
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -28,6 +28,11 @@
                 <ResourceDictionary Source="Theme/TextBoxFilterTheme.xaml"/>
                 <ResourceDictionary Source="Theme/FilterByDateButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ConfirmButtonTheme.xaml"/>
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
 
             </ResourceDictionary.MergedDictionaries>
 
