@@ -27,7 +27,8 @@
                 <ResourceDictionary Source="Theme/ValueAddButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/TextBoxFilterTheme.xaml"/>
                 <ResourceDictionary Source="Theme/FilterByDateButtonTheme.xaml"/>
-                
+                <ResourceDictionary Source="Theme/ConfirmButtonTheme.xaml"/>
+
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">

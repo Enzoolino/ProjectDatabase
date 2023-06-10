@@ -519,15 +519,6 @@ namespace WorkshopDataModifier.MVVM.View
                 Keyboard.ClearFocus();
             }
 
-            if (txtSearch.Text == "")
-            {
-                Keyboard.ClearFocus();
-                txtSearch.Text = "Search...";
-            }
-            else
-            {
-                Keyboard.ClearFocus();
-            }
         }
 
         private void txtSearchClients_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -537,18 +528,34 @@ namespace WorkshopDataModifier.MVVM.View
                 txtSearchClients.Text = "";
             }
         }
+        #endregion
 
-        private void txtSearch_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        #region Date Filtering
+
+        private void DataFilterButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (txtSearch.Text == "Search...")
+            if (DayButton.IsChecked == true)
             {
-                txtSearch.Text = "";
+
             }
+            else if (WeekButton.IsChecked == true)
+            {
+
+            }
+            else if (MonthButton.IsChecked == true)
+            {
+
+            }
+            else if (YearButton.IsChecked == true)
+            {
+
+            }
+            else if (InfButton.IsChecked == true)
+            {
+
+            }
+
         }
-
-        
-
-       
         #endregion
 
         private ClientsDbContext _dbContext;

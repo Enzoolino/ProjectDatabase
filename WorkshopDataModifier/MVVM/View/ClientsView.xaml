@@ -35,20 +35,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             
-            <!--Search Textbox-->
-            <Grid Width="300" HorizontalAlignment="Left">
-                
-                <TextBox x:Name="txtSearch"
-                         Margin="30 20 20 20"
-                         Tag="Search..."
-                         Style="{StaticResource TextBoxSearchTheme}"
-                         GotKeyboardFocus="txtSearch_GotKeyboardFocus"/>
-
-                <fa:IconImage Icon="MagnifyingGlass" Width="15" Height="15" VerticalAlignment="Center"
-                              Margin="0 0 35 0" Foreground="#b0b9c6" HorizontalAlignment="Right"/>
-
-            </Grid>
-
+            
             <!--Page Title-->
             <TextBlock Text="Clients" Grid.Row="1" FontSize="32" Margin="20 20 0 0"
                        HorizontalAlignment="Left" Foreground="#ffffff" FontFamily="/Fonts/#Poppins"/>
@@ -95,10 +82,10 @@
                         </TextBlock>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
-                            <Button Content="Confirm" Style="{StaticResource GridEditButtonTheme}" Margin="0 10 40 0"
-                                    Width="100" Click="ConfirmAddButton_Click"/>
+                            <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmAddButton_Click"/>
                             <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
-                                    Width="100" Click="CancelAddButton_Click"/>
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelAddButton_Click"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -108,11 +95,11 @@
             
             <!--Filter by Date Buttons-->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 10 0 0">
-                <RadioButton Content="Day" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
-                <RadioButton Content="Week" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
-                <RadioButton Content="Month" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
-                <RadioButton Content="Year" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
-                <RadioButton Style="{StaticResource FilterByDateButtonTheme}">
+                <RadioButton x:Name="DayButton" Content="Day" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
+                <RadioButton x:Name="WeekButton" Content="Week" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
+                <RadioButton x:Name="MonthButton" Content="Month" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
+                <RadioButton x:Name="YearButton" Content="Year" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
+                <RadioButton x:Name="InfButton" Style="{StaticResource FilterByDateButtonTheme}">
                     <fa:IconImage Icon="Infinity" Foreground="White" Height="20" Width="40"/>
                 </RadioButton>
 
@@ -243,10 +230,10 @@
                         </TextBlock>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
-                            <Button Content="Confirm" Style="{StaticResource GridEditButtonTheme}" Margin="0 10 40 0"
-                                    Width="100" Click="ConfirmEditButton_Click"/>
+                            <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmEditButton_Click"/>
                             <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
-                                    Width="100" Click="CancelEditButton_Click"/>
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelEditButton_Click"/>
                         </StackPanel>
 
                     </StackPanel>
@@ -254,19 +241,19 @@
             </Popup>
 
             <!--Delete Popup Window-->
-            <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto">
+            <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="475" Height="auto">
                 <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
                         MouseLeftButtonDown="DeletePopup_MouseLeftButtonDown" MouseMove="DeletePopup_MouseMove" MouseLeftButtonUp="DeletePopup_MouseLeftButtonUp">
                     <StackPanel>
                         <!--Information-->
-                        <TextBlock Foreground="Black" FontSize="16" Margin="0 10 0 20" HorizontalAlignment="Center">
+                        <TextBlock Foreground="Black" FontSize="16" Margin="0 10 0 20" HorizontalAlignment="Center" FontFamily="/Fonts/#Poppins">
                             Are you sure you want to delete selected customers ?
                         </TextBlock>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button  Content="Confirm" Style="{StaticResource GridEditButtonTheme}"  Margin="0 0 20 0" 
-                                     Width="150" Click="ConfirmRemoveButton_Click" />
+                            <Button  Content="Confirm" Style="{StaticResource ConfirmButtonTheme}"  Margin="0 0 20 0" 
+                                     FontFamily="/Fonts/#Poppins" Width="150" Click="ConfirmRemoveButton_Click" />
                             <Button  Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}"  
-                                     Width="150" Click="CancelRemoveButton_Click"/>
+                                     FontFamily="/Fonts/#Poppins" Width="150" Click="CancelRemoveButton_Click"/>
                         </StackPanel>
                     </StackPanel>
 
