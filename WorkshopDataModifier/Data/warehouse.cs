@@ -10,14 +10,14 @@
 namespace WorkshopDataModifier.Data
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class warehouse
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public warehouse()
         {
-            this.warehouse_vehicles = new HashSet<warehouse_vehicles>();
+            this.warehouse_vehicles = new ObservableCollection<warehouse_vehicles>();
         }
     
         public string Name { get; set; }
@@ -26,6 +26,6 @@ namespace WorkshopDataModifier.Data
     
         public virtual branch_office branch_office { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<warehouse_vehicles> warehouse_vehicles { get; set; }
+        public virtual ObservableCollection<warehouse_vehicles> warehouse_vehicles { get; set; }
     }
 }

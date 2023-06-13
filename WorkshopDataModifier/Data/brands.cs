@@ -10,22 +10,22 @@
 namespace WorkshopDataModifier.Data
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class brands
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public brands()
         {
-            this.vehicles = new HashSet<vehicles>();
-            this.warehouse_vehicles = new HashSet<warehouse_vehicles>();
+            this.vehicles = new ObservableCollection<vehicles>();
+            this.warehouse_vehicles = new ObservableCollection<warehouse_vehicles>();
         }
     
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<vehicles> vehicles { get; set; }
+        public virtual ObservableCollection<vehicles> vehicles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<warehouse_vehicles> warehouse_vehicles { get; set; }
+        public virtual ObservableCollection<warehouse_vehicles> warehouse_vehicles { get; set; }
     }
 }

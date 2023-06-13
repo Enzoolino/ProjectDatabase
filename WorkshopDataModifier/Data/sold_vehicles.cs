@@ -10,14 +10,14 @@
 namespace WorkshopDataModifier.Data
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class sold_vehicles
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public sold_vehicles()
         {
-            this.purchase = new HashSet<purchase>();
+            this.purchase = new ObservableCollection<purchase>();
         }
     
         public int Vin { get; set; }
@@ -31,6 +31,6 @@ namespace WorkshopDataModifier.Data
         public Nullable<System.DateTime> SellTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<purchase> purchase { get; set; }
+        public virtual ObservableCollection<purchase> purchase { get; set; }
     }
 }

@@ -10,16 +10,16 @@
 namespace WorkshopDataModifier.Data
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class dealership
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public dealership()
         {
-            this.vehicles = new HashSet<vehicles>();
-            this.purchase = new HashSet<purchase>();
-            this.employee = new HashSet<employee>();
+            this.vehicles = new ObservableCollection<vehicles>();
+            this.purchase = new ObservableCollection<purchase>();
+            this.employee = new ObservableCollection<employee>();
         }
     
         public string Name { get; set; }
@@ -28,10 +28,10 @@ namespace WorkshopDataModifier.Data
     
         public virtual branch_office branch_office { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<vehicles> vehicles { get; set; }
+        public virtual ObservableCollection<vehicles> vehicles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<purchase> purchase { get; set; }
+        public virtual ObservableCollection<purchase> purchase { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<employee> employee { get; set; }
+        public virtual ObservableCollection<employee> employee { get; set; }
     }
 }

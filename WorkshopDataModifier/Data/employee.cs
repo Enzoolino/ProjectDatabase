@@ -10,16 +10,16 @@
 namespace WorkshopDataModifier.Data
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public employee()
         {
-            this.users = new HashSet<users>();
-            this.sell = new HashSet<sell>();
-            this.employee1 = new HashSet<employee>();
+            this.users = new ObservableCollection<users>();
+            this.sell = new ObservableCollection<sell>();
+            this.employee1 = new ObservableCollection<employee>();
         }
     
         public long EmpID { get; set; }
@@ -34,12 +34,12 @@ namespace WorkshopDataModifier.Data
         public virtual branch_office branch_office { get; set; }
         public virtual dealership dealership { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<users> users { get; set; }
+        public virtual ObservableCollection<users> users { get; set; }
         public virtual position position1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sell> sell { get; set; }
+        public virtual ObservableCollection<sell> sell { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<employee> employee1 { get; set; }
+        public virtual ObservableCollection<employee> employee1 { get; set; }
         public virtual employee employee2 { get; set; }
     }
 }
