@@ -104,6 +104,36 @@
     </ApplicationDefinition>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="Data\branch_office.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\brands.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\customer.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\dealership.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\DealershipModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DealershipModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\DealershipModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\DealershipModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DealershipModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Data\employee.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\klienci.cs">
       <DependentUpon>WorkshopData.tt</DependentUpon>
     </Compile>
@@ -116,11 +146,35 @@
     <Compile Include="Data\nazwy_czynnosci.cs">
       <DependentUpon>WorkshopData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\position.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\pracownicy.cs">
       <DependentUpon>WorkshopData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\purchase.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\rodzaje_silnika.cs">
       <DependentUpon>WorkshopData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\sell.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\sold_vehicles.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\users.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\vehicles.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\warehouse.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\warehouse_vehicles.cs">
+      <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\WorkshopData.Context.cs">
       <AutoGen>True</AutoGen>
@@ -310,6 +364,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>WorkshopData.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Data\DealershipModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DealershipModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Data\DealershipModel.edmx.diagram">
+      <DependentUpon>DealershipModel.edmx</DependentUpon>
+    </None>
     <None Include="Data\WorkshopData.edmx.diagram">
       <DependentUpon>WorkshopData.edmx</DependentUpon>
     </None>
@@ -342,6 +403,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\DealershipModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DealershipModel.edmx</DependentUpon>
+      <LastGenOutput>DealershipModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\DealershipModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DealershipModel.edmx</DependentUpon>
+      <LastGenOutput>DealershipModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Data\WorkshopData.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>WorkshopData.edmx</DependentUpon>

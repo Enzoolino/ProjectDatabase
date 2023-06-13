@@ -1,0 +1,1053 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DealershipModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="branch_office">
+          <Key>
+            <PropertyRef Name="BranchID" />
+          </Key>
+          <Property Name="BranchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="11" />
+        </EntityType>
+        <EntityType Name="brands">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="Sin" />
+            <PropertyRef Name="Vin" />
+          </Key>
+          <Property Name="Sin" Type="bigint" Nullable="false" />
+          <Property Name="Vin" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" />
+          <Property Name="Surname" Type="varchar" MaxLength="45" />
+          <Property Name="Phone" Type="varchar" MaxLength="11" />
+          <Property Name="AddTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="dealership">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="45" />
+          <Property Name="BranchID" Type="int" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" />
+          <Property Name="Surname" Type="varchar" MaxLength="45" />
+          <Property Name="SuperiorID" Type="bigint" />
+          <Property Name="BranchID" Type="int" />
+          <Property Name="WorkLocation" Type="varchar" MaxLength="45" />
+          <Property Name="Position" Type="varchar" MaxLength="45" />
+          <Property Name="EmployedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="position">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="purchase">
+          <Key>
+            <PropertyRef Name="Sin" />
+            <PropertyRef Name="Vin" />
+          </Key>
+          <Property Name="Sin" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Vin" Type="int" Nullable="false" />
+          <Property Name="Dealership" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="PurchaseTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="sell">
+          <Key>
+            <PropertyRef Name="Sin" />
+            <PropertyRef Name="Vin" />
+          </Key>
+          <Property Name="Sin" Type="bigint" Nullable="false" />
+          <Property Name="Vin" Type="int" Nullable="false" />
+          <Property Name="EmpID" Type="bigint" Nullable="false" />
+          <Property Name="SellTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="sold_vehicles">
+          <Key>
+            <PropertyRef Name="Vin" />
+          </Key>
+          <Property Name="Vin" Type="int" Nullable="false" />
+          <Property Name="Brand" Type="varchar" MaxLength="50" />
+          <Property Name="Color" Type="varchar" MaxLength="30" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Model" Type="varchar" MaxLength="50" />
+          <Property Name="Door" Type="tinyint" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Dealership" Type="varchar" MaxLength="45" />
+          <Property Name="SellTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AccessLevel" Type="tinyint" Nullable="false" />
+          <Property Name="Owner" Type="bigint" />
+          <Property Name="AddTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="vehicles">
+          <Key>
+            <PropertyRef Name="Vin" />
+          </Key>
+          <Property Name="Vin" Type="int" Nullable="false" />
+          <Property Name="Brand" Type="varchar" MaxLength="50" />
+          <Property Name="Color" Type="varchar" MaxLength="30" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Model" Type="varchar" MaxLength="50" />
+          <Property Name="Door" Type="tinyint" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Dealership" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="DeliveryTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="warehouse">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="45" />
+          <Property Name="BranchID" Type="int" />
+        </EntityType>
+        <EntityType Name="warehouse_vehicles">
+          <Key>
+            <PropertyRef Name="Vin" />
+          </Key>
+          <Property Name="Vin" Type="int" Nullable="false" />
+          <Property Name="Brand" Type="varchar" MaxLength="50" />
+          <Property Name="Color" Type="varchar" MaxLength="30" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Model" Type="varchar" MaxLength="50" />
+          <Property Name="Door" Type="tinyint" />
+          <Property Name="Warehouse" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="DeliveryTime" Type="datetime" />
+        </EntityType>
+        <Association Name="AppAccount">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BrandIdentity">
+          <End Role="brands" Type="Self.brands" Multiplicity="0..1" />
+          <End Role="vehicles" Type="Self.vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="brands">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="vehicles">
+              <PropertyRef Name="Brand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BrandWarehouseIdentity">
+          <End Role="brands" Type="Self.brands" Multiplicity="0..1" />
+          <End Role="warehouse_vehicles" Type="Self.warehouse_vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="brands">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="warehouse_vehicles">
+              <PropertyRef Name="Brand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarDealership">
+          <End Role="dealership" Type="Self.dealership" Multiplicity="1" />
+          <End Role="vehicles" Type="Self.vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dealership">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="vehicles">
+              <PropertyRef Name="Dealership" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarWarehouse">
+          <End Role="warehouse" Type="Self.warehouse" Multiplicity="1" />
+          <End Role="warehouse_vehicles" Type="Self.warehouse_vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="warehouse">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="warehouse_vehicles">
+              <PropertyRef Name="Warehouse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerIdentity">
+          <End Role="purchase" Type="Self.purchase" Multiplicity="1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="purchase">
+              <PropertyRef Name="Sin" />
+              <PropertyRef Name="Vin" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="Sin" />
+              <PropertyRef Name="Vin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DealershipBranch">
+          <End Role="branch_office" Type="Self.branch_office" Multiplicity="0..1" />
+          <End Role="dealership" Type="Self.dealership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch_office">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="dealership">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmpBranch">
+          <End Role="branch_office" Type="Self.branch_office" Multiplicity="0..1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch_office">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PositionName">
+          <End Role="position" Type="Self.position" Multiplicity="0..1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="Position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchasedDealership">
+          <End Role="dealership" Type="Self.dealership" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="purchase" Type="Self.purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dealership">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="purchase">
+              <PropertyRef Name="Dealership" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchasedVin">
+          <End Role="sold_vehicles" Type="Self.sold_vehicles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="purchase" Type="Self.purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sold_vehicles">
+              <PropertyRef Name="Vin" />
+            </Principal>
+            <Dependent Role="purchase">
+              <PropertyRef Name="Vin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SellingEmp">
+          <End Role="employee" Type="Self.employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="sell" Type="Self.sell" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="sell">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Superior">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+          <End Role="employee1" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="employee1">
+              <PropertyRef Name="SuperiorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TransactionIdentity">
+          <End Role="purchase" Type="Self.purchase" Multiplicity="1" />
+          <End Role="sell" Type="Self.sell" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="purchase">
+              <PropertyRef Name="Sin" />
+              <PropertyRef Name="Vin" />
+            </Principal>
+            <Dependent Role="sell">
+              <PropertyRef Name="Sin" />
+              <PropertyRef Name="Vin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WarehouseBranch">
+          <End Role="branch_office" Type="Self.branch_office" Multiplicity="0..1" />
+          <End Role="warehouse" Type="Self.warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch_office">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="warehouse">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WorkerLocation">
+          <End Role="dealership" Type="Self.dealership" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dealership">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="WorkLocation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DealershipModelStoreContainer">
+          <EntitySet Name="branch_office" EntityType="Self.branch_office" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="brands" EntityType="Self.brands" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dealership" EntityType="Self.dealership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="position" EntityType="Self.position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="purchase" EntityType="Self.purchase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sell" EntityType="Self.sell" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sold_vehicles" EntityType="Self.sold_vehicles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vehicles" EntityType="Self.vehicles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="warehouse" EntityType="Self.warehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="warehouse_vehicles" EntityType="Self.warehouse_vehicles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="AppAccount" Association="Self.AppAccount">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="BrandIdentity" Association="Self.BrandIdentity">
+            <End Role="brands" EntitySet="brands" />
+            <End Role="vehicles" EntitySet="vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="BrandWarehouseIdentity" Association="Self.BrandWarehouseIdentity">
+            <End Role="brands" EntitySet="brands" />
+            <End Role="warehouse_vehicles" EntitySet="warehouse_vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="CarDealership" Association="Self.CarDealership">
+            <End Role="dealership" EntitySet="dealership" />
+            <End Role="vehicles" EntitySet="vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="CarWarehouse" Association="Self.CarWarehouse">
+            <End Role="warehouse" EntitySet="warehouse" />
+            <End Role="warehouse_vehicles" EntitySet="warehouse_vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerIdentity" Association="Self.CustomerIdentity">
+            <End Role="purchase" EntitySet="purchase" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="DealershipBranch" Association="Self.DealershipBranch">
+            <End Role="branch_office" EntitySet="branch_office" />
+            <End Role="dealership" EntitySet="dealership" />
+          </AssociationSet>
+          <AssociationSet Name="EmpBranch" Association="Self.EmpBranch">
+            <End Role="branch_office" EntitySet="branch_office" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="PositionName" Association="Self.PositionName">
+            <End Role="position" EntitySet="position" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="PurchasedDealership" Association="Self.PurchasedDealership">
+            <End Role="dealership" EntitySet="dealership" />
+            <End Role="purchase" EntitySet="purchase" />
+          </AssociationSet>
+          <AssociationSet Name="PurchasedVin" Association="Self.PurchasedVin">
+            <End Role="sold_vehicles" EntitySet="sold_vehicles" />
+            <End Role="purchase" EntitySet="purchase" />
+          </AssociationSet>
+          <AssociationSet Name="SellingEmp" Association="Self.SellingEmp">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="sell" EntitySet="sell" />
+          </AssociationSet>
+          <AssociationSet Name="Superior" Association="Self.Superior">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="employee1" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="TransactionIdentity" Association="Self.TransactionIdentity">
+            <End Role="purchase" EntitySet="purchase" />
+            <End Role="sell" EntitySet="sell" />
+          </AssociationSet>
+          <AssociationSet Name="WarehouseBranch" Association="Self.WarehouseBranch">
+            <End Role="branch_office" EntitySet="branch_office" />
+            <End Role="warehouse" EntitySet="warehouse" />
+          </AssociationSet>
+          <AssociationSet Name="WorkerLocation" Association="Self.WorkerLocation">
+            <End Role="dealership" EntitySet="dealership" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DealershipModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="branch_office">
+          <Key>
+            <PropertyRef Name="BranchID" />
+          </Key>
+          <Property Name="BranchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="dealership" Relationship="Self.DealershipBranch" FromRole="branch_office" ToRole="dealership" />
+          <NavigationProperty Name="employee" Relationship="Self.EmpBranch" FromRole="branch_office" ToRole="employee" />
+          <NavigationProperty Name="warehouse" Relationship="Self.WarehouseBranch" FromRole="branch_office" ToRole="warehouse" />
+        </EntityType>
+        <EntityType Name="brands">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="vehicles" Relationship="Self.BrandIdentity" FromRole="brands" ToRole="vehicles" />
+          <NavigationProperty Name="warehouse_vehicles" Relationship="Self.BrandWarehouseIdentity" FromRole="brands" ToRole="warehouse_vehicles" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="Sin" />
+            <PropertyRef Name="Vin" />
+          </Key>
+          <Property Name="Sin" Type="Int64" Nullable="false" />
+          <Property Name="Vin" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="AddTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="purchase" Relationship="Self.CustomerIdentity" FromRole="customer" ToRole="purchase" />
+        </EntityType>
+        <EntityType Name="dealership">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="BranchID" Type="Int32" />
+          <NavigationProperty Name="branch_office" Relationship="Self.DealershipBranch" FromRole="dealership" ToRole="branch_office" />
+          <NavigationProperty Name="vehicles" Relationship="Self.CarDealership" FromRole="dealership" ToRole="vehicles" />
+          <NavigationProperty Name="purchase" Relationship="Self.PurchasedDealership" FromRole="dealership" ToRole="purchase" />
+          <NavigationProperty Name="employee" Relationship="Self.WorkerLocation" FromRole="dealership" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="SuperiorID" Type="Int64" />
+          <Property Name="BranchID" Type="Int32" />
+          <Property Name="WorkLocation" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Position" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="EmployedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="branch_office" Relationship="Self.EmpBranch" FromRole="employee" ToRole="branch_office" />
+          <NavigationProperty Name="dealership" Relationship="Self.WorkerLocation" FromRole="employee" ToRole="dealership" />
+          <NavigationProperty Name="users" Relationship="Self.AppAccount" FromRole="employee" ToRole="users" />
+          <NavigationProperty Name="position1" Relationship="Self.PositionName" FromRole="employee" ToRole="position" />
+          <NavigationProperty Name="sell" Relationship="Self.SellingEmp" FromRole="employee" ToRole="sell" />
+          <NavigationProperty Name="employee1" Relationship="Self.Superior" FromRole="employee" ToRole="employee1" />
+          <NavigationProperty Name="employee2" Relationship="Self.Superior" FromRole="employee1" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="position">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.PositionName" FromRole="position" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="purchase">
+          <Key>
+            <PropertyRef Name="Sin" />
+            <PropertyRef Name="Vin" />
+          </Key>
+          <Property Name="Sin" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Vin" Type="Int32" Nullable="false" />
+          <Property Name="Dealership" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PurchaseTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="customer" Relationship="Self.CustomerIdentity" FromRole="purchase" ToRole="customer" />
+          <NavigationProperty Name="dealership1" Relationship="Self.PurchasedDealership" FromRole="purchase" ToRole="dealership" />
+          <NavigationProperty Name="sold_vehicles" Relationship="Self.PurchasedVin" FromRole="purchase" ToRole="sold_vehicles" />
+          <NavigationProperty Name="sell" Relationship="Self.TransactionIdentity" FromRole="purchase" ToRole="sell" />
+        </EntityType>
+        <EntityType Name="sell">
+          <Key>
+            <PropertyRef Name="Sin" />
+            <PropertyRef Name="Vin" />
+          </Key>
+          <Property Name="Sin" Type="Int64" Nullable="false" />
+          <Property Name="Vin" Type="Int32" Nullable="false" />
+          <Property Name="EmpID" Type="Int64" Nullable="false" />
+          <Property Name="SellTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="employee" Relationship="Self.SellingEmp" FromRole="sell" ToRole="employee" />
+          <NavigationProperty Name="purchase" Relationship="Self.TransactionIdentity" FromRole="sell" ToRole="purchase" />
+        </EntityType>
+        <EntityType Name="sold_vehicles">
+          <Key>
+            <PropertyRef Name="Vin" />
+          </Key>
+          <Property Name="Vin" Type="Int32" Nullable="false" />
+          <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Door" Type="Byte" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Dealership" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="SellTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="purchase" Relationship="Self.PurchasedVin" FromRole="sold_vehicles" ToRole="purchase" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AccessLevel" Type="Byte" Nullable="false" />
+          <Property Name="Owner" Type="Int64" />
+          <Property Name="AddTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="employee" Relationship="Self.AppAccount" FromRole="users" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="vehicles">
+          <Key>
+            <PropertyRef Name="Vin" />
+          </Key>
+          <Property Name="Vin" Type="Int32" Nullable="false" />
+          <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Door" Type="Byte" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Dealership" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeliveryTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="brands" Relationship="Self.BrandIdentity" FromRole="vehicles" ToRole="brands" />
+          <NavigationProperty Name="dealership1" Relationship="Self.CarDealership" FromRole="vehicles" ToRole="dealership" />
+        </EntityType>
+        <EntityType Name="warehouse">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="BranchID" Type="Int32" />
+          <NavigationProperty Name="branch_office" Relationship="Self.WarehouseBranch" FromRole="warehouse" ToRole="branch_office" />
+          <NavigationProperty Name="warehouse_vehicles" Relationship="Self.CarWarehouse" FromRole="warehouse" ToRole="warehouse_vehicles" />
+        </EntityType>
+        <EntityType Name="warehouse_vehicles">
+          <Key>
+            <PropertyRef Name="Vin" />
+          </Key>
+          <Property Name="Vin" Type="Int32" Nullable="false" />
+          <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Door" Type="Byte" />
+          <Property Name="Warehouse" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeliveryTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="brands" Relationship="Self.BrandWarehouseIdentity" FromRole="warehouse_vehicles" ToRole="brands" />
+          <NavigationProperty Name="warehouse1" Relationship="Self.CarWarehouse" FromRole="warehouse_vehicles" ToRole="warehouse" />
+        </EntityType>
+        <Association Name="DealershipBranch">
+          <End Role="branch_office" Type="Self.branch_office" Multiplicity="0..1" />
+          <End Role="dealership" Type="Self.dealership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch_office">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="dealership">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmpBranch">
+          <End Role="branch_office" Type="Self.branch_office" Multiplicity="0..1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch_office">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WarehouseBranch">
+          <End Role="branch_office" Type="Self.branch_office" Multiplicity="0..1" />
+          <End Role="warehouse" Type="Self.warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="branch_office">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="warehouse">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BrandIdentity">
+          <End Role="brands" Type="Self.brands" Multiplicity="0..1" />
+          <End Role="vehicles" Type="Self.vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="brands">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="vehicles">
+              <PropertyRef Name="Brand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BrandWarehouseIdentity">
+          <End Role="brands" Type="Self.brands" Multiplicity="0..1" />
+          <End Role="warehouse_vehicles" Type="Self.warehouse_vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="brands">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="warehouse_vehicles">
+              <PropertyRef Name="Brand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerIdentity">
+          <End Role="purchase" Type="Self.purchase" Multiplicity="1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="purchase">
+              <PropertyRef Name="Sin" />
+              <PropertyRef Name="Vin" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="Sin" />
+              <PropertyRef Name="Vin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarDealership">
+          <End Role="dealership" Type="Self.dealership" Multiplicity="1" />
+          <End Role="vehicles" Type="Self.vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dealership">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="vehicles">
+              <PropertyRef Name="Dealership" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchasedDealership">
+          <End Role="dealership" Type="Self.dealership" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="purchase" Type="Self.purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dealership">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="purchase">
+              <PropertyRef Name="Dealership" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WorkerLocation">
+          <End Role="dealership" Type="Self.dealership" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dealership">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="WorkLocation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AppAccount">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PositionName">
+          <End Role="position" Type="Self.position" Multiplicity="0..1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="Position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SellingEmp">
+          <End Role="employee" Type="Self.employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="sell" Type="Self.sell" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="sell">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Superior">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+          <End Role="employee1" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="employee1">
+              <PropertyRef Name="SuperiorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchasedVin">
+          <End Role="sold_vehicles" Type="Self.sold_vehicles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="purchase" Type="Self.purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sold_vehicles">
+              <PropertyRef Name="Vin" />
+            </Principal>
+            <Dependent Role="purchase">
+              <PropertyRef Name="Vin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TransactionIdentity">
+          <End Role="purchase" Type="Self.purchase" Multiplicity="1" />
+          <End Role="sell" Type="Self.sell" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="purchase">
+              <PropertyRef Name="Sin" />
+              <PropertyRef Name="Vin" />
+            </Principal>
+            <Dependent Role="sell">
+              <PropertyRef Name="Sin" />
+              <PropertyRef Name="Vin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarWarehouse">
+          <End Role="warehouse" Type="Self.warehouse" Multiplicity="1" />
+          <End Role="warehouse_vehicles" Type="Self.warehouse_vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="warehouse">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="warehouse_vehicles">
+              <PropertyRef Name="Warehouse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DealershipCon" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="branch_office" EntityType="Self.branch_office" />
+          <EntitySet Name="brands" EntityType="Self.brands" />
+          <EntitySet Name="customer" EntityType="Self.customer" />
+          <EntitySet Name="dealership" EntityType="Self.dealership" />
+          <EntitySet Name="employee" EntityType="Self.employee" />
+          <EntitySet Name="position" EntityType="Self.position" />
+          <EntitySet Name="purchase" EntityType="Self.purchase" />
+          <EntitySet Name="sell" EntityType="Self.sell" />
+          <EntitySet Name="sold_vehicles" EntityType="Self.sold_vehicles" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <EntitySet Name="vehicles" EntityType="Self.vehicles" />
+          <EntitySet Name="warehouse" EntityType="Self.warehouse" />
+          <EntitySet Name="warehouse_vehicles" EntityType="Self.warehouse_vehicles" />
+          <AssociationSet Name="DealershipBranch" Association="Self.DealershipBranch">
+            <End Role="branch_office" EntitySet="branch_office" />
+            <End Role="dealership" EntitySet="dealership" />
+          </AssociationSet>
+          <AssociationSet Name="EmpBranch" Association="Self.EmpBranch">
+            <End Role="branch_office" EntitySet="branch_office" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="WarehouseBranch" Association="Self.WarehouseBranch">
+            <End Role="branch_office" EntitySet="branch_office" />
+            <End Role="warehouse" EntitySet="warehouse" />
+          </AssociationSet>
+          <AssociationSet Name="BrandIdentity" Association="Self.BrandIdentity">
+            <End Role="brands" EntitySet="brands" />
+            <End Role="vehicles" EntitySet="vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="BrandWarehouseIdentity" Association="Self.BrandWarehouseIdentity">
+            <End Role="brands" EntitySet="brands" />
+            <End Role="warehouse_vehicles" EntitySet="warehouse_vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerIdentity" Association="Self.CustomerIdentity">
+            <End Role="purchase" EntitySet="purchase" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="CarDealership" Association="Self.CarDealership">
+            <End Role="dealership" EntitySet="dealership" />
+            <End Role="vehicles" EntitySet="vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="PurchasedDealership" Association="Self.PurchasedDealership">
+            <End Role="dealership" EntitySet="dealership" />
+            <End Role="purchase" EntitySet="purchase" />
+          </AssociationSet>
+          <AssociationSet Name="WorkerLocation" Association="Self.WorkerLocation">
+            <End Role="dealership" EntitySet="dealership" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="AppAccount" Association="Self.AppAccount">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="PositionName" Association="Self.PositionName">
+            <End Role="position" EntitySet="position" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="SellingEmp" Association="Self.SellingEmp">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="sell" EntitySet="sell" />
+          </AssociationSet>
+          <AssociationSet Name="Superior" Association="Self.Superior">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="employee1" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="PurchasedVin" Association="Self.PurchasedVin">
+            <End Role="sold_vehicles" EntitySet="sold_vehicles" />
+            <End Role="purchase" EntitySet="purchase" />
+          </AssociationSet>
+          <AssociationSet Name="TransactionIdentity" Association="Self.TransactionIdentity">
+            <End Role="purchase" EntitySet="purchase" />
+            <End Role="sell" EntitySet="sell" />
+          </AssociationSet>
+          <AssociationSet Name="CarWarehouse" Association="Self.CarWarehouse">
+            <End Role="warehouse" EntitySet="warehouse" />
+            <End Role="warehouse_vehicles" EntitySet="warehouse_vehicles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DealershipModelStoreContainer" CdmEntityContainer="DealershipCon">
+          <EntitySetMapping Name="branch_office">
+            <EntityTypeMapping TypeName="DealershipModel.branch_office">
+              <MappingFragment StoreEntitySet="branch_office">
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="brands">
+            <EntityTypeMapping TypeName="DealershipModel.brands">
+              <MappingFragment StoreEntitySet="brands">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer">
+            <EntityTypeMapping TypeName="DealershipModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="Sin" ColumnName="Sin" />
+                <ScalarProperty Name="Vin" ColumnName="Vin" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dealership">
+            <EntityTypeMapping TypeName="DealershipModel.dealership">
+              <MappingFragment StoreEntitySet="dealership">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employee">
+            <EntityTypeMapping TypeName="DealershipModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="SuperiorID" ColumnName="SuperiorID" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="EmployedDate" ColumnName="EmployedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="position">
+            <EntityTypeMapping TypeName="DealershipModel.position">
+              <MappingFragment StoreEntitySet="position">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="purchase">
+            <EntityTypeMapping TypeName="DealershipModel.purchase">
+              <MappingFragment StoreEntitySet="purchase">
+                <ScalarProperty Name="Sin" ColumnName="Sin" />
+                <ScalarProperty Name="Vin" ColumnName="Vin" />
+                <ScalarProperty Name="Dealership" ColumnName="Dealership" />
+                <ScalarProperty Name="PurchaseTime" ColumnName="PurchaseTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sell">
+            <EntityTypeMapping TypeName="DealershipModel.sell">
+              <MappingFragment StoreEntitySet="sell">
+                <ScalarProperty Name="Sin" ColumnName="Sin" />
+                <ScalarProperty Name="Vin" ColumnName="Vin" />
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="SellTime" ColumnName="SellTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sold_vehicles">
+            <EntityTypeMapping TypeName="DealershipModel.sold_vehicles">
+              <MappingFragment StoreEntitySet="sold_vehicles">
+                <ScalarProperty Name="Vin" ColumnName="Vin" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Door" ColumnName="Door" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Dealership" ColumnName="Dealership" />
+                <ScalarProperty Name="SellTime" ColumnName="SellTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="DealershipModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="AccessLevel" ColumnName="AccessLevel" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vehicles">
+            <EntityTypeMapping TypeName="DealershipModel.vehicles">
+              <MappingFragment StoreEntitySet="vehicles">
+                <ScalarProperty Name="Vin" ColumnName="Vin" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Door" ColumnName="Door" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Dealership" ColumnName="Dealership" />
+                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="warehouse">
+            <EntityTypeMapping TypeName="DealershipModel.warehouse">
+              <MappingFragment StoreEntitySet="warehouse">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="warehouse_vehicles">
+            <EntityTypeMapping TypeName="DealershipModel.warehouse_vehicles">
+              <MappingFragment StoreEntitySet="warehouse_vehicles">
+                <ScalarProperty Name="Vin" ColumnName="Vin" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Door" ColumnName="Door" />
+                <ScalarProperty Name="Warehouse" ColumnName="Warehouse" />
+                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
