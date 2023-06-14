@@ -8,7 +8,7 @@
         <Setter Property="Margin" Value="0 0 0 5"/>
         <Setter Property="Height" Value="45" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Tag" Value="#6673b7"/>
+        <Setter Property="Tag" Value="#F3EFF5"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">

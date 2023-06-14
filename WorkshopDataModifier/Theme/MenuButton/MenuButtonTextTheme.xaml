@@ -3,6 +3,7 @@
 
     <Style x:Key="MenuButtonTextTheme" TargetType="TextBlock">
         <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontFamily" Value="/Fonts/#Poppins"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{Binding Path=Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RadioButton}}}"/>
     </Style>

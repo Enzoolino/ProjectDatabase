@@ -68,7 +68,8 @@
                              Style="{StaticResource MaterialDesignOutlinedPasswordBox}"/>
 
                 <Button Margin="0 40 0 0" x:Name="btnLogin" Style="{StaticResource MaterialDesignFlatMidBgButton}"
-                        Height="45" Width="300" materialDesign:ButtonAssist.CornerRadius="10" FontSize="18" Content="LOG IN"/>
+                        Height="45" Width="300" materialDesign:ButtonAssist.CornerRadius="10" FontSize="18" Content="LOG IN"
+                        Click="LoginButton_Click"/>
 
             </StackPanel>
         </materialDesign:DialogHost>

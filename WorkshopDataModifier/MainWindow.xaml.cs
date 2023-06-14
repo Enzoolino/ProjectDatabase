@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using WorkshopDataModifier.MVVM.View;
 
@@ -11,9 +13,20 @@ namespace WorkshopDataModifier
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private string userInitials;
+        private string userFullName;
+
+        public MainWindow(string initials, string fullname)
         {
             InitializeComponent();
+
+            //Initialize the user
+            userInitials = initials;
+            userFullName = fullname;
+
+            // Set up the UI with the user's initials
+            Username_Initials.Text = userInitials;
+            Username_Full.Text = userFullName;
         }
 
 

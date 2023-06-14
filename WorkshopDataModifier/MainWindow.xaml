@@ -7,6 +7,7 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:uc="clr-namespace:WorkshopDataModifier.UserControls"
         xmlns:viewModel="clr-namespace:WorkshopDataModifier.MVVM.ViewModel"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" Height="740" Width="1280" WindowStartupLocation="CenterScreen"
         WindowStyle="None" AllowsTransparency="True"
@@ -22,16 +23,14 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
-
         <!--Left Menu-->
         <Border CornerRadius="10 0 0 10" MouseDown="Border_MouseDown">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                    <GradientStop Color="#223266" Offset="0"/>
-                    <GradientStop Color="#27396b" Offset="1"/>
+                    <GradientStop Color="#4D5057" Offset="0"/>
+                    <GradientStop Color="Gray" Offset="4"/>
                 </LinearGradientBrush>
             </Border.Background>
-
 
             <StackPanel>
                 <!--UserNameCorner-->
@@ -39,25 +38,25 @@
                     <Border CornerRadius="10" Width="40" Height="40">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                                <GradientStop Color="#7f7cf1" Offset="0"/>
-                                <GradientStop Color="#d3b7ff" Offset="1"/>
+                                <GradientStop Color="#0575E6" Offset="0"/>
+                                <GradientStop Color="#121212" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
 
-                        <TextBlock Text="00" Foreground="White" FontSize="22" FontWeight="SemiBold"
-                               TextAlignment="Center" VerticalAlignment="Center" Margin="3 0 0 2"
-                               Name="Username_Initials"/>
+                        <TextBlock Text="00" Foreground="White" FontSize="18" FontWeight="SemiBold"
+                               TextAlignment="Center" VerticalAlignment="Center" Margin="0 3 0 2"
+                               FontFamily="/Fonts/#Poppins" Name="Username_Initials"/>
                     </Border>
 
                     <StackPanel Margin="10 0 0 0" VerticalAlignment="Center">
-                        <TextBlock Text="Babaluga" FontSize="15" Margin="0 0 0 5" Foreground="#c2cfff"
-                               Name ="Username_Full"/>
+                        <TextBlock Text="Babaluga" FontSize="15" Margin="0 0 0 2" Foreground="#c2cfff"
+                                   FontFamily="/Fonts/#Poppins" Name ="Username_Full"/>
 
-                        <TextBlock Text="Version 1.0" FontSize="11" Foreground="#7788bf"/>
+                        <TextBlock Text="Version 1.0" FontSize="11" Foreground="White" Margin="2 0 0 0"/>
                     </StackPanel>
                 </StackPanel>
 
-                <Separator Height="0.8" Margin="20 30" Background="#46558a"/>
+                <Separator Height="2.0" Margin="20 30" Background="#F3EFF5"/>
 
                 <!--Menu Buttons-->
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
@@ -69,10 +68,10 @@
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding ClientsViewCommand}">
+                             Command="{Binding CustomersViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="UserGroup" Style="{StaticResource MenuButtonIconTheme}"/>
-                        <TextBlock Text="Clients" Style="{StaticResource MenuButtonTextTheme}"/>
+                        <TextBlock Text="Customers" Style="{StaticResource MenuButtonTextTheme}"/>
                     </StackPanel>
                 </RadioButton>
 
@@ -92,27 +91,28 @@
                     </StackPanel>
                 </RadioButton>
 
+                <RadioButton Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding EngineCodesViewCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Warehouse" Style="{StaticResource MenuButtonIconTheme}"/>
+                        <TextBlock Text="Locations" Style="{StaticResource MenuButtonTextTheme}"/>
+                    </StackPanel>
+                </RadioButton>
+
                 <TextBlock Text="Admin Adjustments" 
                            HorizontalAlignment="Left" 
-                           Foreground="#8a98d1"
+                           Foreground="#F8F7F9"
                            FontSize="15"
-                           Margin="40 20 0 0"/>
+                           Margin="40 20 0 0"
+                           FontFamily="/Fonts/#Poppins"/>
 
-                <Separator Height="0.8" Margin="20 10" Background="#46558a"/>
+                <Separator Height="1.5" Margin="20 10" Background="#F3EFF5"/>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding WorkersViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Briefcase" Style="{StaticResource MenuButtonIconTheme}"/>
-                        <TextBlock Text="Workers" Style="{StaticResource MenuButtonTextTheme}"/>
-                    </StackPanel>
-                </RadioButton>
-
-                <RadioButton Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding EngineCodesViewCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <fa:IconImage Icon="Gears" Style="{StaticResource MenuButtonIconTheme}"/>
-                        <TextBlock Text="Engine Codes" Style="{StaticResource MenuButtonTextTheme}"/>
+                        <TextBlock Text="Employees" Style="{StaticResource MenuButtonTextTheme}"/>
                     </StackPanel>
                 </RadioButton>
 
@@ -120,7 +120,7 @@
                              Command="{Binding TaskNamesViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="List" Style="{StaticResource MenuButtonIconTheme}"/>
-                        <TextBlock Text="Task Names" Style="{StaticResource MenuButtonTextTheme}"/>
+                        <TextBlock Text="Codes" Style="{StaticResource MenuButtonTextTheme}"/>
                     </StackPanel>
                 </RadioButton>
 
@@ -132,7 +132,7 @@
                     </StackPanel>
                 </RadioButton>
 
-                <Separator Height="0.8" Margin="20 30" Background="#46558a"/>
+                <Separator Height="1.5" Margin="20 30" Background="#F3EFF5"/>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}">
                     <StackPanel Orientation="Horizontal">

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WorkshopDataModifier.MVVM.View"
              xmlns:uc="clr-namespace:WorkshopDataModifier.UserControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="740" d:DesignWidth="1030">
 
@@ -12,8 +13,8 @@
     <Border CornerRadius="0 10 10 0">
         <Border.Background>
             <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
-                <GradientStop Color="#41518f" Offset="0"/>
-                <GradientStop Color="#2c386c" Offset="1"/>
+                <GradientStop Color="#4D5057" Offset="0"/>
+                <GradientStop Color="#CFCFCF" Offset="2.5"/>
             </LinearGradientBrush>
         </Border.Background>
 

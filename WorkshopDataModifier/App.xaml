@@ -40,8 +40,8 @@
                 <view:HomeView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:ClientsViewModel}">
-                <view:ClientsView/>
+            <DataTemplate DataType="{x:Type viewModel:CustomersViewModel}">
+                <view:CustomersView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:CarsViewModel}">

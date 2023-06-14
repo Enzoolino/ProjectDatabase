@@ -12,7 +12,7 @@ namespace WorkshopDataModifier.MVVM.ViewModel
     {
 
         public RelayCommand HomeViewCommand { get; set; }
-        public RelayCommand ClientsViewCommand { get; set; }
+        public RelayCommand CustomersViewCommand { get; set; }
         public RelayCommand CarsViewCommand { get; set; }
         public RelayCommand TasksViewCommand { get; set; }
         public RelayCommand WorkersViewCommand { get; set; }
@@ -22,7 +22,7 @@ namespace WorkshopDataModifier.MVVM.ViewModel
 
 
         public HomeViewModel HomeVM { get; set; }
-        public ClientsViewModel ClientsVM { get; set; }
+        public CustomersViewModel CustomersVM { get; set; }
         public CarsViewModel CarsVM { get; set; }
         public TasksViewModel TasksVM { get; set; }
         public WorkersViewModel WorkersVM { get; set; }
@@ -45,7 +45,7 @@ namespace WorkshopDataModifier.MVVM.ViewModel
         public MainViewModel()
         {
             HomeVM = new HomeViewModel();
-            ClientsVM = new ClientsViewModel();
+            CustomersVM = new CustomersViewModel();
             CarsVM = new CarsViewModel();
             TasksVM = new TasksViewModel();
             WorkersVM = new WorkersViewModel();
@@ -61,9 +61,9 @@ namespace WorkshopDataModifier.MVVM.ViewModel
                 CurrentView = HomeVM;
             });
 
-            ClientsViewCommand = new RelayCommand(o =>
+            CustomersViewCommand = new RelayCommand(o =>
             {
-                CurrentView = ClientsVM;
+                CurrentView = CustomersVM;
             });
 
             CarsViewCommand = new RelayCommand(o =>

@@ -15,13 +15,14 @@ using System.Text;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Windows.Controls.Primitives;
+using System.Collections.Specialized;
 
 namespace WorkshopDataModifier.MVVM.View
 {
     /// <summary>
     /// Interaction logic for ClientsView.xaml
     /// </summary>
-    public partial class ClientsView : UserControl, INotifyPropertyChanged
+    public partial class CustomersView : UserControl, INotifyPropertyChanged
     {
         #region Counter of the current clients (dynamic)
         private int _rowCount;
@@ -48,7 +49,7 @@ namespace WorkshopDataModifier.MVVM.View
         {
             bool isChecked = ((CheckBox)sender).IsChecked == true;
 
-            foreach (klienci row in ClientsDataGrid.Items)
+            foreach (customer row in CustomersDataGrid.Items)
             {
                 row.IsSelected = isChecked;
             }
@@ -56,10 +57,10 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void RowCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            DataGridRow row = (DataGridRow)ClientsDataGrid.ItemContainerGenerator.ContainerFromItem(((FrameworkElement)sender).DataContext);
+            DataGridRow row = (DataGridRow)CustomersDataGrid.ItemContainerGenerator.ContainerFromItem(((FrameworkElement)sender).DataContext);
             if (row != null)
             {
-                klienci rowData = (klienci)row.Item;
+                customer rowData = (customer)row.Item;
                 rowData.IsSelected = ((CheckBox)sender).IsChecked == true;
             }
         }
@@ -68,12 +69,12 @@ namespace WorkshopDataModifier.MVVM.View
         #region Data Modification
 
         //List of all selected rows (Initialized with button click)
-        static List<klienci> selectedRows = new List<klienci>(); 
+        static List<customer> selectedRows = new List<customer>(); 
         
         #region Edit Section
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (klienci rowData in ClientsDataGrid.Items)
+            foreach (customer rowData in CustomersDataGrid.Items)
             {
                 if (rowData.IsSelected)
                 {
@@ -82,7 +83,7 @@ namespace WorkshopDataModifier.MVVM.View
             }
 
             Button editButton = (Button)sender;
-            klienci row = (klienci)editButton.DataContext;
+            customer row = (customer)editButton.DataContext;
 
             if (selectedRows.Count == 0)
                 selectedRows.Add(row);
@@ -101,11 +102,12 @@ namespace WorkshopDataModifier.MVVM.View
             {
                 MultiEditionWarning.Visibility = Visibility.Collapsed;
 
-                EditName.Text = row.imie;
-                EditSurname.Text = row.nazwisko;
-                EditAddress.Text = row.adres;
-                EditPesel.Text = row.PESEL;
-
+                EditSin.Text = row.Sin.ToString();
+                EditVin.Text = row.Vin.ToString();
+                EditName.Text = row.Name;
+                EditSurname.Text = row.Surname;
+                EditPhone.Text = row.Phone;
+                
                 EditPopup.IsOpen = true;
             }
             else
@@ -122,7 +124,7 @@ namespace WorkshopDataModifier.MVVM.View
         {
             try
             {
-                using (var context = new ClientsDbContext())
+                using (var context = new CustomersDbContext())
                 {
                     if (selectedRows.Count == 0)
                     {
@@ -130,44 +132,55 @@ namespace WorkshopDataModifier.MVVM.View
                     }
                     else if (selectedRows.Count == 1)
                     {
-                        klienci selectedRow = context.klienci.Find(selectedRows[0].idKlienta);
+                        customer selectedRow = context.customer.Find(selectedRows[0].Sin, selectedRows[0].Vin);
 
-                        selectedRow.imie = EditName.Text;
-                        selectedRow.nazwisko = EditSurname.Text;
-                        selectedRow.adres = EditAddress.Text;
-                        selectedRow.PESEL = EditPesel.Text;
+                        long txtSin = long.Parse(EditSin.Text);
+                        int txtVin = int.Parse(EditVin.Text);
+
+                        selectedRow.Sin = txtSin;
+                        selectedRow.Vin = txtVin;
+                        selectedRow.Name = EditName.Text;
+                        selectedRow.Surname = EditSurname.Text;
+                        selectedRow.Phone = EditPhone.Text;
                     }
                     else
                     {
-                        foreach (klienci dataRow in selectedRows)
+                        foreach (customer dataRow in selectedRows)
                         {
-                            klienci selectedRow = context.klienci.Find(dataRow.idKlienta);
+                            customer selectedRow = context.customer.Find(dataRow.Sin, dataRow.Vin);
+
+                            long txtSin;
+                            int txtVin;
+
+                            if (EditSin.Text != "" && EditSin.Text != null && long.TryParse(EditSin.Text, out txtSin))
+                                selectedRow.Sin = txtSin;
+
+                            if (EditVin.Text != "" && EditVin.Text != null && int.TryParse(EditSin.Text, out txtVin))
+                                selectedRow.Vin = txtVin;
 
                             if (EditName.Text != "" && EditName.Text != null)
-                            selectedRow.imie = EditName.Text;
+                                selectedRow.Name = EditName.Text;
 
                             if (EditSurname.Text != "" && EditSurname.Text != null)
-                            selectedRow.nazwisko = EditSurname.Text;
+                                selectedRow.Surname = EditSurname.Text;
 
-                            if (EditAddress.Text != "" && EditAddress.Text != null)
-                                selectedRow.adres = EditAddress.Text;
-
-                            if (EditPesel.Text != "" && EditPesel.Text != null)
-                                selectedRow.PESEL = EditPesel.Text;
+                            if (EditPhone.Text != "" && EditPhone.Text != null)
+                                selectedRow.Phone = EditPhone.Text;
                         }
                     }
 
                     context.SaveChanges(); 
-                    ClientsDataGrid.ItemsSource = context.klienci.ToList();
+                    CustomersDataGrid.ItemsSource = context.customer.ToList();
                 }
 
                 EditPopup.IsOpen = false;
 
+                EditSin.Text = "";
+                EditVin.Text = "";
                 EditName.Text = "";
                 EditSurname.Text = "";
-                EditAddress.Text = "";
-                EditPesel.Text = "";
-
+                EditPhone.Text = "";
+                
                 selectedRows.Clear();
             }
             catch (DbEntityValidationException ex)
@@ -193,10 +206,11 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelEditButton_Click(object sender, RoutedEventArgs e)
         {
+            EditVin.Text = "";
+            EditSin.Text = "";
             EditName.Text = "";
             EditSurname.Text = "";
-            EditAddress.Text = "";
-            EditPesel.Text = "";
+            EditPhone.Text = "";
 
             selectedRows.Clear();
 
@@ -207,7 +221,7 @@ namespace WorkshopDataModifier.MVVM.View
         #region Delete Section
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (klienci rowData in ClientsDataGrid.Items)
+            foreach (customer rowData in CustomersDataGrid.Items)
             {
                 if (rowData.IsSelected)
                 {
@@ -216,7 +230,7 @@ namespace WorkshopDataModifier.MVVM.View
             }
 
             Button removeButton = (Button)sender;
-            klienci row = (klienci)removeButton.DataContext;
+            customer row = (customer)removeButton.DataContext;
 
             if (selectedRows.Count == 0)
                 selectedRows.Add(row);
@@ -246,7 +260,7 @@ namespace WorkshopDataModifier.MVVM.View
         {
             try
             {
-                using (var context = new ClientsDbContext())
+                using (var context = new CustomersDbContext())
                 {
                     if (selectedRows.Count == 0)
                     {
@@ -254,25 +268,25 @@ namespace WorkshopDataModifier.MVVM.View
                     }
                     else if (selectedRows.Count == 1)
                     {
-                        klienci selectedRow = context.klienci.Find(selectedRows[0].idKlienta);
-                        context.klienci.Remove(selectedRow);
+                        customer selectedRow = context.customer.Find(selectedRows[0].Sin);
+                        context.customer.Remove(selectedRow);
                     }
                     else
                     {
-                        foreach (klienci dataRow in selectedRows)
+                        foreach (customer dataRow in selectedRows)
                         {
-                            klienci selectedRow = context.klienci.Find(dataRow.idKlienta);
+                            customer selectedRow = context.customer.Find(dataRow.Sin);
                             context.Entry(selectedRow).State = EntityState.Deleted;
                         }
                     }
 
                     //Update DataGrid to show changes
                     context.SaveChanges();
-                    ClientsDataGrid.ItemsSource = context.klienci.ToList();
+                    CustomersDataGrid.ItemsSource = context.customer.ToList();
                 }
 
-                RowCount = ClientsDataGrid.Items.Count;
-                ClientsCounter.Text = $"Current Saved Clients: {RowCount}";
+                RowCount = CustomersDataGrid.Items.Count;
+                CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
 
                 DeletePopup.IsOpen = false;
                 selectedRows.Clear();
@@ -322,24 +336,28 @@ namespace WorkshopDataModifier.MVVM.View
         {
             try
             {
-                using (var context = new ClientsDbContext())
+                using (var context = new CustomersDbContext())
                 {
-                    klienci newClient = new klienci
+                    long txtSin = long.Parse(AddSin.Text);
+                    int txtVin = int.Parse(AddVin.Text);
+
+                    customer newCustomer = new customer
                     {
-                        imie = AddName.Text,
-                        nazwisko = AddSurname.Text,
-                        adres = AddAddress.Text,
-                        PESEL = AddPesel.Text
+                        Sin = txtSin,
+                        Vin = txtVin,
+                        Name = AddName.Text,
+                        Surname = AddSurname.Text,
+                        Phone = AddPhone.Text
                     };
 
-                    context.klienci.Add(newClient);
+                    context.customer.Add(newCustomer);
                     context.SaveChanges();
 
-                    ClientsDataGrid.ItemsSource = context.klienci.ToList();
+                    CustomersDataGrid.ItemsSource = context.customer.ToList();
                 }
 
-                RowCount = ClientsDataGrid.Items.Count;
-                ClientsCounter.Text = $"Current Saved Clients: {RowCount}";
+                RowCount = CustomersDataGrid.Items.Count;
+                CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
                 AddPopup.IsOpen = false;
             }
             catch (Exception ex)
@@ -350,11 +368,12 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelAddButton_Click(object sender, RoutedEventArgs e)
         {
+            AddSin.Text = "";
+            AddVin.Text = "";
             AddName.Text = "";
             AddSurname.Text = "";
-            AddAddress.Text = "";
-            AddPesel.Text = "";
-
+            AddPhone.Text = "";
+           
             AddPopup.IsOpen = false;
         }
 
@@ -480,26 +499,33 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtSearchClients.Text != "Search in Clients...")
+            if (txtSearchCustomers.Text != "Search in Customers...")
             {
 
-                string searchText = txtSearchClients.Text.ToLower();
+                string searchText = txtSearchCustomers.Text.ToLower();
 
 
-                ClientsDataGrid.Items.Filter = item =>
+                CustomersDataGrid.Items.Filter = item =>
                 {
-                    if (item is klienci dataItem)
+                    if (item is customer dataItem)
                     {
-                        return dataItem.imie.ToLower().Contains(searchText) ||
-                               dataItem.nazwisko.ToLower().Contains(searchText) ||
-                               dataItem.adres.ToLower().Contains(searchText) ||
-                               dataItem.PESEL.ToLower().Contains(searchText);
+                        string txtSin = dataItem.Sin.ToString();
+                        string txtVin = dataItem.Vin.ToString();
+                        string timeStamp = dataItem.AddTime.ToString();
+
+                        return txtSin.Contains(searchText) ||
+                               txtVin.Contains(searchText) ||
+                               dataItem.Name.ToLower().Contains(searchText) ||
+                               dataItem.Surname.ToLower().Contains(searchText) ||
+                               dataItem.Phone.Contains(searchText) ||
+                               timeStamp.Contains(searchText);
+                               
                     }
 
                     return false;
                 };
 
-                ClientsDataGrid.Items.Refresh();
+                CustomersDataGrid.Items.Refresh();
             }
         }
 
@@ -507,12 +533,12 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Focus Settings
 
-        private void ClientsWindow_MouseDown(object sender, MouseButtonEventArgs e)
+        private void CustomersWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (txtSearchClients.Text == "")
+            if (txtSearchCustomers.Text == "")
             {
                 Keyboard.ClearFocus();
-                txtSearchClients.Text = "Search in Clients...";
+                txtSearchCustomers.Text = "Search in Customers...";
             }
             else
             {
@@ -521,11 +547,11 @@ namespace WorkshopDataModifier.MVVM.View
 
         }
 
-        private void txtSearchClients_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void txtSearchCustomers_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if (txtSearchClients.Text == "Search in Clients...")
+            if (txtSearchCustomers.Text == "Search in Customers...")
             {
-                txtSearchClients.Text = "";
+                txtSearchCustomers.Text = "";
             }
         }
         #endregion
@@ -558,19 +584,19 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        private ClientsDbContext _dbContext;
+        private CustomersDbContext _dbContext;
 
-        public ClientsView()
+        public CustomersView()
         {
             InitializeComponent();
 
             //Database initializer
-            _dbContext = new ClientsDbContext();
-            ClientsDataGrid.ItemsSource = _dbContext.klienci.ToList();
+            _dbContext = new CustomersDbContext();
+            CustomersDataGrid.ItemsSource = _dbContext.customer.ToList();
 
             //Counter initializer
-            RowCount = ClientsDataGrid.Items.Count;
-            ClientsCounter.Text = $"Current Saved Clients: {RowCount}";
+            RowCount = CustomersDataGrid.Items.Count;
+            CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
 
         }
     }
@@ -578,40 +604,14 @@ namespace WorkshopDataModifier.MVVM.View
     /// <summary>
     /// Gets context of clients tab from the connected DataBase
     /// </summary>
-    public class ClientsDbContext : DbContext
+    public class CustomersDbContext : DbContext
     {
-        public DbSet<klienci> klienci { get; set; } //DbSet dla tabeli "klienci"
+        public DbSet<customer> customer { get; set; } //DbSet dla tabeli "customer"
 
-        public ClientsDbContext() : base("ConString")
+        public CustomersDbContext() : base("DealershipCon")
         {
         }
     }
 
-    //Take initials from name and surname //UNUSED//
-    #region
-    public class InitialsConverter : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (values.Length >= 2 && values[0] is string imie && values[1] is string nazwisko && !string.IsNullOrEmpty(imie) && !string.IsNullOrEmpty(nazwisko))
-            {
-                string initials = string.Concat(imie[0], nazwisko[0]);
-                return initials.ToUpper();
-            }
-
-            return string.Empty;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
-    }
-    #endregion
-
-    
-    
-       
-
-    
+ 
 }

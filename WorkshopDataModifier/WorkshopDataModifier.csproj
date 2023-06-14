@@ -195,7 +195,7 @@
       <DependentUpon>WorkshopData.tt</DependentUpon>
     </Compile>
     <Compile Include="MVVM\ViewModel\CarsViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\ClientsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\CustomersViewModel.cs" />
     <Compile Include="MVVM\ViewModel\EngineCodesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
@@ -206,8 +206,8 @@
     <Compile Include="MVVM\View\CarsView.xaml.cs">
       <DependentUpon>CarsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\ClientsView.xaml.cs">
-      <DependentUpon>ClientsView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\CustomersView.xaml.cs">
+      <DependentUpon>CustomersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\EngineCodesView.xaml.cs">
       <DependentUpon>EngineCodesView.xaml</DependentUpon>
@@ -249,7 +249,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\ClientsView.xaml">
+    <Page Include="MVVM\View\CustomersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
