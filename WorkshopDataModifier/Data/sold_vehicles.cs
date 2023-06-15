@@ -11,15 +11,29 @@ namespace WorkshopDataModifier.Data
 {
     using System;
     using System.Collections.ObjectModel;
-    
-    public partial class sold_vehicles
+    using WorkshopDataModifier.Core;
+
+    public partial class sold_vehicles : ObservableObject
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public sold_vehicles()
         {
             this.purchase = new ObservableCollection<purchase>();
         }
-    
+
+
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
         public int Vin { get; set; }
         public string Brand { get; set; }
         public string Color { get; set; }

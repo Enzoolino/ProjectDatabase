@@ -158,6 +158,12 @@
     <Compile Include="Data\warehouse_vehicles.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\ViewModel\BranchesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\BrandsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\DealershipsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\PositionsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\SalesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\SoldVehiclesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\VehiclesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CustomersViewModel.cs" />
     <Compile Include="MVVM\ViewModel\LocationsViewModel.cs" />
@@ -168,6 +174,26 @@
     <Compile Include="MVVM\ViewModel\TasksViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UsersViewModel.cs" />
     <Compile Include="MVVM\ViewModel\EmployeesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\WarehousesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\WarehouseVehiclesViewModel.cs" />
+    <Compile Include="MVVM\View\BranchesView.xaml.cs">
+      <DependentUpon>BranchesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\BrandsView.xaml.cs">
+      <DependentUpon>BrandsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\DealershipsView.xaml.cs">
+      <DependentUpon>DealershipsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\PositionsView.xaml.cs">
+      <DependentUpon>PositionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\SalesView.xaml.cs">
+      <DependentUpon>SalesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\SoldVehiclesView.xaml.cs">
+      <DependentUpon>SoldVehiclesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\VehiclesView.xaml.cs">
       <DependentUpon>VehiclesView.xaml</DependentUpon>
     </Compile>
@@ -198,6 +224,12 @@
     <Compile Include="MVVM\View\EmployeesView.xaml.cs">
       <DependentUpon>EmployeesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\WarehousesView.xaml.cs">
+      <DependentUpon>WarehousesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\WarehouseVehiclesView.xaml.cs">
+      <DependentUpon>WarehouseVehiclesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\InfoCard.xaml.cs">
       <DependentUpon>InfoCard.xaml</DependentUpon>
     </Compile>
@@ -213,6 +245,30 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MVVM\View\BranchesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\BrandsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\DealershipsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\PositionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\SalesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\SoldVehiclesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\VehiclesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -250,6 +306,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\EmployeesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\WarehousesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\WarehouseVehiclesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -19,7 +19,11 @@ namespace WorkshopDataModifier.MVVM.ViewModel
         public RelayCommand EmployeesViewCommand { get; set; }
         public RelayCommand CodesViewCommand { get; set; }
         public RelayCommand UsersViewCommand { get; set; }
+
+        //Inside Commands
         public RelayCommand PurchasesViewCommand { get; set; }
+        public RelayCommand SoldVehiclesViewCommand { get; set; }
+
 
 
 
@@ -31,7 +35,10 @@ namespace WorkshopDataModifier.MVVM.ViewModel
         public LocationsViewModel LocationsVM { get; set; }
         public CodesViewModel CodesVM { get; set; }
         public UsersViewModel UsersVM { get; set; }
+
+        //Inside ViewModels
         public PurchasesViewModel PurchasesVM { get; set; }
+        public SoldVehiclesViewModel SoldVehiclesVM { get; set; }
 
         private object _currentView;
 
@@ -55,7 +62,10 @@ namespace WorkshopDataModifier.MVVM.ViewModel
             LocationsVM = new LocationsViewModel();
             CodesVM = new CodesViewModel();
             UsersVM = new UsersViewModel();
+
+            //Inside Declarations
             PurchasesVM = new PurchasesViewModel();
+            SoldVehiclesVM = new SoldVehiclesViewModel();
             
 
             CurrentView = HomeVM;
@@ -100,9 +110,16 @@ namespace WorkshopDataModifier.MVVM.ViewModel
                 CurrentView = UsersVM;
             });
 
+
+            //Inside Bindings
             PurchasesViewCommand = new RelayCommand(o =>
             {
                 CurrentView = PurchasesVM;
+            });
+
+            SoldVehiclesViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = SoldVehiclesVM;
             });
         }
     }

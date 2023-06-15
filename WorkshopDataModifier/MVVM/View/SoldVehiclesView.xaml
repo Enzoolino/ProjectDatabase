@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WorkshopDataModifier.MVVM.View.VehiclesView"
+﻿<UserControl x:Class="WorkshopDataModifier.MVVM.View.SoldVehiclesView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,7 @@
              xmlns:mainWindow="clr-namespace:WorkshopDataModifier"
              mc:Ignorable="d" 
              d:DesignHeight="740" d:DesignWidth="1030"
-             MouseDown="VehiclesWindow_MouseDown">
+             MouseDown="SoldVehiclesWindow_MouseDown">
 
     <Border CornerRadius="0 10 10 0" Background="#26282B">
 
@@ -27,86 +27,16 @@
 
 
             <!--Page Title-->
-            <TextBlock Text="Vehicles" Grid.Row="1" FontSize="32" Margin="20 20 0 0"
+            <TextBlock Text="Sold Vehicles" Grid.Row="1" FontSize="32" Margin="20 20 0 0"
                        HorizontalAlignment="Left" Foreground="#ffffff" FontFamily="/Fonts/#Poppins"/>
-
-            <!--Add Button-->
-            <Button Style="{StaticResource ValueAddButtonTemplate}" Margin="0 20 10 0" Click="AddButton_Click">
-                <StackPanel Orientation="Horizontal">
-                    <fa:IconImage Icon="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
-                    <TextBlock Text="Add New Vehicle" FontFamily="/Fonts/#Poppins"/>
-                </StackPanel>
-            </Button>
-
-            <!--Add Popup Window-->
-            <Popup Name="AddPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto">
-                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
-                        MouseLeftButtonDown="AddPopup_MouseLeftButtonDown" MouseMove="AddPopup_MouseMove" MouseLeftButtonUp="AddPopup_MouseLeftButtonUp">
-                    <StackPanel>
-                        <!--Title TextBox-->
-                        <TextBlock Foreground="Black" Text="Add Window" 
-                                   Margin="0 10 0 10" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
-
-                        <!--Input Boxes-->
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Vin:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Vin"  
-                                 Name="AddVin"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Brand:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Brand"  
-                                 Name="AddBrand"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Color:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Color" 
-                                 Name="AddColor"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Production Year:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Year"
-                                 Name="AddYear"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Model:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Model"
-                                 Name="AddModel"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Door number:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Door"
-                                 Name="AddDoor"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Price:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Price"
-                                 Name="AddPrice"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Dealership:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Dealership"
-                                 Name="AddDealership"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Delivery Time:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Delivery"
-                                 Name="AddDeliveryTime"/>
-
-                        <!--Rules TextBlocks-->
-                        <TextBlock Foreground="Black" Text="Rules:" Margin="0 10 0 10" FontSize="18" FontFamily="/Fonts/#Poppins"/>
-
-                        <TextBlock Foreground="Black" FontFamily="/Fonts/#Poppins">
-                            * Vin    = <LineBreak/>
-                            * Brand =  <LineBreak/>
-                            * Color  =  <LineBreak/>
-                            * Year   =  <LineBreak/>
-                            * Model = <LineBreak/>
-                            * Door = <LineBreak/>
-                            * Price = <LineBreak/>
-                            * Dealership = <LineBreak/>
-                        </TextBlock>
-
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
-                            <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
-                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmAddButton_Click"/>
-                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
-                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelAddButton_Click"/>
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
-            </Popup>
 
             <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 -1 10 10"/>
 
             <!--Switch tabs Buttons-->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10 10 0 0" HorizontalAlignment="Left">
-                <RadioButton x:Name="btnVehicles" Content="Vehicles" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Background="#023E8A"/>
-                <RadioButton x:Name="btnSoldVehicles" Content="Sold Vehicles" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#5F85DB"
-                             Command="{Binding DataContext.SoldVehiclesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
+                <RadioButton x:Name="btnVehicles" Content="Vehicles" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Background="#5F85DB"
+                             Command="{Binding DataContext.VehiclesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
+                <RadioButton x:Name="btnSoldVehicles" Content="Sold Vehicles" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#023E8A"/>
                 <RadioButton x:Name="btnWarehouseVehicles" Content="Warehouse Vehicles" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#5F85DB"/>
             </StackPanel>
 
@@ -122,7 +52,7 @@
             </StackPanel>
 
             <!--Counter Title-->
-            <TextBlock Text="VehiclesCounter" Name="VehiclesCounter" Grid.Row="4" FontSize="18" FontFamily="/Fonts/#Poppins"
+            <TextBlock Text="SoldVehiclesCounter" Name="SoldVehiclesCounter" Grid.Row="4" FontSize="18" FontFamily="/Fonts/#Poppins"
                        Foreground="#ffffff" HorizontalAlignment="Left" VerticalAlignment="Center"
                        Margin="20 0 0 10"/>
 
@@ -132,16 +62,16 @@
 
             <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
 
-                <TextBox x:Name="txtSearchVehicles"
+                <TextBox x:Name="txtSearchSoldVehicles"
                          Margin="0 10 20 20"
-                         Tag="Search in Vehicles..."
+                         Tag="Search in Sold Vehicles..."
                          Style="{StaticResource TextBoxFilterTheme}"
                          TextChanged="SearchTextBox_TextChanged"
-                         GotKeyboardFocus="txtSearchVehicles_GotKeyboardFocus"/>
+                         GotKeyboardFocus="txtSearchSoldVehicles_GotKeyboardFocus"/>
             </Grid>
 
-            <!--Customers DataGrid-->
-            <DataGrid Name="VehiclesDataGrid"
+            <!--Sold Vehicles DataGrid-->
+            <DataGrid Name="SoldVehiclesDataGrid"
                       Style="{DynamicResource DataGridStyle1}" 
                       CellStyle="{DynamicResource DataGridCellStyle1}" 
                       ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
@@ -169,13 +99,16 @@
                     <DataGridTextColumn Header="Door" IsReadOnly="True" Width="*" Binding="{Binding Door}"/>
                     <DataGridTextColumn Header="Price" IsReadOnly="True" Width="*" Binding="{Binding Price}"/>
                     <DataGridTextColumn Header="Dealership" IsReadOnly="True" Width="*" Binding="{Binding Dealership}"/>
-                    <DataGridTextColumn Header="Delivery" IsReadOnly="True" Width="*" Binding="{Binding DeliveryTime}"/>
+                    <DataGridTextColumn Header="Delivery" IsReadOnly="True" Width="*" Binding="{Binding SellTime}"/>
 
                     <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Style="{StaticResource GridEditButtonTheme}" Click="EditButton_Click">
+                                    <Button Style="{StaticResource GridEditButtonTheme}" Click="MoveToVehiclesButton_Click">
+                                        <fa:IconImage Icon="CarOn" Style="{StaticResource GridButtonIconTheme}"/>
+                                    </Button>
+                                    <Button Style="{StaticResource GridEditButtonTheme}" Margin="5 0 0 0" Click="EditButton_Click">
                                         <fa:IconImage Icon="Pencil" Style="{StaticResource GridButtonIconTheme}"/>
                                     </Button>
                                     <Button Style="{StaticResource GridRemoveButtonTheme}" Margin="5 0 0 0" Click="RemoveButton_Click">
@@ -225,9 +158,9 @@
                         <TextBlock Foreground="DimGray" Text="Edit Dealership of selected vehicle:" FontFamily="/Fonts/#Poppins"/>
                         <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Price"
                                  Name="EditDealership"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Delivery Time of selected vehicle:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Delivery"
-                                 Name="EditDeliveryTime"/>
+                        <TextBlock Foreground="DimGray" Text="Edit Sell Time of selected vehicle:" FontFamily="/Fonts/#Poppins"/>
+                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Sell Time"
+                                 Name="EditSellTime"/>
 
                         <!--Rules TextBlocks-->
                         <TextBlock Foreground="Black" Text="Rules:" Margin="0 10 0 10" FontSize="18" FontFamily="/Fonts/#Poppins"/>

@@ -66,9 +66,15 @@
             <DataTemplate DataType="{x:Type viewModel:UsersViewModel}">
                 <view:UsersView/>
             </DataTemplate>
+            
+        
 
             <DataTemplate DataType="{x:Type viewModel:PurchasesViewModel}">
                 <view:PurchasesView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:SoldVehiclesViewModel}">
+                <view:SoldVehiclesView/>
             </DataTemplate>
 
 
