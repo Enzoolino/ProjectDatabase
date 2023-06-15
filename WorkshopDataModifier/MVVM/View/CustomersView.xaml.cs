@@ -155,7 +155,7 @@ namespace WorkshopDataModifier.MVVM.View
                             if (EditSin.Text != "" && EditSin.Text != null && long.TryParse(EditSin.Text, out txtSin))
                                 selectedRow.Sin = txtSin;
 
-                            if (EditVin.Text != "" && EditVin.Text != null && int.TryParse(EditSin.Text, out txtVin))
+                            if (EditVin.Text != "" && EditVin.Text != null && int.TryParse(EditVin.Text, out txtVin))
                                 selectedRow.Vin = txtVin;
 
                             if (EditName.Text != "" && EditName.Text != null)
