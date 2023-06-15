@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace WorkshopDataModifier.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for EngineCodesView.xaml
+    /// Interaction logic for WorkersView.xaml
     /// </summary>
-    public partial class EngineCodesView : UserControl
+    public partial class EmployeesView : UserControl
     {
-        public EngineCodesView()
+        public EmployeesView()
         {
             InitializeComponent();
         }

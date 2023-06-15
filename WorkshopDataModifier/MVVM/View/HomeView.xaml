@@ -10,13 +10,8 @@
              d:DesignHeight="740" d:DesignWidth="1030">
 
     <!--Main Section-->
-    <Border CornerRadius="0 10 10 0">
-        <Border.Background>
-            <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
-                <GradientStop Color="#4D5057" Offset="0"/>
-                <GradientStop Color="#CFCFCF" Offset="2.5"/>
-            </LinearGradientBrush>
-        </Border.Background>
+    <Border CornerRadius="0 10 10 0" Background="#26282B">
+        
 
         <Grid>
             <Grid.RowDefinitions>

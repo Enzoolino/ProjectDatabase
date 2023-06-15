@@ -1,37 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Data.Entity;
-using System.Globalization;
-using System.ComponentModel;
+using System.Windows.Documents;
 using System.Windows.Input;
-using WorkshopDataModifier.Core;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using WorkshopDataModifier.Data;
-using System.Data.Entity.Validation;
-using System.Text;
-using System.Data.Entity.Infrastructure;
-using System.Data.SqlClient;
-using System.Windows.Controls.Primitives;
-using System.Collections.Specialized;
 
 namespace WorkshopDataModifier.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for ClientsView.xaml
+    /// Interaction logic for SalesView.xaml
     /// </summary>
-    public partial class CustomersView : UserControl, INotifyPropertyChanged
+    public partial class PurchasesView : UserControl
     {
         #region Counter of the current clients (dynamic)
         private int _rowCount;
         public int RowCount
         {
             get { return _rowCount; }
-            set 
-            { 
-                _rowCount = value; 
+            set
+            {
+                _rowCount = value;
                 OnPropertyChanged(nameof(RowCount));
             }
         }
@@ -69,8 +71,8 @@ namespace WorkshopDataModifier.MVVM.View
         #region Data Modification
 
         //List of all selected rows (Initialized with button click)
-        static List<customer> selectedRows = new List<customer>(); 
-        
+        static List<customer> selectedRows = new List<customer>();
+
         #region Edit Section
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
@@ -92,7 +94,7 @@ namespace WorkshopDataModifier.MVVM.View
             {
                 selectedRows.Clear();
                 return;
-            }    
+            }
 
             if (selectedRows.Count == 0)
             {
@@ -107,7 +109,7 @@ namespace WorkshopDataModifier.MVVM.View
                 EditName.Text = row.Name;
                 EditSurname.Text = row.Surname;
                 EditPhone.Text = row.Phone;
-                
+
                 EditPopup.IsOpen = true;
             }
             else
@@ -169,7 +171,7 @@ namespace WorkshopDataModifier.MVVM.View
                         }
                     }
 
-                    context.SaveChanges(); 
+                    context.SaveChanges();
                     CustomersDataGrid.ItemsSource = context.customer.ToList();
                 }
 
@@ -180,7 +182,7 @@ namespace WorkshopDataModifier.MVVM.View
                 EditName.Text = "";
                 EditSurname.Text = "";
                 EditPhone.Text = "";
-                
+
                 selectedRows.Clear();
             }
             catch (DbEntityValidationException ex)
@@ -373,7 +375,7 @@ namespace WorkshopDataModifier.MVVM.View
             AddName.Text = "";
             AddSurname.Text = "";
             AddPhone.Text = "";
-           
+
             AddPopup.IsOpen = false;
         }
 
@@ -490,6 +492,11 @@ namespace WorkshopDataModifier.MVVM.View
 
         #endregion
 
+        #region Pagination
+
+
+        #endregion
+
         #region Search
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -514,7 +521,7 @@ namespace WorkshopDataModifier.MVVM.View
                                dataItem.Surname.ToLower().Contains(searchText) ||
                                dataItem.Phone.Contains(searchText) ||
                                timeStamp.Contains(searchText);
-                               
+
                     }
 
                     return false;
@@ -579,34 +586,26 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        private CustomersDbContext _dbContext;
-
-        public CustomersView()
+        private PurchasesDbContext _dbContext;
+        public PurchasesView()
         {
             InitializeComponent();
 
             //Database initializer
-            _dbContext = new CustomersDbContext();
-            CustomersDataGrid.ItemsSource = _dbContext.customer.ToList();
-
-            //Counter initializer
-            RowCount = CustomersDataGrid.Items.Count;
-            CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
-
+            _dbContext = new PurchasesDbContext();
+            CustomersDataGrid.ItemsSource = _dbContext.purchases.ToList();
         }
     }
 
     /// <summary>
     /// Gets context of clients tab from the connected DataBase
     /// </summary>
-    public class CustomersDbContext : DbContext
+    public class PurchasesDbContext : DbContext
     {
-        public DbSet<customer> customer { get; set; } //DbSet dla tabeli "customer"
+        public DbSet<purchase> purchases { get; set; } //DbSet dla tabeli "customer"
 
-        public CustomersDbContext() : base("DealershipCon")
+        public PurchasesDbContext() : base("DealershipCon")
         {
         }
     }
-
- 
 }

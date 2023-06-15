@@ -24,22 +24,15 @@
         </Grid.ColumnDefinitions>
         
         <!--Left Menu-->
-        <Border CornerRadius="10 0 0 10" MouseDown="Border_MouseDown">
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                    <GradientStop Color="#4D5057" Offset="0"/>
-                    <GradientStop Color="Gray" Offset="4"/>
-                </LinearGradientBrush>
-            </Border.Background>
-
+        <Border CornerRadius="10 0 0 10" MouseDown="Border_MouseDown" Background="#353941">
             <StackPanel>
                 <!--UserNameCorner-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 35 0 0">
                     <Border CornerRadius="10" Width="40" Height="40">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                                <GradientStop Color="#0575E6" Offset="0"/>
-                                <GradientStop Color="#121212" Offset="1"/>
+                                <GradientStop Color="#5F85DB" Offset="0"/>
+                                <GradientStop Color="#90B8F8" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
 
@@ -56,11 +49,11 @@
                     </StackPanel>
                 </StackPanel>
 
-                <Separator Height="2.0" Margin="20 30" Background="#F3EFF5"/>
+                <Separator Height="2.0" Margin="20 45" Background="#F3EFF5"/>
 
                 <!--Menu Buttons-->
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding HomeViewCommand}">
+                             Command="{Binding HomeViewCommand}" Margin="0 -15 0 0">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Home" Style="{StaticResource MenuButtonTextTheme}"/>
@@ -76,7 +69,7 @@
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding CarsViewCommand}">
+                             Command="{Binding VehiclesViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Car" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Cars" Style="{StaticResource MenuButtonTextTheme}"/>
@@ -92,7 +85,7 @@
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding EngineCodesViewCommand}">
+                             Command="{Binding LocationsViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Warehouse" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Locations" Style="{StaticResource MenuButtonTextTheme}"/>
@@ -109,7 +102,7 @@
                 <Separator Height="1.5" Margin="20 10" Background="#F3EFF5"/>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding WorkersViewCommand}">
+                             Command="{Binding EmployeesViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Briefcase" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Employees" Style="{StaticResource MenuButtonTextTheme}"/>

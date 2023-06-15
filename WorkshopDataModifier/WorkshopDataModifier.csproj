@@ -134,29 +134,11 @@
     <Compile Include="Data\employee.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\klienci.cs">
-      <DependentUpon>WorkshopData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\naprawiane_samochody.cs">
-      <DependentUpon>WorkshopData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\naprawy.cs">
-      <DependentUpon>WorkshopData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\nazwy_czynnosci.cs">
-      <DependentUpon>WorkshopData.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\position.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\pracownicy.cs">
-      <DependentUpon>WorkshopData.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\purchase.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\rodzaje_silnika.cs">
-      <DependentUpon>WorkshopData.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\sell.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
@@ -176,41 +158,24 @@
     <Compile Include="Data\warehouse_vehicles.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\WorkshopData.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WorkshopData.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\WorkshopData.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WorkshopData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\WorkshopData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WorkshopData.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Data\wykonana_praca.cs">
-      <DependentUpon>WorkshopData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\ViewModel\CarsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\VehiclesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CustomersViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\EngineCodesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\LocationsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\TaskNamesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\PurchasesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\CodesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\TasksViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UsersViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\WorkersViewModel.cs" />
-    <Compile Include="MVVM\View\CarsView.xaml.cs">
-      <DependentUpon>CarsView.xaml</DependentUpon>
+    <Compile Include="MVVM\ViewModel\EmployeesViewModel.cs" />
+    <Compile Include="MVVM\View\VehiclesView.xaml.cs">
+      <DependentUpon>VehiclesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\CustomersView.xaml.cs">
       <DependentUpon>CustomersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\EngineCodesView.xaml.cs">
-      <DependentUpon>EngineCodesView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\LocationsView.xaml.cs">
+      <DependentUpon>LocationsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
@@ -218,8 +183,11 @@
     <Compile Include="MVVM\View\Login\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\TaskNamesView.xaml.cs">
-      <DependentUpon>TaskNamesView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\PurchasesView.xaml.cs">
+      <DependentUpon>PurchasesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\CodesView.xaml.cs">
+      <DependentUpon>CodesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\TasksView.xaml.cs">
       <DependentUpon>TasksView.xaml</DependentUpon>
@@ -227,8 +195,8 @@
     <Compile Include="MVVM\View\UsersView.xaml.cs">
       <DependentUpon>UsersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\WorkersView.xaml.cs">
-      <DependentUpon>WorkersView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\EmployeesView.xaml.cs">
+      <DependentUpon>EmployeesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\InfoCard.xaml.cs">
       <DependentUpon>InfoCard.xaml</DependentUpon>
@@ -245,7 +213,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MVVM\View\CarsView.xaml">
+    <Page Include="MVVM\View\VehiclesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -253,7 +221,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\EngineCodesView.xaml">
+    <Page Include="MVVM\View\LocationsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -265,7 +233,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\TaskNamesView.xaml">
+    <Page Include="MVVM\View\PurchasesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\CodesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -277,7 +249,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\WorkersView.xaml">
+    <Page Include="MVVM\View\EmployeesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -333,10 +305,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Theme\TextBoxSearchTheme.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\InfoCard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -360,19 +328,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Data\WorkshopData.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WorkshopData.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <EntityDeploy Include="Data\DealershipModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DealershipModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Data\DealershipModel.edmx.diagram">
       <DependentUpon>DealershipModel.edmx</DependentUpon>
-    </None>
-    <None Include="Data\WorkshopData.edmx.diagram">
-      <DependentUpon>WorkshopData.edmx</DependentUpon>
     </None>
     <Resource Include="Fonts\Poppins-Regular.ttf" />
     <None Include="packages.config" />
@@ -412,16 +373,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DealershipModel.edmx</DependentUpon>
       <LastGenOutput>DealershipModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Data\WorkshopData.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WorkshopData.edmx</DependentUpon>
-      <LastGenOutput>WorkshopData.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Data\WorkshopData.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WorkshopData.edmx</DependentUpon>
-      <LastGenOutput>WorkshopData.cs</LastGenOutput>
     </Content>
     <Resource Include="Images\CarDealerLogo.png" />
   </ItemGroup>

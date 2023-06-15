@@ -18,9 +18,9 @@ namespace WorkshopDataModifier.MVVM.View
     /// <summary>
     /// Interaction logic for CarsView.xaml
     /// </summary>
-    public partial class CarsView : UserControl
+    public partial class VehiclesView : UserControl
     {
-        public CarsView()
+        public VehiclesView()
         {
             InitializeComponent();
         }

@@ -13,22 +13,25 @@ namespace WorkshopDataModifier.MVVM.ViewModel
 
         public RelayCommand HomeViewCommand { get; set; }
         public RelayCommand CustomersViewCommand { get; set; }
-        public RelayCommand CarsViewCommand { get; set; }
+        public RelayCommand VehiclesViewCommand { get; set; }
         public RelayCommand TasksViewCommand { get; set; }
-        public RelayCommand WorkersViewCommand { get; set; }
-        public RelayCommand EngineCodesViewCommand { get; set; }
-        public RelayCommand TaskNamesViewCommand { get; set; }
+        public RelayCommand LocationsViewCommand { get; set; }
+        public RelayCommand EmployeesViewCommand { get; set; }
+        public RelayCommand CodesViewCommand { get; set; }
         public RelayCommand UsersViewCommand { get; set; }
+        public RelayCommand PurchasesViewCommand { get; set; }
+
 
 
         public HomeViewModel HomeVM { get; set; }
         public CustomersViewModel CustomersVM { get; set; }
-        public CarsViewModel CarsVM { get; set; }
+        public VehiclesViewModel VehiclesVM { get; set; }
         public TasksViewModel TasksVM { get; set; }
-        public WorkersViewModel WorkersVM { get; set; }
-        public EngineCodesViewModel EngineCodesVM { get; set; }
-        public TaskNamesViewModel TaskNamesVM { get; set; }
+        public EmployeesViewModel EmployeesVM { get; set; }
+        public LocationsViewModel LocationsVM { get; set; }
+        public CodesViewModel CodesVM { get; set; }
         public UsersViewModel UsersVM { get; set; }
+        public PurchasesViewModel PurchasesVM { get; set; }
 
         private object _currentView;
 
@@ -46,12 +49,13 @@ namespace WorkshopDataModifier.MVVM.ViewModel
         {
             HomeVM = new HomeViewModel();
             CustomersVM = new CustomersViewModel();
-            CarsVM = new CarsViewModel();
+            VehiclesVM = new VehiclesViewModel();
             TasksVM = new TasksViewModel();
-            WorkersVM = new WorkersViewModel();
-            EngineCodesVM = new EngineCodesViewModel();
-            TaskNamesVM = new TaskNamesViewModel();
+            EmployeesVM = new EmployeesViewModel();
+            LocationsVM = new LocationsViewModel();
+            CodesVM = new CodesViewModel();
             UsersVM = new UsersViewModel();
+            PurchasesVM = new PurchasesViewModel();
             
 
             CurrentView = HomeVM;
@@ -66,9 +70,9 @@ namespace WorkshopDataModifier.MVVM.ViewModel
                 CurrentView = CustomersVM;
             });
 
-            CarsViewCommand = new RelayCommand(o =>
+            VehiclesViewCommand = new RelayCommand(o =>
             {
-                CurrentView = CarsVM;
+                CurrentView = VehiclesVM;
             });
 
             TasksViewCommand = new RelayCommand(o =>
@@ -76,19 +80,19 @@ namespace WorkshopDataModifier.MVVM.ViewModel
                 CurrentView = TasksVM;
             });
 
-            WorkersViewCommand = new RelayCommand(o =>
+            EmployeesViewCommand = new RelayCommand(o =>
             {
-                CurrentView = WorkersVM;
+                CurrentView = EmployeesVM;
             });
 
-            EngineCodesViewCommand = new RelayCommand(o =>
+            LocationsViewCommand = new RelayCommand(o =>
             {
-                CurrentView = EngineCodesVM;
+                CurrentView = LocationsVM;
             });
 
-            TaskNamesViewCommand = new RelayCommand(o =>
+            CodesViewCommand = new RelayCommand(o =>
             {
-                CurrentView = TaskNamesVM;
+                CurrentView = CodesVM;
             });
 
             UsersViewCommand = new RelayCommand(o =>
@@ -96,6 +100,10 @@ namespace WorkshopDataModifier.MVVM.ViewModel
                 CurrentView = UsersVM;
             });
 
+            PurchasesViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = PurchasesVM;
+            });
         }
     }
 }

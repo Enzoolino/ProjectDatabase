@@ -22,7 +22,7 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Foreground" Value="#bccaf1"/>
-                <Setter Property="Tag" Value="#7071f0"/>
+                <Setter Property="Tag" Value="#5F85DB"/>
                 <Setter Property="Background">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">

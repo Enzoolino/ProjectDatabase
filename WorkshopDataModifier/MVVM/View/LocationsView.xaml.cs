@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace WorkshopDataModifier.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for TaskNamesView.xaml
+    /// Interaction logic for EngineCodesView.xaml
     /// </summary>
-    public partial class TaskNamesView : UserControl
+    public partial class LocationsView : UserControl
     {
-        public TaskNamesView()
+        public LocationsView()
         {
             InitializeComponent();
         }

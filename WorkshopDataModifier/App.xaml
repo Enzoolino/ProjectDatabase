@@ -23,7 +23,6 @@
                 <ResourceDictionary Source="Theme/Paging/PagingButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/Paging/PagingButtonIconTheme.xaml"/>
 
-                <ResourceDictionary Source="Theme/TextBoxSearchTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ValueAddButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/TextBoxFilterTheme.xaml"/>
                 <ResourceDictionary Source="Theme/FilterByDateButtonTheme.xaml"/>
@@ -32,7 +31,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.DeepPurple.xaml" />
 
             </ResourceDictionary.MergedDictionaries>
 
@@ -44,28 +43,32 @@
                 <view:CustomersView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:CarsViewModel}">
-                <view:CarsView/>
+            <DataTemplate DataType="{x:Type viewModel:VehiclesViewModel}">
+                <view:VehiclesView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:TasksViewModel}">
                 <view:TasksView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:WorkersViewModel}">
-                <view:WorkersView/>
+            <DataTemplate DataType="{x:Type viewModel:LocationsViewModel}">
+                <view:LocationsView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:EngineCodesViewModel}">
-                <view:EngineCodesView/>
+            <DataTemplate DataType="{x:Type viewModel:EmployeesViewModel}">
+                <view:EmployeesView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:TaskNamesViewModel}">
-                <view:TaskNamesView/>
+            <DataTemplate DataType="{x:Type viewModel:CodesViewModel}">
+                <view:CodesView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:UsersViewModel}">
                 <view:UsersView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:PurchasesViewModel}">
+                <view:PurchasesView/>
             </DataTemplate>
 
 
@@ -250,12 +253,12 @@
                 </Setter>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#623ed0"/>
+                        <Setter Property="Background" Value="#5F85DB"/>
                         <Setter Property="Foreground" Value="#ffffff"/>
                     </Trigger>
 
                     <Trigger Property="IsSelected" Value="True">
-                        <Setter Property="Background" Value="#623ed0"/>
+                        <Setter Property="Background" Value="#90B8F8"/>
                         <Setter Property="Foreground" Value="#ffffff"/>
                     </Trigger>
 
