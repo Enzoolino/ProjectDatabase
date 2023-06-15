@@ -15,7 +15,6 @@ namespace WorkshopDataModifier.Data
 
     public partial class customer : ObservableObject
     {
-
         private bool _isSelected;
 
         public bool IsSelected

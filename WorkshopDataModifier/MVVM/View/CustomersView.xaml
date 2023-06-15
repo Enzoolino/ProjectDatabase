@@ -88,7 +88,7 @@
             
             <!--Switch tabs Buttons-->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10 10 0 0" HorizontalAlignment="Left">
-                <RadioButton x:Name="btnCustomer" Content="Customers" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Background="#5F85DB"/>
+                <RadioButton x:Name="btnCustomer" Content="Customers" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Background="#023E8A"/>
                 <RadioButton x:Name="btnPurchase" Content="Purchase" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#5F85DB"
                              Command="{Binding DataContext.PurchasesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
             </StackPanel>

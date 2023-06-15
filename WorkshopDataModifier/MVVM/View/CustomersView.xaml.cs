@@ -268,14 +268,14 @@ namespace WorkshopDataModifier.MVVM.View
                     }
                     else if (selectedRows.Count == 1)
                     {
-                        customer selectedRow = context.customer.Find(selectedRows[0].Sin);
+                        customer selectedRow = context.customer.Find(selectedRows[0].Sin, selectedRows[0].Vin);
                         context.customer.Remove(selectedRow);
                     }
                     else
                     {
                         foreach (customer dataRow in selectedRows)
                         {
-                            customer selectedRow = context.customer.Find(dataRow.Sin);
+                            customer selectedRow = context.customer.Find(dataRow.Sin, dataRow.Vin);
                             context.Entry(selectedRow).State = EntityState.Deleted;
                         }
                     }

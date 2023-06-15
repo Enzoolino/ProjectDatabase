@@ -110,7 +110,7 @@
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding TaskNamesViewCommand}">
+                             Command="{Binding CodesViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="List" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Codes" Style="{StaticResource MenuButtonTextTheme}"/>

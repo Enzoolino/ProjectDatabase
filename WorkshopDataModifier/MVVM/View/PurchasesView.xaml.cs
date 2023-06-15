@@ -26,7 +26,7 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public partial class PurchasesView : UserControl
     {
-        #region Counter of the current clients (dynamic)
+        #region Counter of the current purchases (dynamic)
         private int _rowCount;
         public int RowCount
         {
@@ -51,7 +51,7 @@ namespace WorkshopDataModifier.MVVM.View
         {
             bool isChecked = ((CheckBox)sender).IsChecked == true;
 
-            foreach (customer row in CustomersDataGrid.Items)
+            foreach (purchase row in PurchasesDataGrid.Items)
             {
                 row.IsSelected = isChecked;
             }
@@ -59,10 +59,10 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void RowCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            DataGridRow row = (DataGridRow)CustomersDataGrid.ItemContainerGenerator.ContainerFromItem(((FrameworkElement)sender).DataContext);
+            DataGridRow row = (DataGridRow)PurchasesDataGrid.ItemContainerGenerator.ContainerFromItem(((FrameworkElement)sender).DataContext);
             if (row != null)
             {
-                customer rowData = (customer)row.Item;
+                purchase rowData = (purchase)row.Item;
                 rowData.IsSelected = ((CheckBox)sender).IsChecked == true;
             }
         }
@@ -71,12 +71,12 @@ namespace WorkshopDataModifier.MVVM.View
         #region Data Modification
 
         //List of all selected rows (Initialized with button click)
-        static List<customer> selectedRows = new List<customer>();
+        static List<purchase> selectedRows = new List<purchase>();
 
         #region Edit Section
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (customer rowData in CustomersDataGrid.Items)
+            foreach (purchase rowData in PurchasesDataGrid.Items)
             {
                 if (rowData.IsSelected)
                 {
@@ -85,7 +85,7 @@ namespace WorkshopDataModifier.MVVM.View
             }
 
             Button editButton = (Button)sender;
-            customer row = (customer)editButton.DataContext;
+            purchase row = (purchase)editButton.DataContext;
 
             if (selectedRows.Count == 0)
                 selectedRows.Add(row);
@@ -106,10 +106,8 @@ namespace WorkshopDataModifier.MVVM.View
 
                 EditSin.Text = row.Sin.ToString();
                 EditVin.Text = row.Vin.ToString();
-                EditName.Text = row.Name;
-                EditSurname.Text = row.Surname;
-                EditPhone.Text = row.Phone;
-
+                EditDealership.Text = row.Dealership;
+                
                 EditPopup.IsOpen = true;
             }
             else
@@ -126,7 +124,7 @@ namespace WorkshopDataModifier.MVVM.View
         {
             try
             {
-                using (var context = new CustomersDbContext())
+                using (var context = new PurchasesDbContext())
                 {
                     if (selectedRows.Count == 0)
                     {
@@ -134,54 +132,41 @@ namespace WorkshopDataModifier.MVVM.View
                     }
                     else if (selectedRows.Count == 1)
                     {
-                        customer selectedRow = context.customer.Find(selectedRows[0].Sin, selectedRows[0].Vin);
+                        purchase selectedRow = context.purchase.Find(selectedRows[0].Sin, selectedRows[0].Vin);
 
                         long txtSin = long.Parse(EditSin.Text);
                         int txtVin = int.Parse(EditVin.Text);
 
                         selectedRow.Sin = txtSin;
                         selectedRow.Vin = txtVin;
-                        selectedRow.Name = EditName.Text;
-                        selectedRow.Surname = EditSurname.Text;
-                        selectedRow.Phone = EditPhone.Text;
+                        selectedRow.Dealership = EditDealership.Text;
                     }
                     else
                     {
-                        foreach (customer dataRow in selectedRows)
+                        foreach (purchase dataRow in selectedRows)
                         {
-                            customer selectedRow = context.customer.Find(dataRow.Sin, dataRow.Vin);
+                            purchase selectedRow = context.purchase.Find(dataRow.Sin, dataRow.Vin);
 
-                            long txtSin;
-                            int txtVin;
-
-                            if (EditSin.Text != "" && EditSin.Text != null && long.TryParse(EditSin.Text, out txtSin))
+                            if (EditSin.Text != "" && EditSin.Text != null && long.TryParse(EditSin.Text, out long txtSin))
                                 selectedRow.Sin = txtSin;
 
-                            if (EditVin.Text != "" && EditVin.Text != null && int.TryParse(EditSin.Text, out txtVin))
+                            if (EditVin.Text != "" && EditVin.Text != null && int.TryParse(EditSin.Text, out int txtVin))
                                 selectedRow.Vin = txtVin;
 
-                            if (EditName.Text != "" && EditName.Text != null)
-                                selectedRow.Name = EditName.Text;
-
-                            if (EditSurname.Text != "" && EditSurname.Text != null)
-                                selectedRow.Surname = EditSurname.Text;
-
-                            if (EditPhone.Text != "" && EditPhone.Text != null)
-                                selectedRow.Phone = EditPhone.Text;
+                            if (EditDealership.Text != "" && EditDealership.Text != null)
+                                selectedRow.Dealership = EditDealership.Text;
                         }
                     }
 
                     context.SaveChanges();
-                    CustomersDataGrid.ItemsSource = context.customer.ToList();
+                    PurchasesDataGrid.ItemsSource = context.purchase.ToList();
                 }
 
                 EditPopup.IsOpen = false;
 
                 EditSin.Text = "";
                 EditVin.Text = "";
-                EditName.Text = "";
-                EditSurname.Text = "";
-                EditPhone.Text = "";
+                EditDealership.Text = "";
 
                 selectedRows.Clear();
             }
@@ -210,10 +195,8 @@ namespace WorkshopDataModifier.MVVM.View
         {
             EditVin.Text = "";
             EditSin.Text = "";
-            EditName.Text = "";
-            EditSurname.Text = "";
-            EditPhone.Text = "";
-
+            EditDealership.Text = "";
+     
             selectedRows.Clear();
 
             EditPopup.IsOpen = false;
@@ -223,7 +206,7 @@ namespace WorkshopDataModifier.MVVM.View
         #region Delete Section
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (customer rowData in CustomersDataGrid.Items)
+            foreach (purchase rowData in PurchasesDataGrid.Items)
             {
                 if (rowData.IsSelected)
                 {
@@ -232,7 +215,7 @@ namespace WorkshopDataModifier.MVVM.View
             }
 
             Button removeButton = (Button)sender;
-            customer row = (customer)removeButton.DataContext;
+            purchase row = (purchase)removeButton.DataContext;
 
             if (selectedRows.Count == 0)
                 selectedRows.Add(row);
@@ -262,7 +245,7 @@ namespace WorkshopDataModifier.MVVM.View
         {
             try
             {
-                using (var context = new CustomersDbContext())
+                using (var context = new PurchasesDbContext())
                 {
                     if (selectedRows.Count == 0)
                     {
@@ -270,24 +253,24 @@ namespace WorkshopDataModifier.MVVM.View
                     }
                     else if (selectedRows.Count == 1)
                     {
-                        customer selectedRow = context.customer.Find(selectedRows[0].Sin);
-                        context.customer.Remove(selectedRow);
+                        purchase selectedRow = context.purchase.Find(selectedRows[0].Sin, selectedRows[0].Vin);
+                        context.purchase.Remove(selectedRow);
                     }
                     else
                     {
-                        foreach (customer dataRow in selectedRows)
+                        foreach (purchase dataRow in selectedRows)
                         {
-                            customer selectedRow = context.customer.Find(dataRow.Sin);
+                            purchase selectedRow = context.purchase.Find(dataRow.Sin, dataRow.Vin);
                             context.Entry(selectedRow).State = EntityState.Deleted;
                         }
                     }
 
                     //Update DataGrid to show changes
                     context.SaveChanges();
-                    CustomersDataGrid.ItemsSource = context.customer.ToList();
+                    PurchasesDataGrid.ItemsSource = context.purchase.ToList();
                 }
 
-                RowCount = CustomersDataGrid.Items.Count;
+                RowCount = PurchasesDataGrid.Items.Count;
                 CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
 
                 DeletePopup.IsOpen = false;
@@ -338,28 +321,27 @@ namespace WorkshopDataModifier.MVVM.View
         {
             try
             {
-                using (var context = new CustomersDbContext())
+                using (var context = new PurchasesDbContext())
                 {
                     long txtSin = long.Parse(AddSin.Text);
                     int txtVin = int.Parse(AddVin.Text);
 
-                    customer newCustomer = new customer
+                    purchase newPurchase = new purchase
                     {
                         Sin = txtSin,
                         Vin = txtVin,
-                        Name = AddName.Text,
-                        Surname = AddSurname.Text,
-                        Phone = AddPhone.Text
+                        Dealership = AddDealership.Text,
+                        
                     };
 
-                    context.customer.Add(newCustomer);
+                    context.purchase.Add(newPurchase);
                     context.SaveChanges();
 
-                    CustomersDataGrid.ItemsSource = context.customer.ToList();
+                    PurchasesDataGrid.ItemsSource = context.purchase.ToList();
                 }
 
-                RowCount = CustomersDataGrid.Items.Count;
-                CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
+                RowCount = PurchasesDataGrid.Items.Count;
+                CustomersCounter.Text = $"Current Saved Purchases: {RowCount}";
                 AddPopup.IsOpen = false;
             }
             catch (Exception ex)
@@ -372,10 +354,8 @@ namespace WorkshopDataModifier.MVVM.View
         {
             AddSin.Text = "";
             AddVin.Text = "";
-            AddName.Text = "";
-            AddSurname.Text = "";
-            AddPhone.Text = "";
-
+            AddDealership.Text = "";
+            
             AddPopup.IsOpen = false;
         }
 
@@ -492,42 +472,34 @@ namespace WorkshopDataModifier.MVVM.View
 
         #endregion
 
-        #region Pagination
-
-
-        #endregion
-
         #region Search
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtSearchCustomers.Text != "Search in Customers...")
+            if (txtSearchPurchases.Text != "Search in Purchases...")
             {
 
-                string searchText = txtSearchCustomers.Text.ToLower();
+                string searchText = txtSearchPurchases.Text.ToLower();
 
 
-                CustomersDataGrid.Items.Filter = item =>
+                PurchasesDataGrid.Items.Filter = item =>
                 {
-                    if (item is customer dataItem)
+                    if (item is purchase dataItem)
                     {
                         string txtSin = dataItem.Sin.ToString();
                         string txtVin = dataItem.Vin.ToString();
-                        string timeStamp = dataItem.AddTime.ToString();
+                        string timeStamp = dataItem.PurchaseTime.ToString();
 
                         return txtSin.Contains(searchText) ||
                                txtVin.Contains(searchText) ||
-                               dataItem.Name.ToLower().Contains(searchText) ||
-                               dataItem.Surname.ToLower().Contains(searchText) ||
-                               dataItem.Phone.Contains(searchText) ||
+                               dataItem.Dealership.ToLower().Contains(searchText) ||
                                timeStamp.Contains(searchText);
-
                     }
 
                     return false;
                 };
 
-                CustomersDataGrid.Items.Refresh();
+                PurchasesDataGrid.Items.Refresh();
             }
         }
 
@@ -535,12 +507,12 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Focus Settings
 
-        private void CustomersWindow_MouseDown(object sender, MouseButtonEventArgs e)
+        private void PurchasesWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (txtSearchCustomers.Text == "")
+            if (txtSearchPurchases.Text == "")
             {
                 Keyboard.ClearFocus();
-                txtSearchCustomers.Text = "Search in Customers...";
+                txtSearchPurchases.Text = "Search in Purchases...";
             }
             else
             {
@@ -549,11 +521,11 @@ namespace WorkshopDataModifier.MVVM.View
 
         }
 
-        private void txtSearchCustomers_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void txtSearchPurchases_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if (txtSearchCustomers.Text == "Search in Customers...")
+            if (txtSearchPurchases.Text == "Search in Purchases...")
             {
-                txtSearchCustomers.Text = "";
+                txtSearchPurchases.Text = "";
             }
         }
         #endregion
@@ -593,7 +565,11 @@ namespace WorkshopDataModifier.MVVM.View
 
             //Database initializer
             _dbContext = new PurchasesDbContext();
-            CustomersDataGrid.ItemsSource = _dbContext.purchases.ToList();
+            PurchasesDataGrid.ItemsSource = _dbContext.purchase.ToList();
+
+            //Counter initializer
+            RowCount = PurchasesDataGrid.Items.Count;
+            CustomersCounter.Text = $"Current Saved Purchases: {RowCount}";
         }
     }
 
@@ -602,7 +578,7 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public class PurchasesDbContext : DbContext
     {
-        public DbSet<purchase> purchases { get; set; } //DbSet dla tabeli "customer"
+        public DbSet<purchase> purchase { get; set; } //DbSet dla tabeli "customer"
 
         public PurchasesDbContext() : base("DealershipCon")
         {

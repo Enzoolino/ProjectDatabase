@@ -11,9 +11,21 @@ namespace WorkshopDataModifier.Data
 {
     using System;
     using System.Collections.ObjectModel;
-    
-    public partial class purchase
+    using WorkshopDataModifier.Core;
+
+    public partial class purchase : ObservableObject
     {
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
         public long Sin { get; set; }
         public int Vin { get; set; }
         public string Dealership { get; set; }
