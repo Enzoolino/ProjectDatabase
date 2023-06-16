@@ -23,6 +23,7 @@ namespace WorkshopDataModifier.MVVM.ViewModel
         //Inside Commands
         public RelayCommand PurchasesViewCommand { get; set; }
         public RelayCommand SoldVehiclesViewCommand { get; set; }
+        public RelayCommand WarehouseVehiclesViewCommand { get; set; }
 
 
 
@@ -39,6 +40,7 @@ namespace WorkshopDataModifier.MVVM.ViewModel
         //Inside ViewModels
         public PurchasesViewModel PurchasesVM { get; set; }
         public SoldVehiclesViewModel SoldVehiclesVM { get; set; }
+        public WarehouseVehiclesViewModel WarehouseVehiclesVM { get; set; }
 
         private object _currentView;
 
@@ -66,6 +68,7 @@ namespace WorkshopDataModifier.MVVM.ViewModel
             //Inside Declarations
             PurchasesVM = new PurchasesViewModel();
             SoldVehiclesVM = new SoldVehiclesViewModel();
+            WarehouseVehiclesVM = new WarehouseVehiclesViewModel();
             
 
             CurrentView = HomeVM;
@@ -120,6 +123,11 @@ namespace WorkshopDataModifier.MVVM.ViewModel
             SoldVehiclesViewCommand = new RelayCommand(o =>
             {
                 CurrentView = SoldVehiclesVM;
+            });
+
+            WarehouseVehiclesViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = WarehouseVehiclesVM;
             });
         }
     }

@@ -11,9 +11,22 @@ namespace WorkshopDataModifier.Data
 {
     using System;
     using System.Collections.ObjectModel;
-    
-    public partial class warehouse_vehicles
+    using WorkshopDataModifier.Core;
+
+    public partial class warehouse_vehicles : ObservableObject
     {
+
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
         public int Vin { get; set; }
         public string Brand { get; set; }
         public string Color { get; set; }

@@ -77,6 +77,10 @@
                 <view:SoldVehiclesView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModel:WarehouseVehiclesViewModel}">
+                <view:WarehouseVehiclesView/>    
+            </DataTemplate>
+
 
             <!--#region DataBase Style-->
             <Style x:Key="ColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">

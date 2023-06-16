@@ -37,7 +37,8 @@
                 <RadioButton x:Name="btnVehicles" Content="Vehicles" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Background="#5F85DB"
                              Command="{Binding DataContext.VehiclesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
                 <RadioButton x:Name="btnSoldVehicles" Content="Sold Vehicles" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#023E8A"/>
-                <RadioButton x:Name="btnWarehouseVehicles" Content="Warehouse Vehicles" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#5F85DB"/>
+                <RadioButton x:Name="btnWarehouseVehicles" Content="Warehouse Vehicles" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#5F85DB"
+                             Command="{Binding DataContext.WarehouseVehiclesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
             </StackPanel>
 
             <!--Filter by Date Buttons-->
