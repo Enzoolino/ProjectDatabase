@@ -11,9 +11,22 @@ namespace WorkshopDataModifier.Data
 {
     using System;
     using System.Collections.ObjectModel;
-    
-    public partial class users
+    using WorkshopDataModifier.Core;
+
+    public partial class users : ObservableObject
     {
+
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
         public long ID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
