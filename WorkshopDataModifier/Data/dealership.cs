@@ -11,8 +11,9 @@ namespace WorkshopDataModifier.Data
 {
     using System;
     using System.Collections.ObjectModel;
-    
-    public partial class dealership
+    using WorkshopDataModifier.Core;
+
+    public partial class dealership : ObservableObject
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public dealership()
@@ -21,7 +22,19 @@ namespace WorkshopDataModifier.Data
             this.purchase = new ObservableCollection<purchase>();
             this.employee = new ObservableCollection<employee>();
         }
-    
+
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string Name { get; set; }
         public string Location { get; set; }
         public Nullable<int> BranchID { get; set; }

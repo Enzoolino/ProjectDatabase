@@ -11,8 +11,9 @@ namespace WorkshopDataModifier.Data
 {
     using System;
     using System.Collections.ObjectModel;
-    
-    public partial class branch_office
+    using WorkshopDataModifier.Core;
+
+    public partial class branch_office : ObservableObject
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public branch_office()
@@ -21,7 +22,19 @@ namespace WorkshopDataModifier.Data
             this.employee = new ObservableCollection<employee>();
             this.warehouse = new ObservableCollection<warehouse>();
         }
-    
+
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
         public int BranchID { get; set; }
         public string Location { get; set; }
         public string Phone { get; set; }

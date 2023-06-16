@@ -4,9 +4,226 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WorkshopDataModifier.MVVM.View"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:mainWindow="clr-namespace:WorkshopDataModifier"
              mc:Ignorable="d" 
-             d:DesignHeight="740" d:DesignWidth="1030">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="740" d:DesignWidth="1030"
+             MouseDown="BranchesWindow_MouseDown">
+
+    <Border CornerRadius="0 10 10 0" Background="#26282B">
+
+
+        <Grid>
+            <!--Main Section-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+
+            <!--Page Title-->
+            <TextBlock Text="Branches" Grid.Row="1" FontSize="32" Margin="20 20 0 0"
+                       HorizontalAlignment="Left" Foreground="#ffffff" FontFamily="/Fonts/#Poppins"/>
+
+            <!--Add Button-->
+            <Button Style="{StaticResource ValueAddButtonTemplate}" Margin="0 20 10 0" Click="AddButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <fa:IconImage Icon="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
+                    <TextBlock Text="Add New Branch" FontFamily="/Fonts/#Poppins"/>
+                </StackPanel>
+            </Button>
+
+            <!--Add Popup Window-->
+            <Popup Name="AddPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto">
+                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+                        MouseLeftButtonDown="AddPopup_MouseLeftButtonDown" MouseMove="AddPopup_MouseMove" MouseLeftButtonUp="AddPopup_MouseLeftButtonUp">
+                    <StackPanel>
+                        <!--Title TextBox-->
+                        <TextBlock Foreground="Black" Text="Add Window" 
+                                   Margin="0 10 0 10" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
+
+                        <!--Input Boxes-->
+                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Location:" FontFamily="/Fonts/#Poppins"/>
+                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Location"  
+                                 Name="AddLocation"/>
+                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Phone number:" FontFamily="/Fonts/#Poppins"/>
+                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Phone number"  
+                                 Name="AddPhone"/>
+                        
+                        <!--Rules TextBlocks-->
+                        <TextBlock Foreground="Black" Text="Rules:" Margin="0 10 0 10" FontSize="18" FontFamily="/Fonts/#Poppins"/>
+
+                        <TextBlock Foreground="Black" FontFamily="/Fonts/#Poppins">
+                            * Location = <LineBreak/>
+                            * Phone =  
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
+                            <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmAddButton_Click"/>
+                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelAddButton_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Popup>
+
+
+            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 -1 10 10"/>
+
+            <!--Switch tabs Buttons-->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10 10 0 0" HorizontalAlignment="Left">
+                <RadioButton x:Name="btnVehicles" Content="Branches" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Background="#023E8A"
+                             Command="{Binding DataContext.VehiclesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
+                <RadioButton x:Name="btnSoldVehicles" Content="Dealerships" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#5F85DB"
+                             Command="{Binding DataContext.SoldVehiclesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
+                <RadioButton x:Name="btnWarehouseVehicles" Content="Warehouses" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#5F85DB"/>
+            </StackPanel>
+
+            <!--Filter by Date Buttons-->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Right">
+                <RadioButton x:Name="DayButton" Content="Day" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
+                <RadioButton x:Name="WeekButton" Content="Week" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
+                <RadioButton x:Name="MonthButton" Content="Month" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
+                <RadioButton x:Name="YearButton" Content="Year" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
+                <RadioButton x:Name="InfButton" Style="{StaticResource FilterByDateButtonTheme}">
+                    <fa:IconImage Icon="Infinity" Foreground="White" Height="20" Width="40"/>
+                </RadioButton>
+            </StackPanel>
+
+            <!--Counter Title-->
+            <TextBlock Text="BranchesCounter" Name="BranchesCounter" Grid.Row="4" FontSize="18" FontFamily="/Fonts/#Poppins"
+                       Foreground="#ffffff" HorizontalAlignment="Left" VerticalAlignment="Center"
+                       Margin="20 0 0 10"/>
+
+            <!--Filter TextBox-->
+            <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontFamily="/Fonts/#Poppins" Margin="0 0 215 10"
+                       Foreground="#ffffff" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+            <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
+
+                <TextBox x:Name="txtSearchBranches"
+                         Margin="0 10 20 20"
+                         Tag="Search in Warehouse..."
+                         Style="{StaticResource TextBoxFilterTheme}"
+                         TextChanged="SearchTextBox_TextChanged"
+                         GotKeyboardFocus="txtSearchBranches_GotKeyboardFocus"/>
+            </Grid>
+
+            <!--Sold Vehicles DataGrid-->
+            <DataGrid Name="BranchesDataGrid"
+                      Style="{DynamicResource DataGridStyle1}" 
+                      CellStyle="{DynamicResource DataGridCellStyle1}" 
+                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                      RowStyle="{DynamicResource DataGridRowStyle1}"  Grid.Row="5">
+
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn CanUserResize="False" Width="auto">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <CheckBox Name="SelectAllCheckBox" Style="{StaticResource CheckBoxStyle1}" Click="SelectAllCheckBox_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Style="{StaticResource CheckBoxStyle1}" IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="RowCheckBox_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Header="BranchID" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding BranchID}"/>
+                    <DataGridTextColumn Header="Location" IsReadOnly="True" Width="*" Binding="{Binding Location}"/>
+                    <DataGridTextColumn Header="Phone" IsReadOnly="True" Width="*" Binding="{Binding Phone}"/>
+                    
+                    <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource GridEditButtonTheme}">
+                                        <fa:IconImage Icon="CarOn" Style="{StaticResource GridButtonIconTheme}"/>
+                                    </Button>
+                                    <Button Style="{StaticResource GridEditButtonTheme}" Margin="5 0 0 0" Click="EditButton_Click">
+                                        <fa:IconImage Icon="Pencil" Style="{StaticResource GridButtonIconTheme}"/>
+                                    </Button>
+                                    <Button Style="{StaticResource GridRemoveButtonTheme}" Margin="5 0 0 0" Click="RemoveButton_Click">
+                                        <fa:IconImage Icon="TrashCan" Style="{StaticResource GridButtonIconTheme}"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!--Edit Popup Window-->
+            <Popup Name="EditPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto">
+                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+                        MouseLeftButtonDown="EditPopup_MouseLeftButtonDown" MouseMove="EditPopup_MouseMove" MouseLeftButtonUp="EditPopup_MouseLeftButtonUp">
+                    <StackPanel>
+                        <!--Title TextBox-->
+                        <TextBlock Foreground="Black" Text="Edit Window" 
+                                   Margin="0 10 0 10" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
+                        <TextBlock Name="MultiEditionWarning" Foreground="Red" Text="Be careful while editing multiple rows at once !" 
+                                   FontSize="12" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0 0 0 30"/>
+
+                        <!--Input Boxes-->
+                        <TextBlock Foreground="DimGray" Text="Edit Location of selected branch:" FontFamily="/Fonts/#Poppins"/>
+                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Location"  
+                                 Name="EditLocation"/>
+                        <TextBlock Foreground="DimGray" Text="Edit Phone number of selected branch:" FontFamily="/Fonts/#Poppins"/>
+                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Phone"  
+                                 Name="EditPhone"/>
+                       
+                        <!--Rules TextBlocks-->
+                        <TextBlock Foreground="Black" Text="Rules:" Margin="0 10 0 10" FontSize="18" FontFamily="/Fonts/#Poppins"/>
+
+                        <TextBlock Name="EditInfo" Foreground="Black" FontFamily="/Fonts/#Poppins" Text="* Leave the input unchanged if you do not wish for the row to be edited." Visibility="Visible"/>
+                        <TextBlock Foreground="Black" FontFamily="/Fonts/#Poppins">
+                            * Location    = <LineBreak/>
+                            * Phone =  
+
+                        </TextBlock>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
+                            <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmEditButton_Click"/>
+                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelEditButton_Click"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </Border>
+            </Popup>
+
+            <!--Delete Popup Window-->
+            <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="475" Height="auto">
+                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+                        MouseLeftButtonDown="DeletePopup_MouseLeftButtonDown" MouseMove="DeletePopup_MouseMove" MouseLeftButtonUp="DeletePopup_MouseLeftButtonUp">
+                    <StackPanel>
+                        <!--Information-->
+                        <TextBlock Foreground="Black" FontSize="16" Margin="0 10 0 20" HorizontalAlignment="Center" FontFamily="/Fonts/#Poppins">
+                            Are you sure you want to delete selected vehicles ?
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button  Content="Confirm" Style="{StaticResource ConfirmButtonTheme}"  Margin="0 0 20 0" 
+                                     FontFamily="/Fonts/#Poppins" Width="150" Click="ConfirmRemoveButton_Click" />
+                            <Button  Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}"  
+                                     FontFamily="/Fonts/#Poppins" Width="150" Click="CancelRemoveButton_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                </Border>
+            </Popup>
+
+        </Grid>
+
+    </Border>
+
+
 </UserControl>

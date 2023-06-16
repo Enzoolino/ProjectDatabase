@@ -158,8 +158,6 @@
     <Compile Include="Data\warehouse_vehicles.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\ViewModel\BranchesViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\BrandsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\DealershipsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PositionsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SalesViewModel.cs" />
@@ -176,12 +174,6 @@
     <Compile Include="MVVM\ViewModel\EmployeesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\WarehousesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\WarehouseVehiclesViewModel.cs" />
-    <Compile Include="MVVM\View\BranchesView.xaml.cs">
-      <DependentUpon>BranchesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\BrandsView.xaml.cs">
-      <DependentUpon>BrandsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MVVM\View\DealershipsView.xaml.cs">
       <DependentUpon>DealershipsView.xaml</DependentUpon>
     </Compile>
@@ -245,14 +237,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MVVM\View\BranchesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\BrandsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MVVM\View\DealershipsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

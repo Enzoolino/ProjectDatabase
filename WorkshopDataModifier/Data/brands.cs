@@ -11,8 +11,9 @@ namespace WorkshopDataModifier.Data
 {
     using System;
     using System.Collections.ObjectModel;
-    
-    public partial class brands
+    using WorkshopDataModifier.Core;
+
+    public partial class brands : ObservableObject
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public brands()
@@ -20,7 +21,19 @@ namespace WorkshopDataModifier.Data
             this.vehicles = new ObservableCollection<vehicles>();
             this.warehouse_vehicles = new ObservableCollection<warehouse_vehicles>();
         }
-    
+
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

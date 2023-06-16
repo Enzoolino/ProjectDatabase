@@ -11,8 +11,9 @@ namespace WorkshopDataModifier.Data
 {
     using System;
     using System.Collections.ObjectModel;
-    
-    public partial class employee
+    using WorkshopDataModifier.Core;
+
+    public partial class employee : ObservableObject
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public employee()
@@ -21,7 +22,19 @@ namespace WorkshopDataModifier.Data
             this.sell = new ObservableCollection<sell>();
             this.employee1 = new ObservableCollection<employee>();
         }
-    
+
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
         public long EmpID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
