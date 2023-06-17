@@ -72,7 +72,7 @@
                              Command="{Binding VehiclesViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Car" Style="{StaticResource MenuButtonIconTheme}"/>
-                        <TextBlock Text="Cars" Style="{StaticResource MenuButtonTextTheme}"/>
+                        <TextBlock Text="Vehicles" Style="{StaticResource MenuButtonTextTheme}"/>
                     </StackPanel>
                 </RadioButton>
 

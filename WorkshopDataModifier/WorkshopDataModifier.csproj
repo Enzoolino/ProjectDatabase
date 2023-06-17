@@ -164,7 +164,7 @@
     <Compile Include="MVVM\ViewModel\SoldVehiclesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\VehiclesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CustomersViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\BranchesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Locations\BranchesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PurchasesViewModel.cs" />
@@ -174,52 +174,52 @@
     <Compile Include="MVVM\ViewModel\EmployeesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\WarehousesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\WarehouseVehiclesViewModel.cs" />
-    <Compile Include="MVVM\View\DealershipsView.xaml.cs">
+    <Compile Include="MVVM\View\Locations\DealershipsView.xaml.cs">
       <DependentUpon>DealershipsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\PositionsView.xaml.cs">
+    <Compile Include="MVVM\View\Codes\PositionsView.xaml.cs">
       <DependentUpon>PositionsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\SalesView.xaml.cs">
+    <Compile Include="MVVM\View\Employees\SalesView.xaml.cs">
       <DependentUpon>SalesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\SoldVehiclesView.xaml.cs">
+    <Compile Include="MVVM\View\Vehicles\SoldVehiclesView.xaml.cs">
       <DependentUpon>SoldVehiclesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\VehiclesView.xaml.cs">
+    <Compile Include="MVVM\View\Vehicles\VehiclesView.xaml.cs">
       <DependentUpon>VehiclesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\CustomersView.xaml.cs">
+    <Compile Include="MVVM\View\Customers\CustomersView.xaml.cs">
       <DependentUpon>CustomersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\BranchesView.xaml.cs">
+    <Compile Include="MVVM\View\Locations\BranchesView.xaml.cs">
       <DependentUpon>BranchesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\HomeView.xaml.cs">
+    <Compile Include="MVVM\View\Home\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\Login\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\PurchasesView.xaml.cs">
+    <Compile Include="MVVM\View\Customers\PurchasesView.xaml.cs">
       <DependentUpon>PurchasesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\BrandsView.xaml.cs">
+    <Compile Include="MVVM\View\Codes\BrandsView.xaml.cs">
       <DependentUpon>BrandsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\TasksView.xaml.cs">
+    <Compile Include="MVVM\View\Tasks\TasksView.xaml.cs">
       <DependentUpon>TasksView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\UsersView.xaml.cs">
+    <Compile Include="MVVM\View\Users\UsersView.xaml.cs">
       <DependentUpon>UsersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\EmployeesView.xaml.cs">
+    <Compile Include="MVVM\View\Employees\EmployeesView.xaml.cs">
       <DependentUpon>EmployeesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\WarehousesView.xaml.cs">
+    <Compile Include="MVVM\View\Locations\WarehousesView.xaml.cs">
       <DependentUpon>WarehousesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\WarehouseVehiclesView.xaml.cs">
+    <Compile Include="MVVM\View\Vehicles\WarehouseVehiclesView.xaml.cs">
       <DependentUpon>WarehouseVehiclesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\InfoCard.xaml.cs">
@@ -237,35 +237,35 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MVVM\View\DealershipsView.xaml">
+    <Page Include="MVVM\View\Locations\DealershipsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\PositionsView.xaml">
+    <Page Include="MVVM\View\Codes\PositionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\SalesView.xaml">
+    <Page Include="MVVM\View\Employees\SalesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\SoldVehiclesView.xaml">
+    <Page Include="MVVM\View\Vehicles\SoldVehiclesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\VehiclesView.xaml">
+    <Page Include="MVVM\View\Vehicles\VehiclesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\CustomersView.xaml">
+    <Page Include="MVVM\View\Customers\CustomersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\BranchesView.xaml">
+    <Page Include="MVVM\View\Locations\BranchesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\HomeView.xaml">
+    <Page Include="MVVM\View\Home\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -273,31 +273,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\PurchasesView.xaml">
+    <Page Include="MVVM\View\Customers\PurchasesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\BrandsView.xaml">
+    <Page Include="MVVM\View\Codes\BrandsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\TasksView.xaml">
+    <Page Include="MVVM\View\Tasks\TasksView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\UsersView.xaml">
+    <Page Include="MVVM\View\Users\UsersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\EmployeesView.xaml">
+    <Page Include="MVVM\View\Employees\EmployeesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\WarehousesView.xaml">
+    <Page Include="MVVM\View\Locations\WarehousesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\WarehouseVehiclesView.xaml">
+    <Page Include="MVVM\View\Vehicles\WarehouseVehiclesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -395,6 +395,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MVVM\Model\" />
+    <Folder Include="MVVM\ViewModel\Codes\" />
+    <Folder Include="MVVM\ViewModel\Customers\" />
+    <Folder Include="MVVM\ViewModel\Employees\" />
+    <Folder Include="MVVM\ViewModel\Home\" />
+    <Folder Include="MVVM\ViewModel\Tasks\" />
+    <Folder Include="MVVM\ViewModel\Users\" />
+    <Folder Include="MVVM\ViewModel\Vehicles\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
