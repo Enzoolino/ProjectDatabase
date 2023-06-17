@@ -78,11 +78,11 @@
 
             <!--Switch tabs Buttons-->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10 10 0 0" HorizontalAlignment="Left">
-                <RadioButton x:Name="btnVehicles" Content="Branches" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Background="#023E8A"
-                             Command="{Binding DataContext.VehiclesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
-                <RadioButton x:Name="btnSoldVehicles" Content="Dealerships" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#5F85DB"
-                             Command="{Binding DataContext.SoldVehiclesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
-                <RadioButton x:Name="btnWarehouseVehicles" Content="Warehouses" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#5F85DB"/>
+                <RadioButton x:Name="btnBranches" Content="Branches" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Background="#023E8A"/>
+                <RadioButton x:Name="btnDealerships" Content="Dealerships" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#5F85DB"
+                             Command="{Binding DataContext.DealershipsViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
+                <RadioButton x:Name="btnWarehouses" Content="Warehouses" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#5F85DB"
+                             Command="{Binding DataContext.WarehousesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
             </StackPanel>
 
             <!--Filter by Date Buttons-->

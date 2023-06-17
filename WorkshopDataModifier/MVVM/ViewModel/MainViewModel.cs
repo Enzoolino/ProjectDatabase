@@ -24,6 +24,10 @@ namespace WorkshopDataModifier.MVVM.ViewModel
         public RelayCommand PurchasesViewCommand { get; set; }
         public RelayCommand SoldVehiclesViewCommand { get; set; }
         public RelayCommand WarehouseVehiclesViewCommand { get; set; }
+        public RelayCommand DealershipsViewCommand { get; set; }
+        public RelayCommand WarehousesViewCommand { get; set; }
+        public RelayCommand SalesViewCommand { get; set; }
+        public RelayCommand PositionsViewCommand { get; set; }
 
 
 
@@ -41,6 +45,11 @@ namespace WorkshopDataModifier.MVVM.ViewModel
         public PurchasesViewModel PurchasesVM { get; set; }
         public SoldVehiclesViewModel SoldVehiclesVM { get; set; }
         public WarehouseVehiclesViewModel WarehouseVehiclesVM { get; set; }
+        public DealershipsViewModel DealershipsVM { get; set; }
+        public WarehousesViewModel WarehousesVM { get; set; }
+        public SalesViewModel SalesVM { get; set; }
+        public PositionsViewModel PositionsVM { get; set; }
+
 
         private object _currentView;
 
@@ -69,6 +78,10 @@ namespace WorkshopDataModifier.MVVM.ViewModel
             PurchasesVM = new PurchasesViewModel();
             SoldVehiclesVM = new SoldVehiclesViewModel();
             WarehouseVehiclesVM = new WarehouseVehiclesViewModel();
+            DealershipsVM = new DealershipsViewModel();
+            WarehousesVM = new WarehousesViewModel();   
+            SalesVM = new SalesViewModel();
+            PositionsVM = new PositionsViewModel();
             
 
             CurrentView = HomeVM;
@@ -128,6 +141,26 @@ namespace WorkshopDataModifier.MVVM.ViewModel
             WarehouseVehiclesViewCommand = new RelayCommand(o =>
             {
                 CurrentView = WarehouseVehiclesVM;
+            });
+
+            DealershipsViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = DealershipsVM;
+            });
+
+            WarehousesViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = WarehousesVM;
+            });
+
+            SalesViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = SalesVM;
+            });
+
+            PositionsViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = PositionsVM;
             });
         }
     }

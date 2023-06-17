@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using WorkshopDataModifier.MVVM.View;
-
+using WorkshopDataModifier.MVVM.View.Login;
 
 namespace WorkshopDataModifier
 {
@@ -58,6 +58,17 @@ namespace WorkshopDataModifier
                     IsMaximized = true;
                 }
             }
+        }
+
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Open Login Window
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+
+            // Close Main window
+            Close();
         }
     }
 }

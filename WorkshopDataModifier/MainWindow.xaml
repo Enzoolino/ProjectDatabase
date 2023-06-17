@@ -127,7 +127,8 @@
 
                 <Separator Height="1.5" Margin="20 30" Background="#F3EFF5"/>
 
-                <RadioButton Style="{StaticResource MenuButtonTheme}">
+                <RadioButton Style="{StaticResource MenuButtonTheme}"
+                             Click="LogoutButton_Click">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="PowerOff"  Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Logout" Style="{StaticResource MenuButtonTextTheme}"/>
