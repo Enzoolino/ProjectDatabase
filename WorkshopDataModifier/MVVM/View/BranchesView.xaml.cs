@@ -25,7 +25,7 @@ namespace WorkshopDataModifier.MVVM.View
     /// <summary>
     /// Interaction logic for EngineCodesView.xaml
     /// </summary>
-    public partial class LocationsView : UserControl
+    public partial class BranchesView : UserControl
     {
 
 
@@ -538,7 +538,7 @@ namespace WorkshopDataModifier.MVVM.View
 
 
         private BranchesDbContext _dbContext;
-        public LocationsView()
+        public BranchesView()
         {
             InitializeComponent();
 

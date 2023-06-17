@@ -24,7 +24,7 @@ namespace WorkshopDataModifier.MVVM.View
     /// <summary>
     /// Interaction logic for TaskNamesView.xaml
     /// </summary>
-    public partial class CodesView : UserControl
+    public partial class BrandsView : UserControl
     {
 
 
@@ -520,7 +520,7 @@ namespace WorkshopDataModifier.MVVM.View
         #endregion
 
         private BrandsDbContext _dbContext;
-        public CodesView()
+        public BrandsView()
         {
             InitializeComponent();
 

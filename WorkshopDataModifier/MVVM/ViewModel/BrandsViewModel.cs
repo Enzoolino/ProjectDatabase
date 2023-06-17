@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorkshopDataModifier.MVVM.ViewModel
 {
-    class LocationsViewModel
+    class BrandsViewModel
     {
     }
 }

@@ -85,7 +85,7 @@
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding LocationsViewCommand}">
+                             Command="{Binding BranchesViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Warehouse" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Locations" Style="{StaticResource MenuButtonTextTheme}"/>
@@ -110,7 +110,7 @@
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding CodesViewCommand}">
+                             Command="{Binding BrandsViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="List" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Codes" Style="{StaticResource MenuButtonTextTheme}"/>

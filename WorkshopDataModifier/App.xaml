@@ -51,16 +51,16 @@
                 <view:TasksView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:LocationsViewModel}">
-                <view:LocationsView/>
+            <DataTemplate DataType="{x:Type viewModel:BranchesViewModel}">
+                <view:BranchesView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:EmployeesViewModel}">
                 <view:EmployeesView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:CodesViewModel}">
-                <view:CodesView/>
+            <DataTemplate DataType="{x:Type viewModel:BrandsViewModel}">
+                <view:BrandsView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewModel:UsersViewModel}">

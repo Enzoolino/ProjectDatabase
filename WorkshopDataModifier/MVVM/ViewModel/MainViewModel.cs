@@ -15,9 +15,9 @@ namespace WorkshopDataModifier.MVVM.ViewModel
         public RelayCommand CustomersViewCommand { get; set; }
         public RelayCommand VehiclesViewCommand { get; set; }
         public RelayCommand TasksViewCommand { get; set; }
-        public RelayCommand LocationsViewCommand { get; set; }
+        public RelayCommand BranchesViewCommand { get; set; }
         public RelayCommand EmployeesViewCommand { get; set; }
-        public RelayCommand CodesViewCommand { get; set; }
+        public RelayCommand BrandsViewCommand { get; set; }
         public RelayCommand UsersViewCommand { get; set; }
 
         //Inside Commands
@@ -37,8 +37,8 @@ namespace WorkshopDataModifier.MVVM.ViewModel
         public VehiclesViewModel VehiclesVM { get; set; }
         public TasksViewModel TasksVM { get; set; }
         public EmployeesViewModel EmployeesVM { get; set; }
-        public LocationsViewModel LocationsVM { get; set; }
-        public CodesViewModel CodesVM { get; set; }
+        public BranchesViewModel BranchesVM { get; set; }
+        public BrandsViewModel BrandsVM { get; set; }
         public UsersViewModel UsersVM { get; set; }
 
         //Inside ViewModels
@@ -70,8 +70,8 @@ namespace WorkshopDataModifier.MVVM.ViewModel
             VehiclesVM = new VehiclesViewModel();
             TasksVM = new TasksViewModel();
             EmployeesVM = new EmployeesViewModel();
-            LocationsVM = new LocationsViewModel();
-            CodesVM = new CodesViewModel();
+            BranchesVM = new BranchesViewModel();
+            BrandsVM = new BrandsViewModel();
             UsersVM = new UsersViewModel();
 
             //Inside Declarations
@@ -111,14 +111,14 @@ namespace WorkshopDataModifier.MVVM.ViewModel
                 CurrentView = EmployeesVM;
             });
 
-            LocationsViewCommand = new RelayCommand(o =>
+            BranchesViewCommand = new RelayCommand(o =>
             {
-                CurrentView = LocationsVM;
+                CurrentView = BranchesVM;
             });
 
-            CodesViewCommand = new RelayCommand(o =>
+            BrandsViewCommand = new RelayCommand(o =>
             {
-                CurrentView = CodesVM;
+                CurrentView = BrandsVM;
             });
 
             UsersViewCommand = new RelayCommand(o =>

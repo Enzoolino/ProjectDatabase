@@ -164,11 +164,11 @@
     <Compile Include="MVVM\ViewModel\SoldVehiclesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\VehiclesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CustomersViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\LocationsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\BranchesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\PurchasesViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\CodesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\BrandsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\TasksViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UsersViewModel.cs" />
     <Compile Include="MVVM\ViewModel\EmployeesViewModel.cs" />
@@ -192,8 +192,8 @@
     <Compile Include="MVVM\View\CustomersView.xaml.cs">
       <DependentUpon>CustomersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\LocationsView.xaml.cs">
-      <DependentUpon>LocationsView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\BranchesView.xaml.cs">
+      <DependentUpon>BranchesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
@@ -204,8 +204,8 @@
     <Compile Include="MVVM\View\PurchasesView.xaml.cs">
       <DependentUpon>PurchasesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\CodesView.xaml.cs">
-      <DependentUpon>CodesView.xaml</DependentUpon>
+    <Compile Include="MVVM\View\BrandsView.xaml.cs">
+      <DependentUpon>BrandsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\TasksView.xaml.cs">
       <DependentUpon>TasksView.xaml</DependentUpon>
@@ -261,7 +261,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\LocationsView.xaml">
+    <Page Include="MVVM\View\BranchesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -277,7 +277,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\CodesView.xaml">
+    <Page Include="MVVM\View\BrandsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
