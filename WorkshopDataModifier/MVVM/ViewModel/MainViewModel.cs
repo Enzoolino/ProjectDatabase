@@ -11,48 +11,134 @@ namespace WorkshopDataModifier.MVVM.ViewModel
     class MainViewModel : ObservableObject
     {
 
+        //HOME SECTION --------------------------------------------------------------------------
+
+        /// <summary>
+        /// Command that is switching the View to HomeView using ViemModels
+        /// </summary>
         public RelayCommand HomeViewCommand { get; set; }
-        public RelayCommand CustomersViewCommand { get; set; }
-        public RelayCommand VehiclesViewCommand { get; set; }
-        public RelayCommand TasksViewCommand { get; set; }
-        public RelayCommand BranchesViewCommand { get; set; }
-        public RelayCommand EmployeesViewCommand { get; set; }
-        public RelayCommand BrandsViewCommand { get; set; }
-        public RelayCommand UsersViewCommand { get; set; }
-
-        //Inside Commands
-        public RelayCommand PurchasesViewCommand { get; set; }
-        public RelayCommand SoldVehiclesViewCommand { get; set; }
-        public RelayCommand WarehouseVehiclesViewCommand { get; set; }
-        public RelayCommand DealershipsViewCommand { get; set; }
-        public RelayCommand WarehousesViewCommand { get; set; }
-        public RelayCommand SalesViewCommand { get; set; }
-        public RelayCommand PositionsViewCommand { get; set; }
-
-
-
 
         public HomeViewModel HomeVM { get; set; }
-        public CustomersViewModel CustomersVM { get; set; }
-        public VehiclesViewModel VehiclesVM { get; set; }
-        public TasksViewModel TasksVM { get; set; }
-        public EmployeesViewModel EmployeesVM { get; set; }
-        public BranchesViewModel BranchesVM { get; set; }
-        public BrandsViewModel BrandsVM { get; set; }
-        public UsersViewModel UsersVM { get; set; }
 
-        //Inside ViewModels
+        //CUSTOMERS SECTION ---------------------------------------------------------------------
+
+        /// <summary>
+        /// Command that is switching the View to CustomersView using ViemModels
+        /// </summary>
+        public RelayCommand CustomersViewCommand { get; set; }
+
+        public CustomersViewModel CustomersVM { get; set; }
+
+        /// <summary>
+        /// Command that is switching the View to PurchasesView using ViemModels
+        /// </summary>
+        public RelayCommand PurchasesViewCommand { get; set; }
+
         public PurchasesViewModel PurchasesVM { get; set; }
+
+        //VEHICLES SECTION --------------------------------------------------------------------
+
+        /// <summary>
+        /// Command that is switching the View to VehiclesView using ViemModels
+        /// </summary>
+        public RelayCommand VehiclesViewCommand { get; set; }
+
+        public VehiclesViewModel VehiclesVM { get; set; }
+
+        /// <summary>
+        /// Command that is switching the View to SoldVehiclesView using ViemModels
+        /// </summary>
+        public RelayCommand SoldVehiclesViewCommand { get; set; }
+
         public SoldVehiclesViewModel SoldVehiclesVM { get; set; }
+
+        /// <summary>
+        /// Command that is switching the View to WarehouseVehiclesView using ViemModels
+        /// </summary>
+        public RelayCommand WarehouseVehiclesViewCommand { get; set; }
+
         public WarehouseVehiclesViewModel WarehouseVehiclesVM { get; set; }
+
+        //TASKS SECTION ----------------------------------------------------------------------
+
+        /// <summary>
+        /// Command that is switching the View to TasksView using ViemModels
+        /// </summary>
+        public RelayCommand TasksViewCommand { get; set; }
+
+        public TasksViewModel TasksVM { get; set; }
+
+        //LOCATIONS SECTION ------------------------------------------------------------------
+
+        /// <summary>
+        /// Command that is switching the View to BranchesView using ViemModels
+        /// </summary>
+        public RelayCommand BranchesViewCommand { get; set; }
+
+        public BranchesViewModel BranchesVM { get; set; }
+
+        /// <summary>
+        /// Command that is switching the View to DealershipsView using ViemModels
+        /// </summary>
+        public RelayCommand DealershipsViewCommand { get; set; }
+
         public DealershipsViewModel DealershipsVM { get; set; }
+
+        /// <summary>
+        /// Command that is switching the View to WarehousesView using ViemModels
+        /// </summary>
+        public RelayCommand WarehousesViewCommand { get; set; }
+
         public WarehousesViewModel WarehousesVM { get; set; }
+
+        //EMPLOYEES SECTION ------------------------------------------------------------------
+
+        /// <summary>
+        /// Command that is switching the View to EmployeesView using ViemModels
+        /// </summary>
+        public RelayCommand EmployeesViewCommand { get; set; }
+
+        public EmployeesViewModel EmployeesVM { get; set; }
+
+        /// <summary>
+        /// Command that is switching the View to SalesView using ViemModels
+        /// </summary>
+        public RelayCommand SalesViewCommand { get; set; }
+
         public SalesViewModel SalesVM { get; set; }
+
+        //CODES SECTION ----------------------------------------------------------------------
+
+        /// <summary>
+        /// Command that is switching the View to BrandsView using ViemModels
+        /// </summary>
+        public RelayCommand BrandsViewCommand { get; set; }
+
+        public BrandsViewModel BrandsVM { get; set; }
+
+        /// <summary>
+        /// Command that is switching the View to PositionsView using ViemModels
+        /// </summary>
+        public RelayCommand PositionsViewCommand { get; set; }
+
         public PositionsViewModel PositionsVM { get; set; }
 
+        //USERS SECTION ----------------------------------------------------------------------
+
+        /// <summary>
+        /// Command that is switching the View to UsersView using ViemModels
+        /// </summary>
+        public RelayCommand UsersViewCommand { get; set; }
+
+        public UsersViewModel UsersVM { get; set; }
+
+        //-----------------------------------------------------------------------------------
+        
 
         private object _currentView;
-
+        /// <summary>
+        /// Identifier of current selected view
+        /// </summary>
         public object CurrentView
         {
             get { return _currentView; }
@@ -65,27 +151,42 @@ namespace WorkshopDataModifier.MVVM.ViewModel
 
         public MainViewModel()
         {
+            //Home
             HomeVM = new HomeViewModel();
-            CustomersVM = new CustomersViewModel();
-            VehiclesVM = new VehiclesViewModel();
-            TasksVM = new TasksViewModel();
-            EmployeesVM = new EmployeesViewModel();
-            BranchesVM = new BranchesViewModel();
-            BrandsVM = new BrandsViewModel();
-            UsersVM = new UsersViewModel();
 
-            //Inside Declarations
+            //Customers
+            CustomersVM = new CustomersViewModel();
             PurchasesVM = new PurchasesViewModel();
+
+            //Vehicles
+            VehiclesVM = new VehiclesViewModel();
             SoldVehiclesVM = new SoldVehiclesViewModel();
             WarehouseVehiclesVM = new WarehouseVehiclesViewModel();
-            DealershipsVM = new DealershipsViewModel();
-            WarehousesVM = new WarehousesViewModel();   
-            SalesVM = new SalesViewModel();
-            PositionsVM = new PositionsViewModel();
-            
 
+            //Tasks
+            TasksVM = new TasksViewModel();
+
+            //Locations
+            BranchesVM = new BranchesViewModel();
+            DealershipsVM = new DealershipsViewModel();
+            WarehousesVM = new WarehousesViewModel();
+
+            //Employees
+            EmployeesVM = new EmployeesViewModel();
+            SalesVM = new SalesViewModel();
+
+            //Codes
+            BrandsVM = new BrandsViewModel();
+            PositionsVM = new PositionsViewModel();
+
+            //Users
+            UsersVM = new UsersViewModel();
+
+            
+            // Set the current view to HomeView
             CurrentView = HomeVM;
 
+            //Main bindings
             HomeViewCommand = new RelayCommand(o =>
             {
                 CurrentView = HomeVM;
