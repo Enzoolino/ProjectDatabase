@@ -579,8 +579,8 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        private CustomersDbContext _dbContext;
 
+        private CustomersDbContext _dbContext;
         public CustomersView()
         {
             InitializeComponent();
