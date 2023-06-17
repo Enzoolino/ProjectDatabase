@@ -104,76 +104,76 @@
     </ApplicationDefinition>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
-    <Compile Include="Data\branch_office.cs">
+    <Compile Include="MVVM\Model\branch_office.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\brands.cs">
+    <Compile Include="MVVM\Model\brands.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\customer.cs">
+    <Compile Include="MVVM\Model\customer.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\dealership.cs">
+    <Compile Include="MVVM\Model\dealership.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\DealershipModel.Context.cs">
+    <Compile Include="MVVM\Model\DealershipModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DealershipModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\DealershipModel.cs">
+    <Compile Include="MVVM\Model\DealershipModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\DealershipModel.Designer.cs">
+    <Compile Include="MVVM\Model\DealershipModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DealershipModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Data\employee.cs">
+    <Compile Include="MVVM\Model\employee.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\position.cs">
+    <Compile Include="MVVM\Model\position.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\purchase.cs">
+    <Compile Include="MVVM\Model\purchase.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\sell.cs">
+    <Compile Include="MVVM\Model\sell.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\sold_vehicles.cs">
+    <Compile Include="MVVM\Model\sold_vehicles.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\users.cs">
+    <Compile Include="MVVM\Model\users.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\vehicles.cs">
+    <Compile Include="MVVM\Model\vehicles.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\warehouse.cs">
+    <Compile Include="MVVM\Model\warehouse.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\warehouse_vehicles.cs">
+    <Compile Include="MVVM\Model\warehouse_vehicles.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\ViewModel\DealershipsViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\PositionsViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\SalesViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\SoldVehiclesViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\VehiclesViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\CustomersViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Locations\DealershipsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Codes\PositionsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Employees\SalesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Vehicles\SoldVehiclesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Vehicles\VehiclesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Customers\CustomersViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Locations\BranchesViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Home\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\PurchasesViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\BrandsViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\TasksViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\UsersViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\EmployeesViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\WarehousesViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\WarehouseVehiclesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Customers\PurchasesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Codes\BrandsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Tasks\TasksViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Users\UsersViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Employees\EmployeesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Locations\WarehousesViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Vehicles\WarehouseVehiclesViewModel.cs" />
     <Compile Include="MVVM\View\Locations\DealershipsView.xaml.cs">
       <DependentUpon>DealershipsView.xaml</DependentUpon>
     </Compile>
@@ -376,11 +376,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Data\DealershipModel.edmx">
+    <EntityDeploy Include="MVVM\Model\DealershipModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DealershipModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Data\DealershipModel.edmx.diagram">
+    <None Include="MVVM\Model\DealershipModel.edmx.diagram">
       <DependentUpon>DealershipModel.edmx</DependentUpon>
     </None>
     <Resource Include="Fonts\Poppins-Regular.ttf" />
@@ -394,14 +394,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="MVVM\Model\" />
-    <Folder Include="MVVM\ViewModel\Codes\" />
-    <Folder Include="MVVM\ViewModel\Customers\" />
-    <Folder Include="MVVM\ViewModel\Employees\" />
-    <Folder Include="MVVM\ViewModel\Home\" />
-    <Folder Include="MVVM\ViewModel\Tasks\" />
-    <Folder Include="MVVM\ViewModel\Users\" />
-    <Folder Include="MVVM\ViewModel\Vehicles\" />
+    <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -419,12 +412,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\DealershipModel.Context.tt">
+    <Content Include="MVVM\Model\DealershipModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DealershipModel.edmx</DependentUpon>
       <LastGenOutput>DealershipModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Data\DealershipModel.tt">
+    <Content Include="MVVM\Model\DealershipModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DealershipModel.edmx</DependentUpon>
       <LastGenOutput>DealershipModel.cs</LastGenOutput>

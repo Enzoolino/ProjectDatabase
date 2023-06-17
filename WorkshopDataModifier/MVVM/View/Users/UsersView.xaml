@@ -108,7 +108,7 @@
 
                 <TextBox x:Name="txtSearchUsers"
                          Margin="0 10 20 20"
-                         Tag="Search in Warehouse..."
+                         Tag="Search in Users..."
                          Style="{StaticResource TextBoxFilterTheme}"
                          TextChanged="SearchTextBox_TextChanged"
                          GotKeyboardFocus="txtSearchUsers_GotKeyboardFocus"/>
