@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WorkshopDataModifier.Data
+namespace WorkshopDataModifier.MVVM.Model
 {
     using System;
     using System.Collections.ObjectModel;
@@ -15,7 +15,6 @@ namespace WorkshopDataModifier.Data
 
     public partial class users : ObservableObject
     {
-
         private bool _isSelected;
 
         public bool IsSelected
@@ -27,6 +26,7 @@ namespace WorkshopDataModifier.Data
                 OnPropertyChanged();
             }
         }
+
         public long ID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }

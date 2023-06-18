@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WorkshopDataModifier.Data
+namespace WorkshopDataModifier.MVVM.Model
 {
     using System;
     using System.Collections.ObjectModel;

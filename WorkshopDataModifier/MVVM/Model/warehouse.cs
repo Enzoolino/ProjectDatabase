@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WorkshopDataModifier.Data
+namespace WorkshopDataModifier.MVVM.Model
 {
     using System;
     using System.Collections.ObjectModel;
@@ -36,6 +36,7 @@ namespace WorkshopDataModifier.Data
         public string Name { get; set; }
         public string Location { get; set; }
         public Nullable<int> BranchID { get; set; }
+        public string Phone { get; set; }
     
         public virtual branch_office branch_office { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

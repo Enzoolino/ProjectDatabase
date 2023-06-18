@@ -18,7 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WorkshopDataModifier.Data;
+using WorkshopDataModifier.MVVM.Model;
 
 namespace WorkshopDataModifier.MVVM.View
 {

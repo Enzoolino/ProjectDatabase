@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WorkshopDataModifier.Data
+namespace WorkshopDataModifier.MVVM.Model
 {
     using System;
     using System.Collections.ObjectModel;
@@ -15,7 +15,6 @@ namespace WorkshopDataModifier.Data
 
     public partial class sell : ObservableObject
     {
-
         private bool _isSelected;
 
         public bool IsSelected
@@ -27,6 +26,7 @@ namespace WorkshopDataModifier.Data
                 OnPropertyChanged();
             }
         }
+
         public long Sin { get; set; }
         public int Vin { get; set; }
         public long EmpID { get; set; }
