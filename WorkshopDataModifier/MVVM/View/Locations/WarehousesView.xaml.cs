@@ -522,34 +522,6 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        #region Date Filtering
-
-        private void DataFilterButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (DayButton.IsChecked == true)
-            {
-
-            }
-            else if (WeekButton.IsChecked == true)
-            {
-
-            }
-            else if (MonthButton.IsChecked == true)
-            {
-
-            }
-            else if (YearButton.IsChecked == true)
-            {
-
-            }
-            else if (InfButton.IsChecked == true)
-            {
-
-            }
-
-        }
-        #endregion
-
 
         private WarehousesDbContext _dbContext;
         public WarehousesView()

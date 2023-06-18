@@ -393,8 +393,9 @@ namespace WorkshopDataModifier.MVVM.View
                         Vin = txtVin,
                         Name = AddName.Text,
                         Surname = AddSurname.Text,
-                        Phone = AddPhone.Text
-                    };
+                        Phone = AddPhone.Text,
+                        AddTime = DateTime.Now
+                };
 
                     context.customer.Add(newCustomer);
                     context.SaveChanges();

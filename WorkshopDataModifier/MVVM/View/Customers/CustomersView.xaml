@@ -41,7 +41,7 @@
             
             <!--Add Popup Window-->
             <Popup Name="AddPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="600" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
-                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="10 0 10 0" BorderBrush="#5F85DB" 
+                <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="AddPopup_MouseLeftButtonDown" MouseMove="AddPopup_MouseMove" MouseLeftButtonUp="AddPopup_MouseLeftButtonUp">
 
                     <Grid Margin="50 0 50 0">
@@ -58,11 +58,12 @@
                                    Margin="0 10 0 0" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
 
                         <!--Input Boxes-->
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 10 0 0">
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 20 0 0" HorizontalAlignment="Center">
 
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-                                <TextBox Margin="0 10 10 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 0 10 0">
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Sin"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
                                          materialDesign:HintAssist.FloatingOffset="0, -20"
                                          BorderBrush="#c5c8cc"
                                          BorderThickness="0 0 0 1.5"
@@ -71,8 +72,9 @@
                             </StackPanel>
 
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="50 0 0 0">
-                                <TextBox Margin="0 10 10 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Vin"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
                                          materialDesign:HintAssist.FloatingOffset="0, -20"
                                          BorderBrush="#c5c8cc"
                                          BorderThickness="0 0 0 1.5"
@@ -82,11 +84,12 @@
 
                         </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0">
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
 
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-                                <TextBox Margin="0 10 10 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 0 10 0">
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Name"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
                                          materialDesign:HintAssist.FloatingOffset="0, -20"
                                          BorderBrush="#c5c8cc"
                                          BorderThickness="0 0 0 1.5"
@@ -96,8 +99,9 @@
 
 
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="50 0 0 0">
-                                <TextBox Margin="0 10 10 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Surname"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
                                          materialDesign:HintAssist.FloatingOffset="0, -20"
                                          BorderBrush="#c5c8cc"
                                          BorderThickness="0 0 0 1.5"
@@ -107,16 +111,21 @@
 
                         </StackPanel>
 
-                        <StackPanel Orientation="Vertical" Grid.Row="3" HorizontalAlignment="Center" Margin="0 30 0 0">
+                        <StackPanel Orientation="Vertical" Grid.Row="3" HorizontalAlignment="Center" Margin="15 30 0 0">
 
-                            <TextBox Margin="0 10 10 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                         materialDesign:HintAssist.Hint="Phone"
-                                         materialDesign:HintAssist.FloatingOffset="0, -20"
-                                         BorderBrush="#c5c8cc"
-                                         BorderThickness="0 0 0 1.5"
-                                         Name="AddPhone"
-                                         Width="200"/>
-
+                            <StackPanel Orientation="Horizontal">
+                            <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="Phone"
+                                     materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                     materialDesign:HintAssist.FloatingOffset="0, -20"
+                                     BorderBrush="#c5c8cc"
+                                     BorderThickness="0 0 0 1.5"
+                                     Name="AddPhone"
+                                     Width="200">
+                            </TextBox>
+                                <fa:IconImage Icon="Phone" Height="15" Width="15" HorizontalAlignment="Right" Foreground="Gray" Margin="5 13 0 0"/>
+                            </StackPanel>
+                        
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
                                 <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
                                     FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmAddButton_Click"/>
@@ -147,9 +156,12 @@
                        Margin="20 0 0 10"/>
 
             <!--Filter TextBox-->
-            <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontFamily="/Fonts/#Poppins" Margin="0 0 215 10"
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                <fa:IconImage Icon="Filter" Width="15" Height="15" Foreground="Gray" Margin="0 0 5 10"/>
+            <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontFamily="/Fonts/#Poppins" Margin="0 0 210 10"
                        Foreground="#ffffff" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-            
+                
+            </StackPanel>
             
             <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
 
@@ -207,11 +219,21 @@
                 </DataGrid.Columns>
             </DataGrid>
 
+            
+
             <!--Edit Popup Window-->
-            <Popup Name="EditPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto">
-                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+            <Popup Name="EditPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="600" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
+                <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="EditPopup_MouseLeftButtonDown" MouseMove="EditPopup_MouseMove" MouseLeftButtonUp="EditPopup_MouseLeftButtonUp">
-                    <StackPanel>
+
+                    <Grid Margin="50 0 50 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
                         <!--Title TextBox-->
                         <TextBlock Foreground="Black" Text="Edit Window" 
                                    Margin="0 10 0 10" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
@@ -219,47 +241,92 @@
                                    FontSize="12" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0 0 0 30"/>
 
                         <!--Input Boxes-->
-                        <TextBlock Foreground="DimGray" Text="Edit Sin of selected customer:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Sin"  
-                                 Name="EditSin"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Vin of selected customer:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Vin"  
-                                 Name="EditVin"/>
-                        <TextBlock Foreground="DimGray" Text="Edit name of selected customer:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Name"  
-                                 Name="EditName"/>
-                        <TextBlock Foreground="DimGray" Text="Edit surname of selected customer:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Surname" 
-                                 Name="EditSurname"/>
-                        <TextBlock Foreground="DimGray" Text="Edit phone number of selected customer:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Phone number"
-                                 Name="EditPhone"/>
-                       
-                        <!--Rules TextBlocks-->
-                        <TextBlock Foreground="Black" Text="Rules:" Margin="0 10 0 10" FontSize="18" FontFamily="/Fonts/#Poppins"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 20 0 0" HorizontalAlignment="Center">
 
-                        <TextBlock Name="EditInfo" Foreground="Black" FontFamily="/Fonts/#Poppins" Text="* Leave the input unchanged if you do not wish for the row to be edited." Visibility="Visible"/>
-                        <TextBlock Foreground="Black" FontFamily="/Fonts/#Poppins">
-                            * Name    = max 30 symbols. <LineBreak/>
-                            * Surname = max 30 symbols. <LineBreak/>
-                            * Addres  = max 50 symbols. <LineBreak/>
-                            * PESEL   = 11 numbers.
-                        </TextBlock>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 0 10 0">
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Sin"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditSin"
+                                         Width="200"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
-                            <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
-                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmEditButton_Click"/>
-                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
-                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelEditButton_Click"/>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="50 0 0 0">
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Vin"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditVin"
+                                         Width="200"/>
+                            </StackPanel>
+
                         </StackPanel>
 
-                    </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 0 10 0">
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Name"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditName"
+                                         Width="200"/>
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="50 0 0 0">
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Surname"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditSurname"
+                                         Width="200"/>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Grid.Row="3" HorizontalAlignment="Center" Margin="15 30 0 0">
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Phone"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditPhone"
+                                         Width="200">
+                                </TextBox>
+                                <fa:IconImage Icon="Phone" Height="15" Width="15" HorizontalAlignment="Right" Foreground="Gray" Margin="5 13 0 0"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
+                                <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmEditButton_Click"/>
+                                <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelEditButton_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+
+
+
+                    </Grid>
+
                 </Border>
             </Popup>
 
             <!--Delete Popup Window-->
-            <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="475" Height="auto">
-                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+            <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
+                <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="DeletePopup_MouseLeftButtonDown" MouseMove="DeletePopup_MouseMove" MouseLeftButtonUp="DeletePopup_MouseLeftButtonUp">
                     <StackPanel>
                         <!--Information-->

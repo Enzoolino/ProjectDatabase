@@ -85,17 +85,7 @@
                              Command="{Binding DataContext.WarehousesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
             </StackPanel>
 
-            <!--Filter by Date Buttons-->
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Right">
-                <RadioButton x:Name="DayButton" Content="Day" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
-                <RadioButton x:Name="WeekButton" Content="Week" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
-                <RadioButton x:Name="MonthButton" Content="Month" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
-                <RadioButton x:Name="YearButton" Content="Year" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
-                <RadioButton x:Name="InfButton" Style="{StaticResource FilterByDateButtonTheme}">
-                    <fa:IconImage Icon="Infinity" Foreground="White" Height="20" Width="40"/>
-                </RadioButton>
-            </StackPanel>
-
+            
             <!--Counter Title-->
             <TextBlock Text="BranchesCounter" Name="BranchesCounter" Grid.Row="4" FontSize="18" FontFamily="/Fonts/#Poppins"
                        Foreground="#ffffff" HorizontalAlignment="Left" VerticalAlignment="Center"
