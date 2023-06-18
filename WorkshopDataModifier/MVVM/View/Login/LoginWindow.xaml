@@ -14,8 +14,8 @@
         WindowStartupLocation="CenterScreen">
 
     <materialDesign:Card UniformCornerRadius="15" Background="{DynamicResource MaterialDesignDarkBackground}"
-                         Margin="25" materialDesign:ElevationAssist.Elevation="Dp4"
-                         >
+                         Margin="25" materialDesign:ElevationAssist.Elevation="Dp4">
+        
         <materialDesign:DialogHost CloseOnClickAway="True" x:Name="DialogHost">
             <StackPanel>
 

@@ -16,6 +16,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Windows.Controls.Primitives;
 using System.Collections.Specialized;
+using System.Windows.Media;
 
 namespace WorkshopDataModifier.MVVM.View
 {
@@ -118,6 +119,15 @@ namespace WorkshopDataModifier.MVVM.View
                 EditPopup.IsOpen = true;
             }
 
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (EditPopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
+
         }
 
         private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
@@ -149,13 +159,10 @@ namespace WorkshopDataModifier.MVVM.View
                         {
                             customer selectedRow = context.customer.Find(dataRow.Sin, dataRow.Vin);
 
-                            long txtSin;
-                            int txtVin;
-
-                            if (EditSin.Text != "" && EditSin.Text != null && long.TryParse(EditSin.Text, out txtSin))
+                            if (EditSin.Text != "" && EditSin.Text != null && long.TryParse(EditSin.Text, out long txtSin))
                                 selectedRow.Sin = txtSin;
 
-                            if (EditVin.Text != "" && EditVin.Text != null && int.TryParse(EditVin.Text, out txtVin))
+                            if (EditVin.Text != "" && EditVin.Text != null && int.TryParse(EditVin.Text, out int txtVin))
                                 selectedRow.Vin = txtVin;
 
                             if (EditName.Text != "" && EditName.Text != null)
@@ -173,6 +180,13 @@ namespace WorkshopDataModifier.MVVM.View
                     CustomersDataGrid.ItemsSource = context.customer.ToList();
                 }
 
+                selectedRows.Clear();
+
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                EnableControls();
+
                 EditPopup.IsOpen = false;
 
                 EditSin.Text = "";
@@ -180,8 +194,8 @@ namespace WorkshopDataModifier.MVVM.View
                 EditName.Text = "";
                 EditSurname.Text = "";
                 EditPhone.Text = "";
-                
-                selectedRows.Clear();
+
+
             }
             catch (DbEntityValidationException ex)
             {
@@ -206,15 +220,20 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelEditButton_Click(object sender, RoutedEventArgs e)
         {
+            selectedRows.Clear();
+
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            EnableControls();
+
+            EditPopup.IsOpen = false;
+
             EditVin.Text = "";
             EditSin.Text = "";
             EditName.Text = "";
             EditSurname.Text = "";
             EditPhone.Text = "";
-
-            selectedRows.Clear();
-
-            EditPopup.IsOpen = false;
         }
         #endregion
 
@@ -254,6 +273,15 @@ namespace WorkshopDataModifier.MVVM.View
                 DeletePopup.DataContext = selectedRows;
                 DeletePopup.IsOpen = true;
             }
+
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (DeletePopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
         private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
@@ -288,6 +316,11 @@ namespace WorkshopDataModifier.MVVM.View
                 RowCount = CustomersDataGrid.Items.Count;
                 CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
 
+                EnableControls();
+
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
                 DeletePopup.IsOpen = false;
                 selectedRows.Clear();
             }
@@ -321,6 +354,12 @@ namespace WorkshopDataModifier.MVVM.View
         private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
         {
             selectedRows.Clear();
+
+            EnableControls();
+
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
             DeletePopup.IsOpen = false;
         }
         #endregion
@@ -329,6 +368,13 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Enable Scrimming
+            MainContentWindow.Opacity = 0.5;
+            MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+
+            DisableControls();
+            
+            //Open Popup
             AddPopup.IsOpen = true;
         }
 
@@ -356,8 +402,18 @@ namespace WorkshopDataModifier.MVVM.View
                     CustomersDataGrid.ItemsSource = context.customer.ToList();
                 }
 
+                //Update Counter
                 RowCount = CustomersDataGrid.Items.Count;
                 CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
+
+                //Enable all other controls
+                EnableControls();
+
+                //Disable scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Close Popup
                 AddPopup.IsOpen = false;
             }
             catch (Exception ex)
@@ -368,12 +424,20 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelAddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Make the text values empty
             AddSin.Text = "";
             AddVin.Text = "";
             AddName.Text = "";
             AddSurname.Text = "";
             AddPhone.Text = "";
-           
+
+            //Enable all other controls
+            EnableControls();
+
+            //Disable scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
             AddPopup.IsOpen = false;
         }
 
@@ -551,32 +615,26 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        #region Date Filtering
+        #region Controls Control
 
-        private void DataFilterButton_Checked(object sender, RoutedEventArgs e)
+        private void DisableControls()
         {
-            if (DayButton.IsChecked == true)
-            {
-
-            }
-            else if (WeekButton.IsChecked == true)
-            {
-
-            }
-            else if (MonthButton.IsChecked == true)
-            {
-
-            }
-            else if (YearButton.IsChecked == true)
-            {
-
-            }
-            else if (InfButton.IsChecked == true)
-            {
-
-            }
-
+            btnCustomer.IsHitTestVisible = false;
+            btnPurchase.IsHitTestVisible = false;
+            btnAdd.IsHitTestVisible = false;    
+            txtSearchCustomers.IsHitTestVisible = false;
+            CustomersDataGrid.IsHitTestVisible = false;
         }
+        private void EnableControls()
+        {
+            btnCustomer.IsHitTestVisible = true;
+            btnPurchase.IsHitTestVisible = true;
+            btnAdd.IsHitTestVisible = true;
+            txtSearchCustomers.IsHitTestVisible = true;
+            CustomersDataGrid.IsHitTestVisible = true;
+        }
+
+
         #endregion
 
 
