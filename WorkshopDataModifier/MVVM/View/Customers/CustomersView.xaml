@@ -22,9 +22,8 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            
             
             <!--Page Title-->
             <TextBlock Text="Customers" Grid.Row="1" FontSize="32" Margin="20 20 0 0"
@@ -38,9 +37,8 @@
                 </StackPanel>
             </Button>
 
-            
             <!--Add Popup Window-->
-            <Popup Name="AddPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="600" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
+            <Popup Name="AddPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="630" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
                 <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="AddPopup_MouseLeftButtonDown" MouseMove="AddPopup_MouseMove" MouseLeftButtonUp="AddPopup_MouseLeftButtonUp">
 
@@ -52,7 +50,6 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-
                         <!--Title TextBox-->
                         <TextBlock Foreground="Black" Text="Add Window" 
                                    Margin="0 10 0 0" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
@@ -60,7 +57,8 @@
                         <!--Input Boxes-->
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 20 0 0" HorizontalAlignment="Center">
 
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 0 10 0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 0 10 0">
+                                <fa:IconImage Icon="Info" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Sin"
                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
@@ -71,7 +69,8 @@
                                          Width="200"/>
                             </StackPanel>
 
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="50 0 0 0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="50 0 0 0">
+                                <fa:IconImage Icon="CarBattery" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Vin"
                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
@@ -86,7 +85,8 @@
 
                         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
 
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 0 10 0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 0 10 0">
+                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Name"
                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
@@ -98,7 +98,8 @@
                             </StackPanel>
 
 
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="50 0 0 0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="50 0 0 0">
+                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Surname"
                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
@@ -114,18 +115,18 @@
                         <StackPanel Orientation="Vertical" Grid.Row="3" HorizontalAlignment="Center" Margin="15 30 0 0">
 
                             <StackPanel Orientation="Horizontal">
-                            <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                <fa:IconImage Icon="Phone" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                      materialDesign:HintAssist.Hint="Phone"
                                      materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
                                      materialDesign:HintAssist.FloatingOffset="0, -20"
                                      BorderBrush="#c5c8cc"
                                      BorderThickness="0 0 0 1.5"
                                      Name="AddPhone"
-                                     Width="200">
-                            </TextBox>
-                                <fa:IconImage Icon="Phone" Height="15" Width="15" HorizontalAlignment="Right" Foreground="Gray" Margin="5 13 0 0"/>
+                                     Width="200"/>
                             </StackPanel>
                         
+                        <!--Option Buttons-->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
                                 <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
                                     FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmAddButton_Click"/>
@@ -134,8 +135,7 @@
                             </StackPanel>
                         </StackPanel>
 
-                        
-
+                       
                     </Grid>
                 </Border>
             </Popup>
@@ -158,9 +158,8 @@
             <!--Filter TextBox-->
             <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
                 <fa:IconImage Icon="Filter" Width="15" Height="15" Foreground="Gray" Margin="0 0 5 10"/>
-            <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontFamily="/Fonts/#Poppins" Margin="0 0 210 10"
+                <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontFamily="/Fonts/#Poppins" Margin="0 0 210 10"
                        Foreground="#ffffff" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                
             </StackPanel>
             
             <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
@@ -170,7 +169,7 @@
                          Tag="Search in Customers..."
                          Style="{StaticResource TextBoxFilterTheme}"
                          TextChanged="SearchTextBox_TextChanged"
-                         GotKeyboardFocus="txtSearchCustomers_GotKeyboardFocus"/>
+                         GotKeyboardFocus="SearchCustomers_GotKeyboardFocus"/>
             </Grid>
 
             <!--Customers DataGrid-->
@@ -222,7 +221,7 @@
             
 
             <!--Edit Popup Window-->
-            <Popup Name="EditPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="600" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
+            <Popup Name="EditPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="630" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
                 <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="EditPopup_MouseLeftButtonDown" MouseMove="EditPopup_MouseMove" MouseLeftButtonUp="EditPopup_MouseLeftButtonUp">
 

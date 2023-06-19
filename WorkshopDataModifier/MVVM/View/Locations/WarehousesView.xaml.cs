@@ -26,10 +26,11 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public partial class WarehousesView : UserControl
     {
-
-
         #region Counter of the current clients (dynamic)
         private int _rowCount;
+        /// <summary>
+        /// Counts number of items inside "warehouse" table
+        /// </summary>
         public int RowCount
         {
             get { return _rowCount; }
@@ -76,6 +77,8 @@ namespace WorkshopDataModifier.MVVM.View
         static List<warehouse> selectedRows = new List<warehouse>();
 
         #region Edit Section
+
+        //Button Click Handler - Sets up the rows for editing
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (warehouse rowData in WarehousesDataGrid.Items)
@@ -109,19 +112,34 @@ namespace WorkshopDataModifier.MVVM.View
                 EditName.Text = row.Name;
                 EditLocation.Text = row.Location;
                 EditBranch.Text = row.BranchID.ToString();
+                EditPhone.Text = row.Phone;
 
                 EditPopup.IsOpen = true;
             }
             else
             {
+                EditName.IsHitTestVisible = false;
+                EditName.Foreground = Brushes.Gray;
+                EditName.Text = "Can't Multi Edit !";
+
                 EditPopup.DataContext = selectedRows;
                 MultiEditionWarning.Visibility = Visibility.Visible;
 
                 EditPopup.IsOpen = true;
             }
 
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (EditPopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
+
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -141,6 +159,7 @@ namespace WorkshopDataModifier.MVVM.View
                         selectedRow.Name = EditName.Text;
                         selectedRow.Location = EditLocation.Text;
                         selectedRow.BranchID = txtBranch;
+                        selectedRow.Phone = EditPhone.Text;
                     }
                     else
                     {
@@ -155,19 +174,39 @@ namespace WorkshopDataModifier.MVVM.View
 
                             if (EditBranch.Text != "" && EditBranch.Text != null)
                                 selectedRow.BranchID = txtBranch;
+
+                            if (EditPhone.Text != "" && EditPhone.Text != null)
+                                selectedRow.Phone = EditPhone.Text;
                         }
                     }
 
+                    //Update DataGrid to show changes
                     context.SaveChanges();
                     WarehousesDataGrid.ItemsSource = context.Warehouse.ToList();
                 }
+
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 EditPopup.IsOpen = false;
 
+                //Set text back to empty
                 EditName.Text = "";
                 EditLocation.Text = "";
                 EditBranch.Text = "";
+                EditPhone.Text = "";
 
-                selectedRows.Clear();
+                //Set the Inputs back to normal
+                EditName.IsHitTestVisible = true;
+                EditName.Foreground = Brushes.Black;
             }
             catch (DbEntityValidationException ex)
             {
@@ -192,17 +231,34 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelEditButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
+            selectedRows.Clear();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            EditPopup.IsOpen = false;
+
+            //Set text back to empty
             EditName.Text = "";
             EditLocation.Text = "";
             EditBranch.Text = "";
+            EditPhone.Text = "";
 
-            selectedRows.Clear();
-
-            EditPopup.IsOpen = false;
+            //Set the Inputs back to normal
+            EditName.IsHitTestVisible = true;
+            EditName.Foreground = Brushes.Black;
         }
         #endregion
 
         #region Delete Section
+
+        //Button Click Handler - Sets up the rows for deletion
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (warehouse rowData in WarehousesDataGrid.Items)
@@ -238,6 +294,15 @@ namespace WorkshopDataModifier.MVVM.View
                 DeletePopup.DataContext = selectedRows;
                 DeletePopup.IsOpen = true;
             }
+
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (DeletePopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
         private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
@@ -269,11 +334,22 @@ namespace WorkshopDataModifier.MVVM.View
                     WarehousesDataGrid.ItemsSource = context.Warehouse.ToList();
                 }
 
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Update Counter
                 RowCount = WarehousesDataGrid.Items.Count;
                 WarehousesCounter.Text = $"Current Saved Warehouses: {RowCount}";
 
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 DeletePopup.IsOpen = false;
-                selectedRows.Clear();
             }
             catch (DbUpdateException ex)
             {
@@ -304,18 +380,38 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
             selectedRows.Clear();
+
+            //Enable Controls
+            EnableControls();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Close Popup
             DeletePopup.IsOpen = false;
         }
         #endregion
 
         #region Add Section
 
+        //Button Click Handler - Opens Row Adding Popup
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Enable Scrimming
+            MainContentWindow.Opacity = 0.5;
+            MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+
+            //Disable Controls
+            DisableControls();
+
+            //Open Popup
             AddPopup.IsOpen = true;
         }
 
+        //Button Click Handler - Adds row to the table if everything correct
         private void ConfirmAddButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -324,22 +420,39 @@ namespace WorkshopDataModifier.MVVM.View
                 {
                     int txtBranch = int.Parse(AddBranch.Text);
 
-                    warehouse newBranch = new warehouse
+                    warehouse newWarehouse = new warehouse
                     {
                         Name = AddName.Text,
                         Location = AddLocation.Text,
-                        BranchID = txtBranch
+                        BranchID = txtBranch,
+                        Phone = AddPhone.Text
                     };
 
-                    context.Warehouse.Add(newBranch);
+                    context.Warehouse.Add(newWarehouse);
                     context.SaveChanges();
 
                     WarehousesDataGrid.ItemsSource = context.Warehouse.ToList();
                 }
 
+                //Update Counter
                 RowCount = WarehousesDataGrid.Items.Count;
                 WarehousesCounter.Text = $"Current Saved Warehouses: {RowCount}";
+
+                //Disable scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 AddPopup.IsOpen = false;
+
+                //Set text back to empty
+                AddName.Text = "";
+                AddLocation.Text = "";
+                AddBranch.Text = "";
+                AddPhone.Text = "";
             }
             catch (Exception ex)
             {
@@ -349,11 +462,21 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelAddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Disable scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            AddPopup.IsOpen = false;
+
+            //Set text back to empty
             AddName.Text = "";
             AddLocation.Text = "";
             AddBranch.Text = "";
-
-            AddPopup.IsOpen = false;
+            AddPhone.Text = "";
         }
 
         #endregion
@@ -485,7 +608,8 @@ namespace WorkshopDataModifier.MVVM.View
 
                         return dataItem.Name.ToLower().Contains(searchText) ||
                                dataItem.Location.ToLower().Contains(searchText) ||
-                               txtBranch.Contains(searchText);
+                               txtBranch.Contains(searchText) ||
+                               dataItem.Phone.ToLower().Contains(searchText);
                     }
 
                     return false;
@@ -513,11 +637,48 @@ namespace WorkshopDataModifier.MVVM.View
 
         }
 
-        private void txtSearchWarehouses_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void SearchWarehouses_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (txtSearchWarehouses.Text == "Search in Warehouses...")
             {
                 txtSearchWarehouses.Text = "";
+            }
+        }
+        #endregion
+
+        #region Controls Control
+
+        //Disables all Controls
+        private void DisableControls()
+        {
+            btnBranches.IsHitTestVisible = false;
+            btnDealerships.IsHitTestVisible = false;
+            btnAdd.IsHitTestVisible = false;
+            txtSearchWarehouses.IsHitTestVisible = false;
+            WarehousesDataGrid.IsHitTestVisible = false;
+        }
+
+        //Enables all Controls
+        private void EnableControls()
+        {
+            btnBranches.IsHitTestVisible = true;
+            btnDealerships.IsHitTestVisible = true;
+            btnAdd.IsHitTestVisible = true;
+            txtSearchWarehouses.IsHitTestVisible = true;
+            WarehousesDataGrid.IsHitTestVisible = true;
+        }
+        #endregion
+
+        #region Comboboxes
+
+        //Set ItemSourcesof ComboBoxes
+        private void BranchCombobox_Options()
+        {
+            using (var context = new WarehousesBranchesDbContext())
+            {
+                var options = context.Branch.ToList();
+                AddBranch.ItemsSource = options;
+                EditBranch.ItemsSource = options;
             }
         }
         #endregion
@@ -535,6 +696,9 @@ namespace WorkshopDataModifier.MVVM.View
             //Counter initializer
             RowCount = WarehousesDataGrid.Items.Count;
             WarehousesCounter.Text = $"Current Saved Warehouses: {RowCount}";
+
+            //Setup Comboboxes
+            BranchCombobox_Options();
         }
     }
 
@@ -549,4 +713,17 @@ namespace WorkshopDataModifier.MVVM.View
         {
         }
     }
+
+    /// <summary>
+    /// Gets context of branch_office tab from the connected DataBase
+    /// </summary>
+    public class WarehousesBranchesDbContext : DbContext
+    {
+        public DbSet<branch_office> Branch { get; set; }
+
+        public WarehousesBranchesDbContext() : base("DealershipCon")
+        {
+        }
+    }
+
 }

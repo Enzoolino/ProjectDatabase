@@ -142,7 +142,7 @@ namespace WorkshopDataModifier.MVVM.View
                     }
                     else if (selectedRows.Count == 1)
                     {
-                        customer selectedRow = context.customer.Find(selectedRows[0].Sin, selectedRows[0].Vin);
+                        customer selectedRow = context.Customer.Find(selectedRows[0].Sin, selectedRows[0].Vin);
 
                         long txtSin = long.Parse(EditSin.Text);
                         int txtVin = int.Parse(EditVin.Text);
@@ -157,7 +157,7 @@ namespace WorkshopDataModifier.MVVM.View
                     {
                         foreach (customer dataRow in selectedRows)
                         {
-                            customer selectedRow = context.customer.Find(dataRow.Sin, dataRow.Vin);
+                            customer selectedRow = context.Customer.Find(dataRow.Sin, dataRow.Vin);
 
                             if (EditSin.Text != "" && EditSin.Text != null && long.TryParse(EditSin.Text, out long txtSin))
                                 selectedRow.Sin = txtSin;
@@ -177,7 +177,7 @@ namespace WorkshopDataModifier.MVVM.View
                     }
 
                     context.SaveChanges(); 
-                    CustomersDataGrid.ItemsSource = context.customer.ToList();
+                    CustomersDataGrid.ItemsSource = context.Customer.ToList();
                 }
 
                 selectedRows.Clear();
@@ -194,7 +194,6 @@ namespace WorkshopDataModifier.MVVM.View
                 EditName.Text = "";
                 EditSurname.Text = "";
                 EditPhone.Text = "";
-
 
             }
             catch (DbEntityValidationException ex)
@@ -296,21 +295,21 @@ namespace WorkshopDataModifier.MVVM.View
                     }
                     else if (selectedRows.Count == 1)
                     {
-                        customer selectedRow = context.customer.Find(selectedRows[0].Sin, selectedRows[0].Vin);
-                        context.customer.Remove(selectedRow);
+                        customer selectedRow = context.Customer.Find(selectedRows[0].Sin, selectedRows[0].Vin);
+                        context.Customer.Remove(selectedRow);
                     }
                     else
                     {
                         foreach (customer dataRow in selectedRows)
                         {
-                            customer selectedRow = context.customer.Find(dataRow.Sin, dataRow.Vin);
+                            customer selectedRow = context.Customer.Find(dataRow.Sin, dataRow.Vin);
                             context.Entry(selectedRow).State = EntityState.Deleted;
                         }
                     }
 
                     //Update DataGrid to show changes
                     context.SaveChanges();
-                    CustomersDataGrid.ItemsSource = context.customer.ToList();
+                    CustomersDataGrid.ItemsSource = context.Customer.ToList();
                 }
 
                 RowCount = CustomersDataGrid.Items.Count;
@@ -372,6 +371,7 @@ namespace WorkshopDataModifier.MVVM.View
             MainContentWindow.Opacity = 0.5;
             MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
 
+            //Disable Controls
             DisableControls();
             
             //Open Popup
@@ -397,10 +397,10 @@ namespace WorkshopDataModifier.MVVM.View
                         AddTime = DateTime.Now
                 };
 
-                    context.customer.Add(newCustomer);
+                    context.Customer.Add(newCustomer);
                     context.SaveChanges();
 
-                    CustomersDataGrid.ItemsSource = context.customer.ToList();
+                    CustomersDataGrid.ItemsSource = context.Customer.ToList();
                 }
 
                 //Update Counter
@@ -607,7 +607,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         }
 
-        private void txtSearchCustomers_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void SearchCustomers_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (txtSearchCustomers.Text == "Search in Customers...")
             {
@@ -646,7 +646,7 @@ namespace WorkshopDataModifier.MVVM.View
 
             //Database initializer
             _dbContext = new CustomersDbContext();
-            CustomersDataGrid.ItemsSource = _dbContext.customer.ToList();
+            CustomersDataGrid.ItemsSource = _dbContext.Customer.ToList();
 
             //Counter initializer
             RowCount = CustomersDataGrid.Items.Count;
@@ -660,7 +660,7 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public class CustomersDbContext : DbContext
     {
-        public DbSet<customer> customer { get; set; } //DbSet dla tabeli "customer"
+        public DbSet<customer> Customer { get; set; } //DbSet dla tabeli "customer"
 
         public CustomersDbContext() : base("DealershipCon")
         {

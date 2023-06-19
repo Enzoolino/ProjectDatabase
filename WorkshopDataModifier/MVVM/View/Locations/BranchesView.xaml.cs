@@ -27,10 +27,12 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public partial class BranchesView : UserControl
     {
-
-
         #region Counter of the current clients (dynamic)
+
         private int _rowCount;
+        /// <summary>
+        /// Counts number of items inside "branches" table
+        /// </summary>
         public int RowCount
         {
             get { return _rowCount; }
@@ -49,7 +51,7 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        #region Multi Select
+        #region Multi Selection
         private void SelectAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
             bool isChecked = ((CheckBox)sender).IsChecked == true;
@@ -74,9 +76,11 @@ namespace WorkshopDataModifier.MVVM.View
         #region Data Modification
 
         //List of all selected rows (Initialized with button click)
-        static List<branch_office> selectedRows = new List<branch_office>();
+        static readonly List<branch_office> selectedRows = new List<branch_office>();
 
         #region Edit Section
+
+        //Button Click Handler - Sets up the rows for editing
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (branch_office rowData in BranchesDataGrid.Items)
@@ -120,8 +124,18 @@ namespace WorkshopDataModifier.MVVM.View
                 EditPopup.IsOpen = true;
             }
 
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (EditPopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
+
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -153,15 +167,28 @@ namespace WorkshopDataModifier.MVVM.View
                         }
                     }
 
+                    //Update DataGrid to show changes
                     context.SaveChanges();
                     BranchesDataGrid.ItemsSource = context.Branch.ToList();
                 }
+
+                //Clear Selection
+                selectedRows.Clear(); 
+
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 EditPopup.IsOpen = false;
 
+                //Set text back to empty
                 EditLocation.Text = "";
                 EditPhone.Text = "";
-                
-                selectedRows.Clear();
+                   
             }
             catch (DbEntityValidationException ex)
             {
@@ -186,16 +213,28 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelEditButton_Click(object sender, RoutedEventArgs e)
         {
-            EditLocation.Text = "";
-            EditPhone.Text = "";
-
+            //Clear Selection
             selectedRows.Clear();
 
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
             EditPopup.IsOpen = false;
+
+            //Set text back to empty
+            EditLocation.Text = "";
+            EditPhone.Text = "";
         }
         #endregion
 
         #region Delete Section
+
+        //Button Click Handler - Sets up the rows for deletion
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (branch_office rowData in BranchesDataGrid.Items)
@@ -231,8 +270,18 @@ namespace WorkshopDataModifier.MVVM.View
                 DeletePopup.DataContext = selectedRows;
                 DeletePopup.IsOpen = true;
             }
+
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (DeletePopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -262,11 +311,22 @@ namespace WorkshopDataModifier.MVVM.View
                     BranchesDataGrid.ItemsSource = context.Branch.ToList();
                 }
 
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Update Counter
                 RowCount = BranchesDataGrid.Items.Count;
                 BranchesCounter.Text = $"Current Saved Branches: {RowCount}";
 
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 DeletePopup.IsOpen = false;
-                selectedRows.Clear();
             }
             catch (DbUpdateException ex)
             {
@@ -297,18 +357,38 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
             selectedRows.Clear();
+
+            //Enable Controls
+            EnableControls();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Close Popup
             DeletePopup.IsOpen = false;
         }
         #endregion
 
         #region Add Section
 
+        //Button Click Handler - Opens Row Adding Popup
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Enable Scrimming
+            MainContentWindow.Opacity = 0.5;
+            MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+
+            //Disable Controls
+            DisableControls();
+
+            //Open Popup
             AddPopup.IsOpen = true;
         }
 
+        //Button Click Handler - Adds row to the table if everything correct
         private void ConfirmAddButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -327,22 +407,46 @@ namespace WorkshopDataModifier.MVVM.View
                     BranchesDataGrid.ItemsSource = context.Branch.ToList();
                 }
 
+                //Update Counter
                 RowCount = BranchesDataGrid.Items.Count;
                 BranchesCounter.Text = $"Current Saved Branches: {RowCount}";
+
+                //Disable scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 AddPopup.IsOpen = false;
+
+                //Set text back to empty
+                AddLocation.Text = "";
+                AddPhone.Text = "";
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred while adding the client: {ex.Message}", "Add Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                MessageBox.Show($"An error occurred while adding the branch: {ex.Message}", "Add Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
             }
         }
 
+        //Button Click Handler - Closes the Adding Popup
         private void CancelAddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Disable scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            AddPopup.IsOpen = false;
+
+            //Set text back to empty
             AddLocation.Text = "";
             AddPhone.Text = "";
-            
-            AddPopup.IsOpen = false;
         }
 
         #endregion
@@ -460,6 +564,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Search
 
+        //Dynamic Search within TextBox
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtSearchBranches.Text != "Search in Branches...")
@@ -470,7 +575,8 @@ namespace WorkshopDataModifier.MVVM.View
                 {
                     if (item is branch_office dataItem)
                     {
-                        return dataItem.Location.ToLower().Contains(searchText) ||
+                        return dataItem.BranchID.ToString().Contains(searchText) ||
+                               dataItem.Location.ToLower().Contains(searchText) ||
                                dataItem.Phone.ToLower().Contains(searchText);      
                     }
 
@@ -485,6 +591,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Focus Settings
 
+        //Handles the defocus of Search TextBox
         private void BranchesWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (txtSearchBranches.Text == "")
@@ -499,12 +606,36 @@ namespace WorkshopDataModifier.MVVM.View
 
         }
 
-        private void txtSearchBranches_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        //Handles the focus of Search TextBox
+        private void SearchBranches_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (txtSearchBranches.Text == "Search in Branches...")
             {
                 txtSearchBranches.Text = "";
             }
+        }
+        #endregion
+
+        #region Controls Control
+
+        //Disables all Controls
+        private void DisableControls()
+        {
+            btnDealerships.IsHitTestVisible = false;
+            btnWarehouses.IsHitTestVisible = false;
+            btnAdd.IsHitTestVisible = false;
+            txtSearchBranches.IsHitTestVisible = false;
+            BranchesDataGrid.IsHitTestVisible = false;
+        }
+
+        //Enables all Controls
+        private void EnableControls()
+        {
+            btnDealerships.IsHitTestVisible = true;
+            btnWarehouses.IsHitTestVisible = true;
+            btnAdd.IsHitTestVisible = true;
+            txtSearchBranches.IsHitTestVisible = true;
+            BranchesDataGrid.IsHitTestVisible = true;
         }
         #endregion
 
