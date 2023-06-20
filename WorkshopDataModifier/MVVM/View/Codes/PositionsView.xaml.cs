@@ -29,6 +29,9 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Counter of the current clients (dynamic)
         private int _rowCount;
+        /// <summary>
+        /// Counts number of items inside "positions" table
+        /// </summary>
         public int RowCount
         {
             get { return _rowCount; }
@@ -75,6 +78,8 @@ namespace WorkshopDataModifier.MVVM.View
         static List<position> selectedRows = new List<position>();
 
         #region Edit Section
+
+        //Button Click Handler - Sets up the rows for editing
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (position rowData in PositionsDataGrid.Items)
@@ -103,22 +108,27 @@ namespace WorkshopDataModifier.MVVM.View
             }
             else if (selectedRows.Count == 1)
             {
-                MultiEditionWarning.Visibility = Visibility.Collapsed;
-
                 EditName.Text = row.Name;
 
                 EditPopup.IsOpen = true;
             }
             else
             {
-                EditPopup.DataContext = selectedRows;
-                MultiEditionWarning.Visibility = Visibility.Visible;
-
-                EditPopup.IsOpen = true;
+                MessageBox.Show("This DataGrid can't be multi edited !", "Multi Edition Warning", MessageBoxButton.OK, MessageBoxImage.Information);
+                selectedRows.Clear();
             }
 
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (EditPopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -135,19 +145,27 @@ namespace WorkshopDataModifier.MVVM.View
 
                         selectedRow.Name = EditName.Text;
                     }
-                    else // Con't be multi edited
-                    {
 
-                    }
-
+                    //Update DataGrid to show changes
                     context.SaveChanges();
                     PositionsDataGrid.ItemsSource = context.Position.ToList();
                 }
+
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 EditPopup.IsOpen = false;
 
+                //Set text back to empty
                 EditName.Text = "";
-
-                selectedRows.Clear();
             }
             catch (DbEntityValidationException ex)
             {
@@ -172,15 +190,27 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelEditButton_Click(object sender, RoutedEventArgs e)
         {
-            EditName.Text = "";
-
+            //Clear Selection
             selectedRows.Clear();
 
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
             EditPopup.IsOpen = false;
+
+            //Set text back to empty
+            EditName.Text = "";
         }
         #endregion
 
         #region Delete Section
+
+        //Button Click Handler - Sets up the rows for deletion
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (position rowData in PositionsDataGrid.Items)
@@ -216,8 +246,18 @@ namespace WorkshopDataModifier.MVVM.View
                 DeletePopup.DataContext = selectedRows;
                 DeletePopup.IsOpen = true;
             }
+
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (DeletePopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -247,11 +287,22 @@ namespace WorkshopDataModifier.MVVM.View
                     PositionsDataGrid.ItemsSource = context.Position.ToList();
                 }
 
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Update Counter
                 RowCount = PositionsDataGrid.Items.Count;
                 PositionsCounter.Text = $"Current Saved Positions: {RowCount}";
 
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 DeletePopup.IsOpen = false;
-                selectedRows.Clear();
             }
             catch (DbUpdateException ex)
             {
@@ -282,38 +333,71 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
             selectedRows.Clear();
+
+            //Enable Controls
+            EnableControls();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Close Popup
             DeletePopup.IsOpen = false;
         }
         #endregion
 
         #region Add Section
 
+        //Button Click Handler - Opens Row Adding Popup
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Enable Scrimming
+            MainContentWindow.Opacity = 0.5;
+            MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+
+            //Disable Controls
+            DisableControls();
+
+            //Open Popup
             AddPopup.IsOpen = true;
         }
 
+        //Button Click Handler - Adds row to the table if everything correct
         private void ConfirmAddButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 using (var context = new PositionsDbContext())
                 {
-                    position newBrand = new position
+                    position newPosition = new position
                     {
                         Name = AddName.Text
                     };
 
-                    context.Position.Add(newBrand);
+                    context.Position.Add(newPosition);
                     context.SaveChanges();
 
                     PositionsDataGrid.ItemsSource = context.Position.ToList();
                 }
 
+                //Update Counter
                 RowCount = PositionsDataGrid.Items.Count;
                 PositionsCounter.Text = $"Current Saved Positions: {RowCount}";
+
+                //Disable scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 AddPopup.IsOpen = false;
+
+                //Set text back to empty
+                AddName.Text = "";
             }
             catch (Exception ex)
             {
@@ -323,9 +407,18 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelAddButton_Click(object sender, RoutedEventArgs e)
         {
-            AddName.Text = "";
+            //Disable scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
 
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
             AddPopup.IsOpen = false;
+
+            //Set text back to empty
+            AddName.Text = "";
         }
 
         #endregion
@@ -481,12 +574,33 @@ namespace WorkshopDataModifier.MVVM.View
 
         }
 
-        private void txtSearchPositions_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void SearchPositions_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (txtSearchPositions.Text == "Search in Positions...")
             {
                 txtSearchPositions.Text = "";
             }
+        }
+        #endregion
+
+        #region Controls Control
+
+        //Disables all Controls
+        private void DisableControls()
+        {
+            btnBrands.IsHitTestVisible = false;
+            btnAdd.IsHitTestVisible = false;
+            txtSearchPositions.IsHitTestVisible = false;
+            PositionsDataGrid.IsHitTestVisible = false;
+        }
+
+        //Enables all Controls
+        private void EnableControls()
+        {
+            btnBrands.IsHitTestVisible = true;
+            btnAdd.IsHitTestVisible = true;
+            txtSearchPositions.IsHitTestVisible = true;
+            PositionsDataGrid.IsHitTestVisible = true;
         }
         #endregion
 
