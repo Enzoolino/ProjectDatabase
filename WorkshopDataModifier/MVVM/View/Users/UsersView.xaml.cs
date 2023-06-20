@@ -29,7 +29,11 @@ namespace WorkshopDataModifier.MVVM.View
     {
 
         #region Counter of the current clients (dynamic)
+
         private int _rowCount;
+        /// <summary>
+        /// Counts number of items inside "users" table
+        /// </summary>
         public int RowCount
         {
             get { return _rowCount; }
@@ -76,6 +80,8 @@ namespace WorkshopDataModifier.MVVM.View
         static List<users> selectedRows = new List<users>();
 
         #region Edit Section
+
+        //Button Click Handler - Sets up the rows for editing
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (users rowData in UsersDataGrid.Items)
@@ -121,8 +127,17 @@ namespace WorkshopDataModifier.MVVM.View
                 EditPopup.IsOpen = true;
             }
 
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (EditPopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -165,17 +180,29 @@ namespace WorkshopDataModifier.MVVM.View
                         }
                     }
 
+                    //Update DataGrid to show changes
                     context.SaveChanges();
                     UsersDataGrid.ItemsSource = context.User.ToList();
                 }
+
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 EditPopup.IsOpen = false;
 
+                //Set text back to empty
                 EditUsername.Text = "";
                 EditPassword.Text = "";
                 EditLevel.Text = "";
                 EditOwner.Text = "";
-
-                selectedRows.Clear();
             }
             catch (DbEntityValidationException ex)
             {
@@ -200,18 +227,30 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelEditButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
+            selectedRows.Clear();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            EditPopup.IsOpen = false;
+
+            //Set text back to empty
             EditUsername.Text = "";
             EditPassword.Text = "";
             EditLevel.Text = "";
-            EditOwner.Text = "";
-
-            selectedRows.Clear();
-
-            EditPopup.IsOpen = false;
+            EditOwner.Text = ""; 
         }
         #endregion
 
         #region Delete Section
+
+        //Button Click Handler - Sets up the rows for deletion
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (users rowData in UsersDataGrid.Items)
@@ -247,6 +286,15 @@ namespace WorkshopDataModifier.MVVM.View
                 DeletePopup.DataContext = selectedRows;
                 DeletePopup.IsOpen = true;
             }
+
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (DeletePopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
         private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
@@ -278,11 +326,22 @@ namespace WorkshopDataModifier.MVVM.View
                     UsersDataGrid.ItemsSource = context.User.ToList();
                 }
 
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Update Counter
                 RowCount = UsersDataGrid.Items.Count;
                 UsersCounter.Text = $"Current Saved Users: {RowCount}";
 
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 DeletePopup.IsOpen = false;
-                selectedRows.Clear();
             }
             catch (DbUpdateException ex)
             {
@@ -313,18 +372,38 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
             selectedRows.Clear();
+
+            //Enable Controls
+            EnableControls();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Close Popup
             DeletePopup.IsOpen = false;
         }
         #endregion
 
         #region Add Section
 
+        //Button Click Handler - Opens Row Adding Popup
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Enable Scrimming
+            MainContentWindow.Opacity = 0.5;
+            MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+
+            //Disable Controls
+            DisableControls();
+
+            //Open Popup
             AddPopup.IsOpen = true;
         }
 
+        //Button Click Handler - Adds row to the table if everything correct
         private void ConfirmAddButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -339,7 +418,8 @@ namespace WorkshopDataModifier.MVVM.View
                         Username = AddUsername.Text,
                         Password = AddPassword.Text,
                         AccessLevel = txtLevel,
-                        Owner = txtOwner
+                        Owner = txtOwner,
+                        AddTime = DateTime.Now
                     };
 
                     context.User.Add(newUser);
@@ -348,9 +428,25 @@ namespace WorkshopDataModifier.MVVM.View
                     UsersDataGrid.ItemsSource = context.User.ToList();
                 }
 
+                //Update Cpunter
                 RowCount = UsersDataGrid.Items.Count;
                 UsersCounter.Text = $"Current Saved Users: {RowCount}";
+
+                //Disable scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 AddPopup.IsOpen = false;
+
+                //Set text back to empty
+                AddUsername.Text = "";
+                AddPassword.Text = "";
+                AddLevel.Text = "";
+                AddOwner.Text = "";
             }
             catch (Exception ex)
             {
@@ -360,12 +456,21 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelAddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Disable scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            AddPopup.IsOpen = false;
+
+            //Set text back to empty
             AddUsername.Text = "";
             AddPassword.Text = "";
             AddLevel.Text = "";
             AddOwner.Text = "";
-
-            AddPopup.IsOpen = false;
         }
 
         #endregion
@@ -531,7 +636,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         }
 
-        private void txtSearchUsers_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void SearchUsers_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (txtSearchUsers.Text == "Search in Users...")
             {
@@ -540,33 +645,42 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        #region Date Filtering
+        #region Controls Control
 
-        private void DataFilterButton_Checked(object sender, RoutedEventArgs e)
+        //Disables all Controls
+        private void DisableControls()
         {
-            if (DayButton.IsChecked == true)
-            {
+            btnAdd.IsHitTestVisible = false;
+            txtSearchUsers.IsHitTestVisible = false;
+            UsersDataGrid.IsHitTestVisible = false;
+        }
 
-            }
-            else if (WeekButton.IsChecked == true)
-            {
-
-            }
-            else if (MonthButton.IsChecked == true)
-            {
-
-            }
-            else if (YearButton.IsChecked == true)
-            {
-
-            }
-            else if (InfButton.IsChecked == true)
-            {
-
-            }
-
+        //Enables all Controls
+        private void EnableControls()
+        {
+            btnAdd.IsHitTestVisible = true;
+            txtSearchUsers.IsHitTestVisible = true;
+            UsersDataGrid.IsHitTestVisible = true;
         }
         #endregion
+
+        #region Comboboxes
+
+        //Set ItemSourcesof ComboBoxes
+        private void Combobox_Options()
+        {
+            using (var context = new EmployeesDbContext())
+            {
+                var ownerOptions = context.Employee.ToList();
+                
+                AddOwner.ItemsSource = ownerOptions;
+                
+                EditOwner.ItemsSource = ownerOptions;
+                
+            }
+        }
+        #endregion
+
 
         private UsersDbContext _dbContext;
         public UsersView()
@@ -580,17 +694,19 @@ namespace WorkshopDataModifier.MVVM.View
             //Counter initializer
             RowCount = UsersDataGrid.Items.Count;
             UsersCounter.Text = $"Current Saved Users: {RowCount}";
+
+            //Setup Comboboxes
+            Combobox_Options();
         }
     }
-
-
 
     /// <summary>
     /// Gets context of users tab from the connected DataBase
     /// </summary>
     public class UsersDbContext : DbContext
     {
-        public DbSet<users> User { get; set; } //DbSet dla tabeli "customer"
+        public DbSet<users> User { get; set; }
+        public DbSet<employee> Employee { get; set; }
 
         public UsersDbContext() : base("DealershipCon")
         {

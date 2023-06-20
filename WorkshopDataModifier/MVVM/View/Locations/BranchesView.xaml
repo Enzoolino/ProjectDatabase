@@ -187,7 +187,7 @@
                         </Grid.RowDefinitions>
 
                         <!--Title TextBox-->
-                        <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Vertical" Grid.Row="0">
                         <TextBlock Foreground="Black" Text="Edit Window" 
                                    Margin="0 10 0 0" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
                         <TextBlock Name="MultiEditionWarning" Foreground="Red" Text="Be careful while editing multiple rows at once !" 

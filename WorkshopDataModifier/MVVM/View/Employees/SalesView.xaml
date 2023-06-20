@@ -235,10 +235,12 @@
                         </Grid.RowDefinitions>
 
                         <!--Title TextBox-->
-                        <TextBlock Foreground="Black" Text="Edit Window" 
-                                   Margin="0 10 0 10" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
-                        <TextBlock Name="MultiEditionWarning" Foreground="Red" Text="Be careful while editing multiple rows at once !" 
-                                   FontSize="12" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0 0 0 30"/>
+                        <StackPanel Orientation="Vertical" Grid.Row="0">
+                            <TextBlock Foreground="Black" Text="Edit Window" 
+                                   Margin="0 10 0 0" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
+                            <TextBlock Name="MultiEditionWarning" Foreground="Red" Text="Be careful while editing multiple rows at once !" 
+                                   FontSize="12" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                        </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 30 0 0" HorizontalAlignment="Center">
 
