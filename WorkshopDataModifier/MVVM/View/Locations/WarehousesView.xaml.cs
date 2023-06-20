@@ -674,7 +674,7 @@ namespace WorkshopDataModifier.MVVM.View
         //Set ItemSourcesof ComboBoxes
         private void BranchCombobox_Options()
         {
-            using (var context = new WarehousesBranchesDbContext())
+            using (var context = new WarehousesDbContext())
             {
                 var options = context.Branch.ToList();
                 AddBranch.ItemsSource = options;
@@ -707,23 +707,11 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public class WarehousesDbContext : DbContext
     {
-        public DbSet<warehouse> Warehouse { get; set; } //DbSet dla tabeli "warehouse"
+        public DbSet<warehouse> Warehouse { get; set; }
+        public DbSet<branch_office> Branch { get; set; }
 
         public WarehousesDbContext() : base("DealershipCon")
         {
         }
     }
-
-    /// <summary>
-    /// Gets context of branch_office tab from the connected DataBase
-    /// </summary>
-    public class WarehousesBranchesDbContext : DbContext
-    {
-        public DbSet<branch_office> Branch { get; set; }
-
-        public WarehousesBranchesDbContext() : base("DealershipCon")
-        {
-        }
-    }
-
 }

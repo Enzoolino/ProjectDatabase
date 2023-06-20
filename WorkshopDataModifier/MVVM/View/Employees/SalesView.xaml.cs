@@ -29,6 +29,9 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Counter of the current clients (dynamic)
         private int _rowCount;
+        /// <summary>
+        /// Counts number of items inside "sales" table
+        /// </summary>
         public int RowCount
         {
             get { return _rowCount; }
@@ -75,6 +78,8 @@ namespace WorkshopDataModifier.MVVM.View
         static List<sell> selectedRows = new List<sell>();
 
         #region Edit Section
+
+        //Button Click Handler - Sets up the rows for editing
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (sell rowData in SalesDataGrid.Items)
@@ -106,22 +111,33 @@ namespace WorkshopDataModifier.MVVM.View
                 MultiEditionWarning.Visibility = Visibility.Collapsed;
 
                 EditSin.Text = row.Sin.ToString();
-                EditVin.Text = row.Vin.ToString();
                 EditEmployee.Text = row.EmpID.ToString();
-                EditSellTime.Text = row.SellTime.ToString();
                 
                 EditPopup.IsOpen = true;
             }
             else
             {
+                EditSin.IsHitTestVisible = false;
+                EditSin.Foreground = Brushes.Gray;
+                EditSin.Text = "Can't Multi Edit !";
+
                 EditPopup.DataContext = selectedRows;
                 MultiEditionWarning.Visibility = Visibility.Visible;
 
                 EditPopup.IsOpen = true;
             }
 
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (EditPopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -152,34 +168,38 @@ namespace WorkshopDataModifier.MVVM.View
                         {
                             sell selectedRow = context.Sale.Find(dataRow.Sin, dataRow.Vin);
 
-                            if (EditSin.Text != "" && EditSin.Text != null && long.TryParse(EditSin.Text, out long txtSin))
-                                selectedRow.Sin = txtSin;
-
-                            if (EditVin.Text != "" && EditVin.Text != null && int.TryParse(EditVin.Text, out int txtVin))
-                                selectedRow.Vin = txtVin;
-
                             if (EditEmployee.Text != "" && EditEmployee.Text != null && long.TryParse(EditEmployee.Text, out long txtEmployee))
                                 selectedRow.EmpID = txtEmployee;
-
-                            if (EditSellTime.Text != "" && EditSellTime.Text != null && DateTime.TryParse(EditVin.Text, out DateTime txtSellTime))
-                                selectedRow.SellTime = txtSellTime;
-
-
                         }
                     }
 
+                    //Update DataGrid to show changes
                     context.SaveChanges();
                     SalesDataGrid.ItemsSource = context.Sale.ToList();
                 }
 
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 EditPopup.IsOpen = false;
 
+                //Set text back to empty
                 EditSin.Text = "";
                 EditVin.Text = "";
                 EditEmployee.Text = "";
                 EditSellTime.Text = "";
-               
-                selectedRows.Clear();
+
+                //Set the Inputs back to normal
+                EditSin.IsHitTestVisible = true;
+                EditSin.Foreground = Brushes.Black;
             }
             catch (DbEntityValidationException ex)
             {
@@ -204,18 +224,34 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelEditButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
+            selectedRows.Clear();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            EditPopup.IsOpen = false;
+
+            //Set text back to empty
             EditSin.Text = "";
             EditVin.Text = "";
             EditEmployee.Text = "";
             EditSellTime.Text = "";
 
-            selectedRows.Clear();
-
-            EditPopup.IsOpen = false;
+            //Set the Inputs back to normal
+            EditSin.IsHitTestVisible = true;
+            EditSin.Foreground = Brushes.Black;
         }
         #endregion
 
         #region Delete Section
+
+        //Button Click Handler - Sets up the rows for deletion
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (sell rowData in SalesDataGrid.Items)
@@ -251,8 +287,18 @@ namespace WorkshopDataModifier.MVVM.View
                 DeletePopup.DataContext = selectedRows;
                 DeletePopup.IsOpen = true;
             }
+
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (DeletePopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -282,11 +328,22 @@ namespace WorkshopDataModifier.MVVM.View
                     SalesDataGrid.ItemsSource = context.Sale.ToList();
                 }
 
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Update Counter
                 RowCount = SalesDataGrid.Items.Count;
                 SalesCounter.Text = $"Current Saved Clients: {RowCount}";
 
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 DeletePopup.IsOpen = false;
-                selectedRows.Clear();
             }
             catch (DbUpdateException ex)
             {
@@ -317,18 +374,38 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
             selectedRows.Clear();
+
+            //Enable Controls
+            EnableControls();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Close Popup
             DeletePopup.IsOpen = false;
         }
         #endregion
 
         #region Add Section
 
+        //Button Click Handler - Opens Row Adding Popup
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Enable Scrimming
+            MainContentWindow.Opacity = 0.5;
+            MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+
+            //Disable Controls
+            DisableControls();
+
+            //Open Popup
             AddPopup.IsOpen = true;
         }
 
+        //Button Click Handler - Adds row to the table if everything correct
         private void ConfirmAddButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -338,12 +415,14 @@ namespace WorkshopDataModifier.MVVM.View
                     long txtSin = long.Parse(AddSin.Text);
                     int txtVin = int.Parse(AddVin.Text);
                     long txtEmployee = long.Parse(AddEmployee.Text);
+                    DateTime txtSellTime = DateTime.Parse(AddSellTime.Text);
 
                     sell newSale = new sell
                     {
                         Sin = txtSin,
                         Vin = txtVin,
                         EmpID = txtEmployee,
+                        SellTime = txtSellTime
                     };
 
                     context.Sale.Add(newSale);
@@ -352,9 +431,25 @@ namespace WorkshopDataModifier.MVVM.View
                     SalesDataGrid.ItemsSource = context.Sale.ToList();
                 }
 
+                //Update Counter
                 RowCount = SalesDataGrid.Items.Count;
                 SalesCounter.Text = $"Current Saved Sales: {RowCount}";
+
+                //Disable scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 AddPopup.IsOpen = false;
+
+                //Set text back to empty
+                AddSin.Text = "";
+                AddVin.Text = "";
+                AddEmployee.Text = "";
+                AddSellTime.Text = "";
             }
             catch (Exception ex)
             {
@@ -362,15 +457,25 @@ namespace WorkshopDataModifier.MVVM.View
             }
         }
 
+        //Button Click Handler - Closes the Adding Popup
         private void CancelAddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Disable scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            AddPopup.IsOpen = false;
+
+            //Set text back to empty
             AddSin.Text = "";
             AddVin.Text = "";
             AddEmployee.Text = "";
-            
-            AddPopup.IsOpen = false;
+            AddSellTime.Text = "";
         }
-
         #endregion
 
         #endregion 
@@ -535,7 +640,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         }
 
-        private void txtSearchSales_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void SearchSales_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (txtSearchSales.Text == "Search in Sales...")
             {
@@ -544,7 +649,77 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-   
+        #region Controls Control
+
+        //Disables all Controls
+        private void DisableControls()
+        {
+            btnEmployees.IsHitTestVisible = false;
+            btnAdd.IsHitTestVisible = false;
+            txtSearchSales.IsHitTestVisible = false;
+            SalesDataGrid.IsHitTestVisible = false;
+        }
+
+        //Enables all Controls
+        private void EnableControls()
+        {
+            btnEmployees.IsHitTestVisible = true;
+            btnAdd.IsHitTestVisible = true;
+            txtSearchSales.IsHitTestVisible = true;
+            SalesDataGrid.IsHitTestVisible = true;
+        }
+        #endregion
+
+        #region Comboboxes
+
+        //Set ItemSourcesof ComboBoxes
+        private void Combobox_Options()
+        {
+            using (var context = new SalesDbContext())
+            {
+                var purchaseOptions = context.Purchase.ToList();
+                var employeeOptions = context.Employee.ToList();
+
+                AddSin.ItemsSource = purchaseOptions;
+                AddEmployee.ItemsSource = employeeOptions;
+
+                EditSin.ItemsSource = purchaseOptions;
+                EditEmployee.ItemsSource = employeeOptions;
+            }
+        }
+
+        //Automatically update the rows connected to each other
+        private void SinComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender == AddSin)
+            {
+                if (AddSin.SelectedItem is purchase selectedPurchase)
+                {
+                    AddVin.Text = selectedPurchase.Vin.ToString();
+
+                    DateTime? dataTime = selectedPurchase.PurchaseTime;
+                    string date = dataTime?.ToString("dd/MM/yyyy h:mm tt") ?? "No date";
+
+                    AddSellTime.Text = date;
+                }
+            }
+
+            if (sender == EditSin)
+            {
+                if (EditSin.SelectedItem is purchase selectedPurchase)
+                {
+                    EditVin.Text = selectedPurchase.Vin.ToString();
+
+                    DateTime? dataTime = selectedPurchase.PurchaseTime;
+                    string date = dataTime?.ToString("dd/MM/yyyy h:mm tt") ?? "No date";
+
+                    EditSellTime.Text = date;
+                }
+            }
+        }
+        #endregion
+
+
         private SalesDbContext _dbContext;
         public SalesView()
         {
@@ -557,6 +732,9 @@ namespace WorkshopDataModifier.MVVM.View
             //Counter initializer
             RowCount = SalesDataGrid.Items.Count;
             SalesCounter.Text = $"Current Saved Sales: {RowCount}";
+
+            //Setup Comboboxes
+            Combobox_Options();
         }
     }
 
@@ -565,7 +743,9 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public class SalesDbContext : DbContext
     {
-        public DbSet<sell> Sale { get; set; } //DbSet dla tabeli "sell"
+        public DbSet<sell> Sale { get; set; } 
+        public DbSet<purchase> Purchase { get; set; }
+        public DbSet<employee> Employee { get; set; }
 
         public SalesDbContext() : base("DealershipCon")
         {

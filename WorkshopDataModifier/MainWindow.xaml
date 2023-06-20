@@ -77,14 +77,6 @@
                 </RadioButton>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding TasksViewCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <fa:IconImage Icon="Tasks" Style="{StaticResource MenuButtonIconTheme}"/>
-                        <TextBlock Text="Tasks" Style="{StaticResource MenuButtonTextTheme}"/>
-                    </StackPanel>
-                </RadioButton>
-
-                <RadioButton Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding BranchesViewCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Warehouse" Style="{StaticResource MenuButtonIconTheme}"/>
@@ -102,7 +94,8 @@
                 <Separator Height="1.5" Margin="20 10" Background="#F3EFF5"/>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding EmployeesViewCommand}">
+                             Command="{Binding EmployeesViewCommand}"
+                             Margin="0 15 0 0">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Briefcase" Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Employees" Style="{StaticResource MenuButtonTextTheme}"/>
@@ -125,10 +118,18 @@
                     </StackPanel>
                 </RadioButton>
 
-                <Separator Height="1.5" Margin="20 30" Background="#F3EFF5"/>
+                <TextBlock Text="Other" 
+                           HorizontalAlignment="Left" 
+                           Foreground="#F8F7F9"
+                           FontSize="15"
+                           Margin="40 20 0 0"
+                           FontFamily="/Fonts/#Poppins"/>
+
+                <Separator Height="1.5" Margin="20 10 20 15" Background="#F3EFF5"/>
 
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
-                             Click="LogoutButton_Click">
+                             Click="LogoutButton_Click"
+                             Margin="0 15 0 0">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="PowerOff"  Style="{StaticResource MenuButtonIconTheme}"/>
                         <TextBlock Text="Logout" Style="{StaticResource MenuButtonTextTheme}"/>

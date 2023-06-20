@@ -59,15 +59,7 @@ namespace WorkshopDataModifier.MVVM.ViewModel
 
         public WarehouseVehiclesViewModel WarehouseVehiclesVM { get; set; }
 
-        //TASKS SECTION ----------------------------------------------------------------------
-
-        /// <summary>
-        /// Command that is switching the View to TasksView using ViemModels
-        /// </summary>
-        public RelayCommand TasksViewCommand { get; set; }
-
-        public TasksViewModel TasksVM { get; set; }
-
+        
         //LOCATIONS SECTION ------------------------------------------------------------------
 
         /// <summary>
@@ -163,9 +155,6 @@ namespace WorkshopDataModifier.MVVM.ViewModel
             SoldVehiclesVM = new SoldVehiclesViewModel();
             WarehouseVehiclesVM = new WarehouseVehiclesViewModel();
 
-            //Tasks
-            TasksVM = new TasksViewModel();
-
             //Locations
             BranchesVM = new BranchesViewModel();
             DealershipsVM = new DealershipsViewModel();
@@ -200,11 +189,6 @@ namespace WorkshopDataModifier.MVVM.ViewModel
             VehiclesViewCommand = new RelayCommand(o =>
             {
                 CurrentView = VehiclesVM;
-            });
-
-            TasksViewCommand = new RelayCommand(o =>
-            {
-                CurrentView = TasksVM;
             });
 
             EmployeesViewCommand = new RelayCommand(o =>

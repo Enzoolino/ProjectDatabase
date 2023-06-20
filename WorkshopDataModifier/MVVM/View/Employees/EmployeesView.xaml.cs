@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,9 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Counter of the current clients (dynamic)
         private int _rowCount;
+        /// <summary>
+        /// Counts number of items inside "employee" table
+        /// </summary>
         public int RowCount
         {
             get { return _rowCount; }
@@ -48,6 +52,7 @@ namespace WorkshopDataModifier.MVVM.View
         #endregion
 
         #region Multi Select
+
         private void SelectAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
             bool isChecked = ((CheckBox)sender).IsChecked == true;
@@ -75,6 +80,8 @@ namespace WorkshopDataModifier.MVVM.View
         static List<employee> selectedRows = new List<employee>();
 
         #region Edit Section
+
+        //Button Click Handler - Sets up the rows for editing
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (employee rowData in EmployeesDataGrid.Items)
@@ -105,13 +112,19 @@ namespace WorkshopDataModifier.MVVM.View
             {
                 MultiEditionWarning.Visibility = Visibility.Collapsed;
 
+                DateTime? dataTime = row.EmployedDate;
+
+                string date = dataTime?.ToString("dd/MM/yyyy") ?? "No date";
+                string time = dataTime?.ToString("h:mm tt") ?? "No time";
+
                 EditName.Text = row.Name;
                 EditSurname.Text = row.Surname;
                 EditSuperior.Text = row.SuperiorID.ToString();
                 EditBranch.Text = row.BranchID.ToString();
                 EditLocation.Text = row.WorkLocation;
                 EditPosition.Text = row.Position;
-                EditEmployDate.Text = row.EmployedDate.ToString();
+                EditEmployDate.Text = date;
+                EditEmployHour.Text = time;
 
                 EditPopup.IsOpen = true;
             }
@@ -123,8 +136,17 @@ namespace WorkshopDataModifier.MVVM.View
                 EditPopup.IsOpen = true;
             }
 
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (EditPopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -141,7 +163,7 @@ namespace WorkshopDataModifier.MVVM.View
 
                         long txtSuperior = long.Parse(EditSuperior.Text);
                         int txtBranch = int.Parse(EditBranch.Text);
-                        DateTime txtEmployDate = DateTime.Parse(EditEmployDate.Text);
+                        DateTime txtEmployDate = DateTime.Parse(EditEmployDate.Text + " " + EditEmployHour.Text);
 
                         selectedRow.Name = EditName.Text;
                         selectedRow.Surname = EditSurname.Text;
@@ -175,18 +197,41 @@ namespace WorkshopDataModifier.MVVM.View
                             if (EditPosition.Text != "" && EditPosition.Text != null)
                                 selectedRow.Position = EditPosition.Text;
 
-                            if (EditEmployDate.Text != "" && EditEmployDate.Text != null && DateTime.TryParse(EditEmployDate.Text, out DateTime txtEmployDate))
-                                selectedRow.EmployedDate = txtEmployDate;
-
+                            if (EditEmployDate.Text != "" && EditEmployDate.Text != null)
+                            {
+                                if (EditEmployHour.Text != "" && EditEmployHour.Text != null)
+                                {
+                                    DateTime txtEmployDate = DateTime.Parse(EditEmployDate.Text + " " + EditEmployHour.Text);
+                                    selectedRow.EmployedDate = txtEmployDate;
+                                }
+                                else
+                                {
+                                    DateTime txtEmployDate = DateTime.Parse(EditEmployDate.Text);
+                                    selectedRow.EmployedDate = txtEmployDate;
+                                }
+                            }    
                         }
                     }
 
+                    //Update DataGrid to show changes
                     context.SaveChanges();
                     EmployeesDataGrid.ItemsSource = context.Employee.ToList();
                 }
 
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 EditPopup.IsOpen = false;
 
+                //Set text back to empty
                 EditName.Text = "";
                 EditSurname.Text = "";
                 EditSuperior.Text = "";
@@ -194,8 +239,7 @@ namespace WorkshopDataModifier.MVVM.View
                 EditLocation.Text = "";
                 EditPosition.Text = "";
                 EditEmployDate.Text = "";
-
-                selectedRows.Clear();
+                EditEmployHour.Text = "";
             }
             catch (DbEntityValidationException ex)
             {
@@ -220,6 +264,20 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelEditButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
+            selectedRows.Clear();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            EditPopup.IsOpen = false;
+
+            //Set text back to empty
             EditName.Text = "";
             EditSurname.Text = "";
             EditSuperior.Text = "";
@@ -227,14 +285,13 @@ namespace WorkshopDataModifier.MVVM.View
             EditLocation.Text = "";
             EditPosition.Text = "";
             EditEmployDate.Text = "";
-
-            selectedRows.Clear();
-
-            EditPopup.IsOpen = false;
+            EditEmployHour.Text = "";
         }
         #endregion
 
         #region Delete Section
+
+        //Button Click Handler - Sets up the rows for deletion
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (employee rowData in EmployeesDataGrid.Items)
@@ -270,8 +327,19 @@ namespace WorkshopDataModifier.MVVM.View
                 DeletePopup.DataContext = selectedRows;
                 DeletePopup.IsOpen = true;
             }
+
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (DeletePopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -301,11 +369,22 @@ namespace WorkshopDataModifier.MVVM.View
                     EmployeesDataGrid.ItemsSource = context.Employee.ToList();
                 }
 
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Update Counter
                 RowCount = EmployeesDataGrid.Items.Count;
                 EmployeesCounter.Text = $"Current Saved Employees: {RowCount}";
 
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 DeletePopup.IsOpen = false;
-                selectedRows.Clear();
             }
             catch (DbUpdateException ex)
             {
@@ -336,18 +415,38 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
             selectedRows.Clear();
+
+            //Enable Controls
+            EnableControls();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Close Popup
             DeletePopup.IsOpen = false;
         }
         #endregion
 
         #region Add Section
 
+        //Button Click Handler - Opens Row Adding Popup
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Enable Scrimming
+            MainContentWindow.Opacity = 0.5;
+            MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+
+            //Disable Controls
+            DisableControls();
+
+            //Open Popup
             AddPopup.IsOpen = true;
         }
 
+        //Button Click Handler - Adds row to the table if everything correct
         private void ConfirmAddButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -356,7 +455,7 @@ namespace WorkshopDataModifier.MVVM.View
                 {
                     long txtSuperior = long.Parse(AddSuperior.Text);
                     int txtBranch = int.Parse(AddBranch.Text);
-                    DateTime txtEmployDate =  DateTime.Parse(AddEmployDate.Text);
+                    DateTime txtEmployDate =  DateTime.Parse(AddEmployDate.Text + " " + AddEmployHour.Text);
 
                     employee newEmployee = new employee
                     {
@@ -375,9 +474,29 @@ namespace WorkshopDataModifier.MVVM.View
                     EmployeesDataGrid.ItemsSource = context.Employee.ToList();
                 }
 
+                //Update Counter
                 RowCount = EmployeesDataGrid.Items.Count;
-                EmployeesCounter.Text = $"Current Saved Clients: {RowCount}";
+                EmployeesCounter.Text = $"Current Saved Employees: {RowCount}";
+
+                //Disable scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 AddPopup.IsOpen = false;
+
+                //Set text back to empty
+                AddName.Text = "";
+                AddSurname.Text = "";
+                AddSuperior.Text = "";
+                AddBranch.Text = "";
+                AddLocation.Text = "";
+                AddPosition.Text = "";
+                AddEmployDate.Text = "";
+                AddEmployHour.Text = "";
             }
             catch (Exception ex)
             {
@@ -385,8 +504,20 @@ namespace WorkshopDataModifier.MVVM.View
             }
         }
 
+        //Button Click Handler - Closes the Adding Popup
         private void CancelAddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Disable scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            AddPopup.IsOpen = false;
+
+            //Set text back to empty
             AddName.Text = "";
             AddSurname.Text = "";
             AddSuperior.Text = "";
@@ -394,8 +525,7 @@ namespace WorkshopDataModifier.MVVM.View
             AddLocation.Text = "";
             AddPosition.Text = "";
             AddEmployDate.Text = "";
-
-            AddPopup.IsOpen = false;
+            AddEmployHour.Text = "";
         }
 
         #endregion
@@ -536,7 +666,6 @@ namespace WorkshopDataModifier.MVVM.View
                                dataItem.WorkLocation.Contains(searchText) ||
                                dataItem.Position.Contains(searchText) ||
                                txtEmployedDate.Contains(searchText);
-
                     }
 
                     return false;
@@ -564,7 +693,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         }
 
-        private void txtSearchEmployees_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void SearchEmployees_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (txtSearchEmployees.Text == "Search in Employees...")
             {
@@ -573,6 +702,52 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
+        #region Controls Control
+
+        //Disables all Controls
+        private void DisableControls()
+        {
+            btnSales.IsHitTestVisible = false;
+            btnAdd.IsHitTestVisible = false;
+            txtSearchEmployees.IsHitTestVisible = false;
+            EmployeesDataGrid.IsHitTestVisible = false;
+        }
+
+        //Enables all Controls
+        private void EnableControls()
+        {
+            btnSales.IsHitTestVisible = true;
+            btnAdd.IsHitTestVisible = true;
+            txtSearchEmployees.IsHitTestVisible = true;
+            EmployeesDataGrid.IsHitTestVisible = true;
+        }
+        #endregion
+
+        #region Comboboxes
+
+        //Set ItemSourcesof ComboBoxes
+        private void Combobox_Options()
+        {
+            using (var context = new EmployeesDbContext())
+            {
+                var superiorOptions = context.Employee.ToList();
+                var branchOptions = context.Branch.ToList();
+                var dealershipOptions = context.Dealership.ToList();
+                var positionOptions = context.Position.ToList();
+
+
+                AddSuperior.ItemsSource = superiorOptions;
+                AddBranch.ItemsSource = branchOptions;
+                AddLocation.ItemsSource = dealershipOptions;
+                AddPosition.ItemsSource = positionOptions;
+
+                EditSuperior.ItemsSource = superiorOptions;
+                EditBranch.ItemsSource = branchOptions;
+                EditLocation.ItemsSource = dealershipOptions;
+                EditPosition.ItemsSource = positionOptions;
+            }
+        }
+        #endregion
 
         private EmployeesDbContext _dbContext;
         public EmployeesView()
@@ -586,15 +761,21 @@ namespace WorkshopDataModifier.MVVM.View
             //Counter initializer
             RowCount = EmployeesDataGrid.Items.Count;
             EmployeesCounter.Text = $"Current Saved Employees: {RowCount}";
+
+            //Setup Comboboxes
+            Combobox_Options();
         }
     }
 
     /// <summary>
-    /// Gets context of employee tab from the connected DataBase
+    /// Gets context of "employee" tab from the connected DataBase
     /// </summary>
     public class EmployeesDbContext : DbContext
     {
-        public DbSet<employee> Employee { get; set; } //DbSet dla tabeli "employee"
+        public DbSet<employee> Employee { get; set; }
+        public DbSet<branch_office> Branch { get; set; }
+        public DbSet<dealership> Dealership { get; set; }
+        public DbSet<position> Position { get; set; }
 
         public EmployeesDbContext() : base("DealershipCon")
         {

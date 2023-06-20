@@ -169,7 +169,6 @@
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Customers\PurchasesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Codes\BrandsViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\Tasks\TasksViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Users\UsersViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Employees\EmployeesViewModel.cs" />
     <Compile Include="MVVM\ViewModel\Locations\WarehousesViewModel.cs" />
@@ -206,9 +205,6 @@
     </Compile>
     <Compile Include="MVVM\View\Codes\BrandsView.xaml.cs">
       <DependentUpon>BrandsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\Tasks\TasksView.xaml.cs">
-      <DependentUpon>TasksView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\Users\UsersView.xaml.cs">
       <DependentUpon>UsersView.xaml</DependentUpon>
@@ -278,10 +274,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\Codes\BrandsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MVVM\View\Tasks\TasksView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

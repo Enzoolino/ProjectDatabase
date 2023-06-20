@@ -47,10 +47,6 @@
                 <view:VehiclesView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:TasksViewModel}">
-                <view:TasksView/>
-            </DataTemplate>
-
             <DataTemplate DataType="{x:Type viewModel:BranchesViewModel}">
                 <view:BranchesView/>
             </DataTemplate>

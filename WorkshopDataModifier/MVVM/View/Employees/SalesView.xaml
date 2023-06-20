@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WorkshopDataModifier.MVVM.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:mainWindow="clr-namespace:WorkshopDataModifier"
              mc:Ignorable="d" 
@@ -11,8 +12,7 @@
 
     <Border CornerRadius="0 10 10 0" Background="#26282B">
 
-
-        <Grid>
+        <Grid x:Name="MainContentWindow">
             <!--Main Section-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -21,7 +21,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
 
@@ -30,7 +30,7 @@
                        HorizontalAlignment="Left" Foreground="#ffffff" FontFamily="/Fonts/#Poppins"/>
 
             <!--Add Button-->
-            <Button Style="{StaticResource ValueAddButtonTemplate}" Margin="0 20 10 0" Click="AddButton_Click">
+            <Button x:Name="btnAdd" Style="{StaticResource ValueAddButtonTemplate}" Margin="0 20 10 0" Click="AddButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <fa:IconImage Icon="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
                     <TextBlock Text="Add New Sale" FontFamily="/Fonts/#Poppins"/>
@@ -38,43 +38,112 @@
             </Button>
 
             <!--Add Popup Window-->
-            <Popup Name="AddPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto">
-                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+            <Popup Name="AddPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="630" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
+                <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="AddPopup_MouseLeftButtonDown" MouseMove="AddPopup_MouseMove" MouseLeftButtonUp="AddPopup_MouseLeftButtonUp">
-                    <StackPanel>
+
+                    <Grid Margin="50 0 50 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
                         <!--Title TextBox-->
                         <TextBlock Foreground="Black" Text="Add Window" 
-                                   Margin="0 10 0 10" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
+                                   Margin="0 10 0 0" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Info" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                          DisplayMemberPath="Sin"
+                                          materialDesign:HintAssist.Hint="Sin"
+                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                          materialDesign:HintAssist.FloatingOffset="0, -20"
+                                          BorderBrush="#c5c8cc"
+                                          BorderThickness="0 0 0 1.5"
+                                          Name="AddSin"
+                                          Width="200"
+                                          SelectionChanged="SinComboBox_SelectionChanged"
+                                          MaxDropDownHeight="166"
+                                          Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="CarBattery" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Vin"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="AddVin"
+                                         Width="200"
+                                         IsHitTestVisible="False"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
+
+                        </StackPanel>
 
                         <!--Input Boxes-->
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Sin:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Sin"  
-                                 Name="AddSin"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Vin:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Vin"  
-                                 Name="AddVin"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering employee:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Employee"  
-                                 Name="AddEmployee"/>
-                       
-                        <!--Rules TextBlocks-->
-                        <TextBlock Foreground="Black" Text="Rules:" Margin="0 10 0 10" FontSize="18" FontFamily="/Fonts/#Poppins"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
 
-                        <TextBlock Foreground="Black" FontFamily="/Fonts/#Poppins">
-                            * Name    = max 30 symbols...
-                        </TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Briefcase" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                          DisplayMemberPath="EmpID"
+                                          materialDesign:HintAssist.Hint="Employee"
+                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                          materialDesign:HintAssist.FloatingOffset="0, -20"
+                                          BorderBrush="#c5c8cc"
+                                          BorderThickness="0 0 0 1.5"
+                                          Name="AddEmployee"
+                                          Width="200"
+                                          MaxDropDownHeight="166"
+                                          Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="MoneyBillTransfer" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Sell Time"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="AddSellTime"
+                                         Width="200"
+                                         IsHitTestVisible="False"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <!--Option Buttons-->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0" Grid.Row="3">
                             <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
                                     FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmAddButton_Click"/>
                             <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
                                     FontFamily="/Fonts/#Poppins" Width="100" Click="CancelAddButton_Click"/>
                         </StackPanel>
-                    </StackPanel>
+
+                    </Grid>
+
                 </Border>
             </Popup>
 
-            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 -1 10 10"/>
+            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 10 10 10"/>
 
             <!--Switch tabs Buttons-->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10 10 0 0" HorizontalAlignment="Left">
@@ -90,8 +159,11 @@
                        Margin="20 0 0 10"/>
 
             <!--Filter TextBox-->
-            <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontFamily="/Fonts/#Poppins" Margin="0 0 215 10"
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                <fa:IconImage Icon="Filter" Width="15" Height="15" Foreground="Gray" Margin="0 0 5 10"/>
+                <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontFamily="/Fonts/#Poppins" Margin="0 0 210 10"
                        Foreground="#ffffff" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </StackPanel>
 
             <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
 
@@ -100,7 +172,7 @@
                          Tag="Search in Sales..."
                          Style="{StaticResource TextBoxFilterTheme}"
                          TextChanged="SearchTextBox_TextChanged"
-                         GotKeyboardFocus="txtSearchSales_GotKeyboardFocus"/>
+                         GotKeyboardFocus="SearchSales_GotKeyboardFocus"/>
             </Grid>
 
             <!--Sales DataGrid-->
@@ -127,7 +199,7 @@
                     <DataGridTextColumn Header="Sin" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding Sin}"/>
                     <DataGridTextColumn Header="Vin" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding Vin}"/>
                     <DataGridTextColumn Header="Employee" IsReadOnly="True" Width="*" Binding="{Binding EmpID}"/>
-                    <DataGridTextColumn Header="SellTime" IsReadOnly="True" Width="*" Binding="{Binding SellTime}"/>
+                    <DataGridTextColumn Header="SellTime" IsReadOnly="True" Width="*" Binding="{Binding SellTime, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
 
                     <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
@@ -147,47 +219,113 @@
                 </DataGrid.Columns>
             </DataGrid>
 
+            
+
             <!--Edit Popup Window-->
-            <Popup Name="EditPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto">
-                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+            <Popup Name="EditPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="630" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
+                <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="EditPopup_MouseLeftButtonDown" MouseMove="EditPopup_MouseMove" MouseLeftButtonUp="EditPopup_MouseLeftButtonUp">
-                    <StackPanel>
+
+                    <Grid Margin="50 0 50 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
                         <!--Title TextBox-->
                         <TextBlock Foreground="Black" Text="Edit Window" 
                                    Margin="0 10 0 10" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
                         <TextBlock Name="MultiEditionWarning" Foreground="Red" Text="Be careful while editing multiple rows at once !" 
                                    FontSize="12" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0 0 0 30"/>
 
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Info" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                          DisplayMemberPath="Sin"
+                                          materialDesign:HintAssist.Hint="Sin"
+                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                          materialDesign:HintAssist.FloatingOffset="0, -20"
+                                          BorderBrush="#c5c8cc"
+                                          BorderThickness="0 0 0 1.5"
+                                          Name="EditSin"
+                                          Width="200"
+                                          SelectionChanged="SinComboBox_SelectionChanged"
+                                          MaxDropDownHeight="166"
+                                          Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="CarBattery" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Vin"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditVin"
+                                         Width="200"
+                                         IsHitTestVisible="False"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
+
+                        </StackPanel>
+
                         <!--Input Boxes-->
-                        <TextBlock Foreground="DimGray" Text="Edit Sin of selected sale:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Sin"  
-                                 Name="EditSin"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Vin of selected sale:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Vin"  
-                                 Name="EditVin"/>
-                        <TextBlock Foreground="DimGray" Text="Edit employee of selected sale:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Employee"  
-                                 Name="EditEmployee"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Sell Time of selected sale:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Sell time"
-                                 Name="EditSellTime"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
 
-                        <!--Rules TextBlocks-->
-                        <TextBlock Foreground="Black" Text="Rules:" Margin="0 10 0 10" FontSize="18" FontFamily="/Fonts/#Poppins"/>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Briefcase" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                          DisplayMemberPath="EmpID"
+                                          materialDesign:HintAssist.Hint="Employee"
+                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                          materialDesign:HintAssist.FloatingOffset="0, -20"
+                                          BorderBrush="#c5c8cc"
+                                          BorderThickness="0 0 0 1.5"
+                                          Name="EditEmployee"
+                                          Width="200"
+                                          MaxDropDownHeight="166"
+                                          Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
 
-                        <TextBlock Name="EditInfo" Foreground="Black" FontFamily="/Fonts/#Poppins" Text="* Leave the input unchanged if you do not wish for the row to be edited." Visibility="Visible"/>
-                        <TextBlock Foreground="Black" FontFamily="/Fonts/#Poppins">
-                            * Name    = max 30 symbols.
-                        </TextBlock>
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="MoneyBillTransfer" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Sell Time"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditSellTime"
+                                         Width="200"
+                                         IsHitTestVisible="False"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
+                        </StackPanel>
+
+                        <!--Option Buttons-->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0" Grid.Row="3">
                             <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
                                     FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmEditButton_Click"/>
                             <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
                                     FontFamily="/Fonts/#Poppins" Width="100" Click="CancelEditButton_Click"/>
                         </StackPanel>
 
-                    </StackPanel>
+                    </Grid>
+
                 </Border>
             </Popup>
 

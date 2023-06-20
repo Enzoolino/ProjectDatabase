@@ -31,19 +31,19 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <uc:InfoCard Grid.Column="0" Title="Cars in repair" Number="To implement" Icon="CarCrash" Background1="#827bff" Background2="#d9b5ff"
+                <uc:InfoCard Grid.Column="0" Title="Sold Vehicles" Number="To implement" Icon="CircleDollarToSlot" Background1="#827bff" Background2="#d9b5ff"
                                  EllipseBackground1="#b298fd" EllipseBackground2="#e4bbff"/>
 
-                <uc:InfoCard Grid.Column="1" Title="Assigned tasks" Number="To implement" Icon="ListAlt" Background1="#fd8a87" Background2="#f3ab92"
+                <uc:InfoCard Grid.Column="1" Title="" Number="To implement" Icon="ListAlt" Background1="#fd8a87" Background2="#f3ab92"
                                  EllipseBackground1="#fbd5a8" EllipseBackground2="#fdb89b"/>
 
-                <uc:InfoCard Grid.Column="2" Title="Supervising tasks" Number="To implement" Icon="HandPointRight" Background1="#fc84cb" Background2="#fc8fae"
+                <uc:InfoCard Grid.Column="2" Title="Employee of the Month" Number="To implement" Icon="Crown" Background1="#fc84cb" Background2="#fc8fae"
                                  EllipseBackground1="#fc8fae" EllipseBackground2="#ffabe6"/>
 
 
             </Grid>
         </Grid>
-
+        
     </Border>
 
 </UserControl>

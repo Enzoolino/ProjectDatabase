@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WorkshopDataModifier.MVVM.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:mainWindow="clr-namespace:WorkshopDataModifier"
              mc:Ignorable="d" 
@@ -12,8 +13,8 @@
 
     <Border CornerRadius="0 10 10 0" Background="#26282B">
 
-
-        <Grid>
+        <Grid x:Name="MainContentWindow">
+            
             <!--Main Section-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -22,7 +23,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
 
@@ -31,7 +32,7 @@
                        HorizontalAlignment="Left" Foreground="#ffffff" FontFamily="/Fonts/#Poppins"/>
 
             <!--Add Button-->
-            <Button Style="{StaticResource ValueAddButtonTemplate}" Margin="0 20 10 0" Click="AddButton_Click">
+            <Button x:Name="btnAdd" Style="{StaticResource ValueAddButtonTemplate}" Margin="0 20 10 0" Click="AddButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <fa:IconImage Icon="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
                     <TextBlock Text="Add New Employee" FontFamily="/Fonts/#Poppins"/>
@@ -39,56 +40,185 @@
             </Button>
 
             <!--Add Popup Window-->
-            <Popup Name="AddPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto">
-                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+            <Popup Name="AddPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="630" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
+                <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="AddPopup_MouseLeftButtonDown" MouseMove="AddPopup_MouseMove" MouseLeftButtonUp="AddPopup_MouseLeftButtonUp">
-                    <StackPanel>
+
+                    <Grid Margin="50 0 50 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
                         <!--Title TextBox-->
                         <TextBlock Foreground="Black" Text="Add Window" 
-                                   Margin="0 10 0 10" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
+                                   Margin="0 10 0 0" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
 
                         <!--Input Boxes-->
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering name:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Name"  
-                                 Name="AddName"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering surname:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Surname" 
-                                 Name="AddSurname"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Superior:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Superior"
-                                 Name="AddSuperior"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Branch:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Branch"
-                                 Name="AddBranch"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Work Location:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Work Location"
-                                 Name="AddLocation"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Position:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Position"
-                                 Name="AddPosition"/>
-                        <TextBlock Foreground="DimGray" Text="Follow the rules while entering Employ Date:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Employ Date"
-                                 Name="AddEmployDate"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 30 0 0" HorizontalAlignment="Center">
 
-                        <!--Rules TextBlocks-->
-                        <TextBlock Foreground="Black" Text="Rules:" Margin="0 10 0 10" FontSize="18" FontFamily="/Fonts/#Poppins"/>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Name"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="AddName"
+                                         Width="200">
+                                </TextBox>
+                            </StackPanel>
 
-                        <TextBlock Foreground="Black" FontFamily="/Fonts/#Poppins">
-                            * Name    = max 30 symbols. <LineBreak/>
-                            * Surname = max 30 symbols...
-                        </TextBlock>
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Surname"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="AddSurname"
+                                         Width="200">
+                                </TextBox>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
-                            <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
-                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmAddButton_Click"/>
-                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
-                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelAddButton_Click"/>
                         </StackPanel>
-                    </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Crown" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="EmpID"
+                                              materialDesign:HintAssist.Hint="Superior"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="AddSuperior"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="CodeBranch" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="BranchID"
+                                              materialDesign:HintAssist.Hint="Branch"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="AddBranch"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Building" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="Name"
+                                              materialDesign:HintAssist.Hint="Location"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="AddLocation"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="ChartLine" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="Name"
+                                              materialDesign:HintAssist.Hint="Position"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="AddPosition"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="0 30 0 0" HorizontalAlignment="Center">
+                            
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Calendar" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <DatePicker Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                            materialDesign:HintAssist.Hint="Employ Date"
+                                            materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                                            BorderBrush="#c5c8cc"
+                                            BorderThickness="0 0 0 1.5"
+                                            Name="AddEmployDate"
+                                            Width="200"
+                                            Margin="0 15 0 0">
+                                </DatePicker>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="Clock" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <materialDesign:TimePicker Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+                                                           materialDesign:HintAssist.Hint="Employ Time"
+                                                           materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                                           materialDesign:HintAssist.FloatingOffset="0, -20"
+                                                           BorderBrush="#c5c8cc"
+                                                           BorderThickness="0 0 0 1.5"
+                                                           Name="AddEmployHour"
+                                                           Width="200"
+                                                           Margin="0 15 0 0">
+                                </materialDesign:TimePicker>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="5">
+
+                            <!--Option Buttons-->
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
+                                <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmAddButton_Click"/>
+                                <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelAddButton_Click"/>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Grid>
+
                 </Border>
             </Popup>
 
-            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 -1 10 10"/>
+                
+            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 10 10 10"/>
 
             <!--Switch tabs Buttons-->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10 10 0 0" HorizontalAlignment="Left">
@@ -104,8 +234,11 @@
                        Margin="20 0 0 10"/>
 
             <!--Filter TextBox-->
-            <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontFamily="/Fonts/#Poppins" Margin="0 0 215 10"
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                <fa:IconImage Icon="Filter" Width="15" Height="15" Foreground="Gray" Margin="0 0 5 10"/>
+                <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontFamily="/Fonts/#Poppins" Margin="0 0 210 10"
                        Foreground="#ffffff" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </StackPanel>
 
             <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
 
@@ -114,10 +247,10 @@
                          Tag="Search in Employees..."
                          Style="{StaticResource TextBoxFilterTheme}"
                          TextChanged="SearchTextBox_TextChanged"
-                         GotKeyboardFocus="txtSearchEmployees_GotKeyboardFocus"/>
+                         GotKeyboardFocus="SearchEmployees_GotKeyboardFocus"/>
             </Grid>
 
-            <!--Customers DataGrid-->
+            <!--Employees DataGrid-->
             <DataGrid Name="EmployeesDataGrid"
                       Style="{DynamicResource DataGridStyle1}" 
                       CellStyle="{DynamicResource DataGridCellStyle1}" 
@@ -145,7 +278,7 @@
                     <DataGridTextColumn Header="Branch" IsReadOnly="True" Width="*" Binding="{Binding BranchID}"/>
                     <DataGridTextColumn Header="Location" IsReadOnly="True" Width="*" Binding="{Binding WorkLocation}"/>
                     <DataGridTextColumn Header="Position" IsReadOnly="True" Width="*" Binding="{Binding Position}"/>
-                    <DataGridTextColumn Header="EmployDate" IsReadOnly="True" Width="*" Binding="{Binding EmployedDate}"/>
+                    <DataGridTextColumn Header="EmployDate" IsReadOnly="True" Width="*" Binding="{Binding EmployedDate, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
 
                     <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
@@ -165,11 +298,23 @@
                 </DataGrid.Columns>
             </DataGrid>
 
+            
+
             <!--Edit Popup Window-->
-            <Popup Name="EditPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto">
-                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+            <Popup Name="EditPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="630" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
+                <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="EditPopup_MouseLeftButtonDown" MouseMove="EditPopup_MouseMove" MouseLeftButtonUp="EditPopup_MouseLeftButtonUp">
-                    <StackPanel>
+
+                    <Grid Margin="50 0 50 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
                         <!--Title TextBox-->
                         <TextBlock Foreground="Black" Text="Edit Window" 
                                    Margin="0 10 0 10" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
@@ -177,51 +322,167 @@
                                    FontSize="12" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0 0 0 30"/>
 
                         <!--Input Boxes-->
-                        <TextBlock Foreground="DimGray" Text="Edit name of selected employee:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Name"  
-                                 Name="EditName"/>
-                        <TextBlock Foreground="DimGray" Text="Edit surname of selected employee:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Surname" 
-                                 Name="EditSurname"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Superior of selected employee:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Superior"
-                                 Name="EditSuperior"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Branch of selected employee:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Branch"
-                                 Name="EditBranch"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Work Location of selected employee:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Location"
-                                 Name="EditLocation"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Position of selected employee:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Position"
-                                 Name="EditPosition"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Employ Date of selected employee:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Employ Date"
-                                 Name="EditEmployDate"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 30 0 0" HorizontalAlignment="Center">
 
-                        <!--Rules TextBlocks-->
-                        <TextBlock Foreground="Black" Text="Rules:" Margin="0 10 0 10" FontSize="18" FontFamily="/Fonts/#Poppins"/>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Name"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditName"
+                                         Width="200">
+                                </TextBox>
+                            </StackPanel>
 
-                        <TextBlock Name="EditInfo" Foreground="Black" FontFamily="/Fonts/#Poppins" Text="* Leave the input unchanged if you do not wish for the row to be edited." Visibility="Visible"/>
-                        <TextBlock Foreground="Black" FontFamily="/Fonts/#Poppins">
-                            * Name    = max 30 symbols. <LineBreak/>
-                            * Surname = max 30 symbols...
-                        </TextBlock>
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Surname"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditSurname"
+                                         Width="200">
+                                </TextBox>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
-                            <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
-                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmEditButton_Click"/>
-                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
-                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelEditButton_Click"/>
                         </StackPanel>
 
-                    </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Crown" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="EmpID"
+                                              materialDesign:HintAssist.Hint="Superior"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="EditSuperior"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="CodeBranch" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="BranchID"
+                                              materialDesign:HintAssist.Hint="Branch"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="EditBranch"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Building" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="Name"
+                                              materialDesign:HintAssist.Hint="Location"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="EditLocation"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="ChartLine" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="Name"
+                                              materialDesign:HintAssist.Hint="Position"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="EditPosition"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Calendar" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <DatePicker Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                            materialDesign:HintAssist.Hint="Employ Date"
+                                            materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                                            BorderBrush="#c5c8cc"
+                                            BorderThickness="0 0 0 1.5"
+                                            Name="EditEmployDate"
+                                            Width="200"
+                                            Margin="0 15 0 0">
+                                </DatePicker>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="Clock" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <materialDesign:TimePicker Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+                                                           materialDesign:HintAssist.Hint="Employ Time"
+                                                           materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                                           materialDesign:HintAssist.FloatingOffset="0, -20"
+                                                           BorderBrush="#c5c8cc"
+                                                           BorderThickness="0 0 0 1.5"
+                                                           Name="EditEmployHour"
+                                                           Width="200"
+                                                           Margin="0 15 0 0">
+                                </materialDesign:TimePicker>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="5">
+
+                            <!--Option Buttons-->
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
+                                <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmEditButton_Click"/>
+                                <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelEditButton_Click"/>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Grid>
+
                 </Border>
             </Popup>
 
             <!--Delete Popup Window-->
             <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="475" Height="auto">
-                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+                <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="DeletePopup_MouseLeftButtonDown" MouseMove="DeletePopup_MouseMove" MouseLeftButtonUp="DeletePopup_MouseLeftButtonUp">
                     <StackPanel>
                         <!--Information-->
