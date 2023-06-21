@@ -13,6 +13,7 @@
                 
                 <ResourceDictionary Source="Theme/DataGrid/GridEditButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/DataGrid/GridRemoveButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/DataGrid/GridMoveToDealerButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/DataGrid/GridButtonIconTheme.xaml"/>
                 
                 <ResourceDictionary Source="Theme/MenuButton/MenuButtonTheme.xaml"/>

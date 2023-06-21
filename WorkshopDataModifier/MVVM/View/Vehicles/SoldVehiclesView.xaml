@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WorkshopDataModifier.MVVM.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:mainWindow="clr-namespace:WorkshopDataModifier"
              mc:Ignorable="d" 
@@ -13,7 +14,7 @@
     <Border CornerRadius="0 10 10 0" Background="#26282B">
 
 
-        <Grid>
+        <Grid x:Name="MainContentWindow">
             <!--Main Section-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -22,15 +23,14 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="61"/>
             </Grid.RowDefinitions>
-
 
             <!--Page Title-->
             <TextBlock Text="Sold Vehicles" Grid.Row="1" FontSize="32" Margin="20 20 0 0"
                        HorizontalAlignment="Left" Foreground="#ffffff" FontFamily="/Fonts/#Poppins"/>
 
-            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 -1 10 10"/>
+            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 10 10 10"/>
 
             <!--Switch tabs Buttons-->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10 10 0 0" HorizontalAlignment="Left">
@@ -41,25 +41,18 @@
                              Command="{Binding DataContext.WarehouseVehiclesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
             </StackPanel>
 
-            <!--Filter by Date Buttons-->
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 10 0 0" HorizontalAlignment="Right">
-                <RadioButton x:Name="DayButton" Content="Day" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
-                <RadioButton x:Name="WeekButton" Content="Week" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
-                <RadioButton x:Name="MonthButton" Content="Month" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
-                <RadioButton x:Name="YearButton" Content="Year" Style="{StaticResource FilterByDateButtonTheme}" FontFamily="/Fonts/#Poppins"/>
-                <RadioButton x:Name="InfButton" Style="{StaticResource FilterByDateButtonTheme}">
-                    <fa:IconImage Icon="Infinity" Foreground="White" Height="20" Width="40"/>
-                </RadioButton>
-            </StackPanel>
-
+            
             <!--Counter Title-->
             <TextBlock Text="SoldVehiclesCounter" Name="SoldVehiclesCounter" Grid.Row="4" FontSize="18" FontFamily="/Fonts/#Poppins"
                        Foreground="#ffffff" HorizontalAlignment="Left" VerticalAlignment="Center"
                        Margin="20 0 0 10"/>
 
             <!--Filter TextBox-->
-            <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontFamily="/Fonts/#Poppins" Margin="0 0 215 10"
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                <fa:IconImage Icon="Filter" Width="15" Height="15" Foreground="Gray" Margin="0 0 5 10"/>
+                <TextBlock Text="Filter by" Grid.Row="4" FontSize="13" FontFamily="/Fonts/#Poppins" Margin="0 0 210 10"
                        Foreground="#ffffff" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </StackPanel>
 
             <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
 
@@ -68,7 +61,7 @@
                          Tag="Search in Sold Vehicles..."
                          Style="{StaticResource TextBoxFilterTheme}"
                          TextChanged="SearchTextBox_TextChanged"
-                         GotKeyboardFocus="txtSearchSoldVehicles_GotKeyboardFocus"/>
+                         GotKeyboardFocus="SearchSoldVehicles_GotKeyboardFocus"/>
             </Grid>
 
             <!--Sold Vehicles DataGrid-->
@@ -100,15 +93,12 @@
                     <DataGridTextColumn Header="Door" IsReadOnly="True" Width="*" Binding="{Binding Door}"/>
                     <DataGridTextColumn Header="Price" IsReadOnly="True" Width="*" Binding="{Binding Price}"/>
                     <DataGridTextColumn Header="Dealership" IsReadOnly="True" Width="*" Binding="{Binding Dealership}"/>
-                    <DataGridTextColumn Header="Delivery" IsReadOnly="True" Width="*" Binding="{Binding SellTime}"/>
+                    <DataGridTextColumn Header="Delivery" IsReadOnly="True" Width="*" Binding="{Binding SellTime, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
 
                     <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Style="{StaticResource GridEditButtonTheme}" Click="MoveToVehiclesButton_Click">
-                                        <fa:IconImage Icon="CarOn" Style="{StaticResource GridButtonIconTheme}"/>
-                                    </Button>
                                     <Button Style="{StaticResource GridEditButtonTheme}" Margin="5 0 0 0" Click="EditButton_Click">
                                         <fa:IconImage Icon="Pencil" Style="{StaticResource GridButtonIconTheme}"/>
                                     </Button>
@@ -124,74 +114,228 @@
             </DataGrid>
 
             <!--Edit Popup Window-->
-            <Popup Name="EditPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto">
-                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+            <Popup Name="EditPopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="630" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
+                <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="EditPopup_MouseLeftButtonDown" MouseMove="EditPopup_MouseMove" MouseLeftButtonUp="EditPopup_MouseLeftButtonUp">
-                    <StackPanel>
+
+                    <Grid Margin="50 0 50 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
                         <!--Title TextBox-->
-                        <TextBlock Foreground="Black" Text="Edit Window" 
-                                   Margin="0 10 0 10" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
-                        <TextBlock Name="MultiEditionWarning" Foreground="Red" Text="Be careful while editing multiple rows at once !" 
-                                   FontSize="12" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0 0 0 30"/>
-
-                        <!--Input Boxes-->
-                        <TextBlock Foreground="DimGray" Text="Edit Vin of selected vehicle:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Vin"  
-                                 Name="EditVin"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Brand of selected vehicle:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Brand"  
-                                 Name="EditBrand"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Color of selected vehicle:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Color" 
-                                 Name="EditColor"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Production Year of selected vehicle:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Year"
-                                 Name="EditYear"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Model of selected vehicle:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Year"
-                                 Name="EditModel"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Door Number of selected vehicle:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Door"
-                                 Name="EditDoor"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Price of selected vehicle:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Price"
-                                 Name="EditPrice"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Dealership of selected vehicle:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Price"
-                                 Name="EditDealership"/>
-                        <TextBlock Foreground="DimGray" Text="Edit Sell Time of selected vehicle:" FontFamily="/Fonts/#Poppins"/>
-                        <TextBox Margin="0 10 0 10" Style="{StaticResource TextBoxFilterTheme}" Tag="Sell Time"
-                                 Name="EditSellTime"/>
-
-                        <!--Rules TextBlocks-->
-                        <TextBlock Foreground="Black" Text="Rules:" Margin="0 10 0 10" FontSize="18" FontFamily="/Fonts/#Poppins"/>
-
-                        <TextBlock Name="EditInfo" Foreground="Black" FontFamily="/Fonts/#Poppins" Text="* Leave the input unchanged if you do not wish for the row to be edited." Visibility="Visible"/>
-                        <TextBlock Foreground="Black" FontFamily="/Fonts/#Poppins">
-                            * Vin    = <LineBreak/>
-                            * Brand =  <LineBreak/>
-                            * Color  =  <LineBreak/>
-                            * Year   =  <LineBreak/>
-                            * Model = <LineBreak/>
-                            * Door = <LineBreak/>
-                            * Price = <LineBreak/>
-                            * Dealership = <LineBreak/>
-                        </TextBlock>
-
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
-                            <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
-                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmEditButton_Click"/>
-                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
-                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelEditButton_Click"/>
+                        <StackPanel Orientation="Vertical" Grid.Row="0">
+                            <TextBlock Foreground="Black" Text="Edit Window" 
+                                   Margin="0 10 0 0" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
+                            <TextBlock Name="MultiEditionWarning" Foreground="Red" Text="Be careful while editing multiple rows at once !" 
+                                   FontSize="12" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center" Visibility="Collapsed"/>
                         </StackPanel>
 
-                    </StackPanel>
+                        <!--Input Boxes-->
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="CarBattery" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Vin"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditVin"
+                                         Width="200"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="Code" Height="15" Width="15" HorizontalAlignment="Right" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="Name"
+                                              materialDesign:HintAssist.Hint="Brand"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="EditBrand"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="SprayCan" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Color"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditColor"
+                                         Width="200"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="SortNumericDesc" Height="15" Width="15" HorizontalAlignment="Right" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              materialDesign:HintAssist.Hint="Year"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="EditYear"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="CarRear" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Model"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditModel"
+                                         Width="200"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="DoorClosed" Height="15" Width="15" HorizontalAlignment="Right" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              materialDesign:HintAssist.Hint="Door"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="EditDoor"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                        <ComboBoxItem Content="2"/>
+                                        <ComboBoxItem Content="4"/>
+                                        <ComboBoxItem Content="6"/>
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="MoneyBill" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Price"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditPrice"
+                                         Width="200"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Warehouse" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="Name"
+                                              materialDesign:HintAssist.Hint="Dealership"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="EditDealership"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+
+
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="5" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Calendar" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <DatePicker Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                            materialDesign:HintAssist.Hint="Delivery Date"
+                                            materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                                            BorderBrush="#c5c8cc"
+                                            BorderThickness="0 0 0 1.5"
+                                            Name="EditSellDate"
+                                            Width="200"
+                                            Margin="0 15 0 0">
+                                </DatePicker>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="Clock" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <materialDesign:TimePicker Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+                                                           materialDesign:HintAssist.Hint="Delivery Time"
+                                                           materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                                           materialDesign:HintAssist.FloatingOffset="0, -20"
+                                                           BorderBrush="#c5c8cc"
+                                                           BorderThickness="0 0 0 1.5"
+                                                           Name="EditSellTime"
+                                                           Width="200"
+                                                           Margin="0 15 0 0">
+                                </materialDesign:TimePicker>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="6">
+
+                            <!--Option Buttons-->
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
+                                <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmEditButton_Click"/>
+                                <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelEditButton_Click"/>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Grid>
+
                 </Border>
             </Popup>
 
             <!--Delete Popup Window-->
-            <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="475" Height="auto">
-                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+            <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="475" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
+                <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="DeletePopup_MouseLeftButtonDown" MouseMove="DeletePopup_MouseMove" MouseLeftButtonUp="DeletePopup_MouseLeftButtonUp">
                     <StackPanel>
                         <!--Information-->

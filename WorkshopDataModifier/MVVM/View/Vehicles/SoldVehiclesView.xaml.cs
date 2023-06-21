@@ -27,7 +27,11 @@ namespace WorkshopDataModifier.MVVM.View
     public partial class SoldVehiclesView : UserControl
     {
         #region Counter of the current clients (dynamic)
+
         private int _rowCount;
+        /// <summary>
+        /// Counts number of items inside "sold_vehicles" table
+        /// </summary>
         public int RowCount
         {
             get { return _rowCount; }
@@ -74,6 +78,8 @@ namespace WorkshopDataModifier.MVVM.View
         static List<sold_vehicles> selectedRows = new List<sold_vehicles>();
 
         #region Edit Section
+
+        //Button Click Handler - Sets up the rows for editing
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (sold_vehicles rowData in SoldVehiclesDataGrid.Items)
@@ -104,6 +110,11 @@ namespace WorkshopDataModifier.MVVM.View
             {
                 MultiEditionWarning.Visibility = Visibility.Collapsed;
 
+                DateTime? dataTime = row.SellTime;
+
+                string date = dataTime?.ToString("dd/MM/yyyy") ?? "No date";
+                string time = dataTime?.ToString("h:mm tt") ?? "No time";
+
                 EditVin.Text = row.Vin.ToString();
                 EditBrand.Text = row.Brand;
                 EditColor.Text = row.Color;
@@ -112,20 +123,34 @@ namespace WorkshopDataModifier.MVVM.View
                 EditDoor.Text = row.Door.ToString();
                 EditPrice.Text = row.Price.ToString();
                 EditDealership.Text = row.Dealership;
-                EditSellTime.Text = row.SellTime.ToString();
+                EditSellDate.Text = date;
+                EditSellTime.Text = time;
 
                 EditPopup.IsOpen = true;
             }
             else
             {
+                EditVin.IsHitTestVisible = false;
+                EditVin.Foreground = Brushes.Gray;
+                EditVin.Text = "Can't Multi Edit !";
+
                 EditPopup.DataContext = selectedRows;
                 MultiEditionWarning.Visibility = Visibility.Visible;
 
                 EditPopup.IsOpen = true;
             }
 
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (EditPopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -144,7 +169,7 @@ namespace WorkshopDataModifier.MVVM.View
                         int txtYear = int.Parse(EditYear.Text);
                         byte txtDoor = byte.Parse(EditDoor.Text);
                         decimal txtPrice = decimal.Parse(EditPrice.Text);
-                        DateTime txtSellTime = DateTime.Parse(EditSellTime.Text);
+                        DateTime txtSellTime = DateTime.Parse(EditSellDate.Text + " " + EditSellTime.Text);
 
                         selectedRow.Vin = txtVin;
                         selectedRow.Brand = EditBrand.Text;
@@ -161,9 +186,6 @@ namespace WorkshopDataModifier.MVVM.View
                         foreach (sold_vehicles dataRow in selectedRows)
                         {
                             sold_vehicles selectedRow = context.SoldVehicle.Find(dataRow.Vin);
-
-                            if (EditVin.Text != "" && EditVin.Text != null && int.TryParse(EditVin.Text, out int txtVin))
-                                selectedRow.Vin = txtVin;
 
                             if (EditBrand.Text != "" && EditBrand.Text != null)
                                 selectedRow.Brand = EditBrand.Text;
@@ -186,17 +208,41 @@ namespace WorkshopDataModifier.MVVM.View
                             if (EditDealership.Text != "" && EditDealership.Text != null)
                                 selectedRow.Dealership = EditDealership.Text;
 
-                            if (EditSellTime.Text != "" && EditSellTime.Text != null && DateTime.TryParse(EditSellTime.Text, out DateTime txtSellTime))
-                                selectedRow.SellTime = txtSellTime;
+                            if (EditSellDate.Text != "" && EditSellDate.Text != null)
+                            {
+                                if (EditSellTime.Text != "" && EditSellTime.Text != null)
+                                {
+                                    DateTime txtDelivery = DateTime.Parse(EditSellDate.Text + " " + EditSellTime.Text);
+                                    selectedRow.SellTime = txtDelivery;
+                                }
+                                else
+                                {
+                                    DateTime txtDelivery = DateTime.Parse(EditSellDate.Text);
+                                    selectedRow.SellTime = txtDelivery;
+                                }
+                            }
                         }
                     }
 
+                    //Update DataGrid to show changes
                     context.SaveChanges();
                     SoldVehiclesDataGrid.ItemsSource = context.SoldVehicle.ToList();
                 }
 
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 EditPopup.IsOpen = false;
 
+                //Set text back to empty
                 EditVin.Text = "";
                 EditBrand.Text = "";
                 EditColor.Text = "";
@@ -205,9 +251,12 @@ namespace WorkshopDataModifier.MVVM.View
                 EditDoor.Text = "";
                 EditPrice.Text = "";
                 EditDealership.Text = "";
+                EditSellDate.Text = "";
                 EditSellTime.Text = "";
 
-                selectedRows.Clear();
+                //Set the Inputs back to normal
+                EditVin.IsHitTestVisible = true;
+                EditVin.Foreground = Brushes.Black;
             }
             catch (DbEntityValidationException ex)
             {
@@ -232,6 +281,20 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelEditButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
+            selectedRows.Clear();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            EditPopup.IsOpen = false;
+
+            //Set text back to empty
             EditVin.Text = "";
             EditBrand.Text = "";
             EditColor.Text = "";
@@ -240,15 +303,18 @@ namespace WorkshopDataModifier.MVVM.View
             EditDoor.Text = "";
             EditPrice.Text = "";
             EditDealership.Text = "";
+            EditSellDate.Text = "";
             EditSellTime.Text = "";
 
-            selectedRows.Clear();
-
-            EditPopup.IsOpen = false;
+            //Set the Inputs back to normal
+            EditVin.IsHitTestVisible = true;
+            EditVin.Foreground = Brushes.Black;
         }
         #endregion
 
         #region Delete Section
+
+        //Button Click Handler - Sets up the rows for deletion
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (sold_vehicles rowData in SoldVehiclesDataGrid.Items)
@@ -284,8 +350,18 @@ namespace WorkshopDataModifier.MVVM.View
                 DeletePopup.DataContext = selectedRows;
                 DeletePopup.IsOpen = true;
             }
+
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (DeletePopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -315,11 +391,22 @@ namespace WorkshopDataModifier.MVVM.View
                     SoldVehiclesDataGrid.ItemsSource = context.SoldVehicle.ToList();
                 }
 
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Update Counter
                 RowCount = SoldVehiclesDataGrid.Items.Count;
                 SoldVehiclesCounter.Text = $"Current Saved Sold Vehicles: {RowCount}";
 
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 DeletePopup.IsOpen = false;
-                selectedRows.Clear();
             }
             catch (DbUpdateException ex)
             {
@@ -350,19 +437,21 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
             selectedRows.Clear();
+
+            //Enable Controls
+            EnableControls();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Close Popup
             DeletePopup.IsOpen = false;
         }
         #endregion
 
-        #endregion
-
-        #region Move To Vehicles
-
-        private void MoveToVehiclesButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         #endregion
 
         #region Draggable Popups
@@ -494,7 +583,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         }
 
-        private void txtSearchSoldVehicles_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void SearchSoldVehicles_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (txtSearchSoldVehicles.Text == "Search in Sold Vehicles...")
             {
@@ -503,31 +592,40 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        #region Date Filtering
+        #region Controls Control
 
-        private void DataFilterButton_Checked(object sender, RoutedEventArgs e)
+        //Disables all Controls
+        private void DisableControls()
         {
-            if (DayButton.IsChecked == true)
+            btnWarehouseVehicles.IsHitTestVisible = false;
+            btnVehicles.IsHitTestVisible = false;
+            txtSearchSoldVehicles.IsHitTestVisible = false;
+            SoldVehiclesDataGrid.IsHitTestVisible = false;
+        }
+
+        //Enables all Controls
+        private void EnableControls()
+        {
+            btnWarehouseVehicles.IsHitTestVisible = true;
+            btnVehicles.IsHitTestVisible = true;
+            txtSearchSoldVehicles.IsHitTestVisible = true;
+            SoldVehiclesDataGrid.IsHitTestVisible = true;
+        }
+        #endregion
+
+        #region Comboboxes
+
+        //Set ItemSourcesof ComboBoxes
+        private void Combobox_Options()
+        {
+            using (var context = new WarehouseVehiclesDbContext())
             {
+                var brandOptions = context.Brand.ToList();
+                var dealershipOptions = context.Dealership.ToList();
 
+                EditBrand.ItemsSource = brandOptions;
+                EditDealership.ItemsSource = dealershipOptions;
             }
-            else if (WeekButton.IsChecked == true)
-            {
-
-            }
-            else if (MonthButton.IsChecked == true)
-            {
-
-            }
-            else if (YearButton.IsChecked == true)
-            {
-
-            }
-            else if (InfButton.IsChecked == true)
-            {
-
-            }
-
         }
         #endregion
 
@@ -546,6 +644,8 @@ namespace WorkshopDataModifier.MVVM.View
             RowCount = SoldVehiclesDataGrid.Items.Count;
             SoldVehiclesCounter.Text = $"Current Saved Sold Vehicles: {RowCount}";
 
+            //Setup Comboboxes
+            Combobox_Options();
         }
     }
 
@@ -555,7 +655,9 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public class SoldVehiclesDbContext : DbContext
     {
-        public DbSet<sold_vehicles> SoldVehicle { get; set; } //DbSet dla tabeli "sold_vehicles"
+        public DbSet<sold_vehicles> SoldVehicle { get; set; }
+        public DbSet<brands> Brand { get; set; }
+        public DbSet<dealership> Dealership { get; set; }
 
         public SoldVehiclesDbContext() : base("DealershipCon")
         {

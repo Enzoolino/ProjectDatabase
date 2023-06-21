@@ -28,7 +28,11 @@ namespace WorkshopDataModifier.MVVM.View
     {
 
         #region Counter of the current clients (dynamic)
+
         private int _rowCount;
+        /// <summary>
+        /// Counts number of items inside "warehouse_vehicles" table
+        /// </summary>
         public int RowCount
         {
             get { return _rowCount; }
@@ -75,6 +79,8 @@ namespace WorkshopDataModifier.MVVM.View
         static List<warehouse_vehicles> selectedRows = new List<warehouse_vehicles>();
 
         #region Edit Section
+
+        //Button Click Handler - Sets up the rows for editing
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (warehouse_vehicles rowData in WarehouseVehiclesDataGrid.Items)
@@ -105,6 +111,11 @@ namespace WorkshopDataModifier.MVVM.View
             {
                 MultiEditionWarning.Visibility = Visibility.Collapsed;
 
+                DateTime? dataTime = row.DeliveryTime;
+
+                string date = dataTime?.ToString("dd/MM/yyyy") ?? "No date";
+                string time = dataTime?.ToString("h:mm tt") ?? "No time";
+
                 EditVin.Text = row.Vin.ToString();
                 EditBrand.Text = row.Brand;
                 EditColor.Text = row.Color;
@@ -112,20 +123,34 @@ namespace WorkshopDataModifier.MVVM.View
                 EditModel.Text = row.Model;
                 EditDoor.Text = row.Door.ToString();
                 EditWarehouse.Text = row.Warehouse;
-                EditDeliveryTime.Text = row.DeliveryTime.ToString();
+                EditDeliveryDate.Text = date;
+                EditDeliveryTime.Text = time;
 
                 EditPopup.IsOpen = true;
             }
             else
             {
+                EditVin.IsHitTestVisible = false;
+                EditVin.Foreground = Brushes.Gray;
+                EditVin.Text = "Can't Multi Edit !";
+
                 EditPopup.DataContext = selectedRows;
                 MultiEditionWarning.Visibility = Visibility.Visible;
 
                 EditPopup.IsOpen = true;
             }
 
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (EditPopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -143,7 +168,7 @@ namespace WorkshopDataModifier.MVVM.View
                         int txtVin = int.Parse(EditVin.Text);
                         int txtYear = int.Parse(EditYear.Text);
                         byte txtDoor = byte.Parse(EditDoor.Text);
-                        DateTime txtDelivery = DateTime.Parse(EditDeliveryTime.Text);
+                        DateTime txtDelivery = DateTime.Parse(EditDeliveryDate.Text + " " + EditDeliveryTime.Text);
 
                         selectedRow.Vin = txtVin;
                         selectedRow.Brand = EditBrand.Text;
@@ -159,9 +184,6 @@ namespace WorkshopDataModifier.MVVM.View
                         foreach (warehouse_vehicles dataRow in selectedRows)
                         {
                             warehouse_vehicles selectedRow = context.WarehouseVehicle.Find(dataRow.Vin);
-
-                            if (EditVin.Text != "" && EditVin.Text != null && int.TryParse(EditVin.Text, out int txtVin))
-                                selectedRow.Vin = txtVin;
 
                             if (EditBrand.Text != "" && EditBrand.Text != null)
                                 selectedRow.Brand = EditBrand.Text;
@@ -181,17 +203,41 @@ namespace WorkshopDataModifier.MVVM.View
                             if (EditWarehouse.Text != "" && EditWarehouse.Text != null)
                                 selectedRow.Warehouse = EditWarehouse.Text;
 
-                            if (EditDeliveryTime.Text != "" && EditDeliveryTime.Text != null && DateTime.TryParse(EditDeliveryTime.Text, out DateTime txtDelivery))
-                                selectedRow.DeliveryTime = txtDelivery;
+                            if (EditDeliveryDate.Text != "" && EditDeliveryDate.Text != null)
+                            {
+                                if (EditDeliveryTime.Text != "" && EditDeliveryTime.Text != null)
+                                {
+                                    DateTime txtDelivery = DateTime.Parse(EditDeliveryDate.Text + " " + EditDeliveryTime.Text);
+                                    selectedRow.DeliveryTime = txtDelivery;
+                                }
+                                else
+                                {
+                                    DateTime txtDelivery = DateTime.Parse(EditDeliveryDate.Text);
+                                    selectedRow.DeliveryTime = txtDelivery;
+                                }
+                            }
                         }
                     }
 
+                    //Update DataGrid to show changes
                     context.SaveChanges();
                     WarehouseVehiclesDataGrid.ItemsSource = context.WarehouseVehicle.ToList();
                 }
 
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 EditPopup.IsOpen = false;
 
+                //Set text back to empty
                 EditVin.Text = "";
                 EditBrand.Text = "";
                 EditColor.Text = "";
@@ -199,9 +245,12 @@ namespace WorkshopDataModifier.MVVM.View
                 EditModel.Text = "";
                 EditDoor.Text = "";
                 EditWarehouse.Text = "";
+                EditDeliveryDate.Text = "";
                 EditDeliveryTime.Text = "";
 
-                selectedRows.Clear();
+                //Set the Inputs back to normal
+                EditVin.IsHitTestVisible = true;
+                EditVin.Foreground = Brushes.Black;
             }
             catch (DbEntityValidationException ex)
             {
@@ -226,6 +275,20 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelEditButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
+            selectedRows.Clear();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            EditPopup.IsOpen = false;
+
+            //Set text back to empty
             EditVin.Text = "";
             EditBrand.Text = "";
             EditColor.Text = "";
@@ -233,15 +296,18 @@ namespace WorkshopDataModifier.MVVM.View
             EditModel.Text = "";
             EditDoor.Text = "";
             EditWarehouse.Text = "";
+            EditDeliveryDate.Text = "";
             EditDeliveryTime.Text = "";
 
-            selectedRows.Clear();
-
-            EditPopup.IsOpen = false;
+            //Set the Inputs back to normal
+            EditVin.IsHitTestVisible = true;
+            EditVin.Foreground = Brushes.Black;
         }
         #endregion
 
         #region Delete Section
+
+        //Button Click Handler - Sets up the rows for deletion
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (warehouse_vehicles rowData in WarehouseVehiclesDataGrid.Items)
@@ -277,8 +343,18 @@ namespace WorkshopDataModifier.MVVM.View
                 DeletePopup.DataContext = selectedRows;
                 DeletePopup.IsOpen = true;
             }
+
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (DeletePopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -308,11 +384,22 @@ namespace WorkshopDataModifier.MVVM.View
                     WarehouseVehiclesDataGrid.ItemsSource = context.WarehouseVehicle.ToList();
                 }
 
-                RowCount = WarehouseVehiclesDataGrid.Items.Count;
-                WarehouseVehiclesCounter.Text = $"Current Saved Vehicles: {RowCount}";
-
-                DeletePopup.IsOpen = false;
+                //Clear Selection
                 selectedRows.Clear();
+
+                //Update Counter
+                RowCount = WarehouseVehiclesDataGrid.Items.Count;
+                WarehouseVehiclesCounter.Text = $"Current Saved Warehouse Vehicles: {RowCount}";
+
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
+                DeletePopup.IsOpen = false;
             }
             catch (DbUpdateException ex)
             {
@@ -343,18 +430,38 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
             selectedRows.Clear();
+
+            //Enable Controls
+            EnableControls();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Close Popup
             DeletePopup.IsOpen = false;
         }
         #endregion
 
         #region Add Section
 
+        //Button Click Handler - Opens Row Adding Popup
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Enable Scrimming
+            MainContentWindow.Opacity = 0.5;
+            MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+
+            //Disable Controls
+            DisableControls();
+
+            //Open Popup
             AddPopup.IsOpen = true;
         }
 
+        //Button Click Handler - Adds row to the table if everything correct
         private void ConfirmAddButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -364,7 +471,7 @@ namespace WorkshopDataModifier.MVVM.View
                     int txtVin = int.Parse(AddVin.Text);
                     int txtYear = int.Parse(AddYear.Text);
                     byte txtDoor = byte.Parse(AddDoor.Text);
-                    DateTime txtDeliveryTime = DateTime.Parse(AddDeliveryTime.Text);
+                    DateTime txtDelivery = DateTime.Parse(AddDeliveryDate.Text + " " + AddDeliveryTime.Text);
 
                     warehouse_vehicles newVehicle = new warehouse_vehicles
                     {
@@ -375,7 +482,7 @@ namespace WorkshopDataModifier.MVVM.View
                         Model = AddModel.Text,
                         Door = txtDoor,
                         Warehouse = AddWarehouse.Text,
-                        DeliveryTime = txtDeliveryTime
+                        DeliveryTime = txtDelivery
                     };
 
                     context.WarehouseVehicle.Add(newVehicle);
@@ -384,9 +491,30 @@ namespace WorkshopDataModifier.MVVM.View
                     WarehouseVehiclesDataGrid.ItemsSource = context.WarehouseVehicle.ToList();
                 }
 
+                //Update Counter
                 RowCount = WarehouseVehiclesDataGrid.Items.Count;
                 WarehouseVehiclesCounter.Text = $"Current Saved Warehouse Vehicles: {RowCount}";
+
+                //Disable scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 AddPopup.IsOpen = false;
+
+                //Set text back to empty
+                AddVin.Text = "";
+                AddBrand.Text = "";
+                AddColor.Text = "";
+                AddYear.Text = "";
+                AddModel.Text = "";
+                AddDoor.Text = "";
+                AddWarehouse.Text = "";
+                AddDeliveryDate.Text = "";
+                AddDeliveryTime.Text = "";
             }
             catch (Exception ex)
             {
@@ -394,8 +522,20 @@ namespace WorkshopDataModifier.MVVM.View
             }
         }
 
+        //Button Click Handler - Closes the Adding Popup
         private void CancelAddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Disable scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            AddPopup.IsOpen = false;
+
+            //Set text back to empty
             AddVin.Text = "";
             AddBrand.Text = "";
             AddColor.Text = "";
@@ -403,14 +543,142 @@ namespace WorkshopDataModifier.MVVM.View
             AddModel.Text = "";
             AddDoor.Text = "";
             AddWarehouse.Text = "";
+            AddDeliveryDate.Text = "";
             AddDeliveryTime.Text = "";
-
-            AddPopup.IsOpen = false;
         }
 
         #endregion
 
-        #endregion 
+        #region MoveToDealer Section
+
+        //Button Click Handler - Opens Row Moving Popup
+        private void MoveToDealerButton_Click (object sender, RoutedEventArgs e)
+        {
+            //Enable Scrimming
+            MainContentWindow.Opacity = 0.5;
+            MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+
+            //Disable Controls
+            DisableControls();
+
+            //Identify the Selected Row
+            Button moveToDealerButton = (Button)sender;
+            warehouse_vehicles row = (warehouse_vehicles)moveToDealerButton.DataContext;
+            selectedRows.Add(row);
+
+            //Open Popup
+            MoveToDealerPopup.IsOpen = true;
+        }
+
+        private void ConfirmMoveToDealerButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var context = new WarehouseVehiclesDbContext())
+                {
+                    warehouse_vehicles selectedRow = context.WarehouseVehicle.Find(selectedRows[0].Vin);
+
+                    //Handle the addition to "vehicles" tab
+                    decimal txtPrice = decimal.Parse(MoveToDealerPrice.Text);
+                    DateTime txtDelivery = DateTime.Parse(MoveToDealerDeliveryDate.Text + " " + MoveToDealerDeliveryTime.Text);
+
+                    vehicles newVehicle = new vehicles
+                    {
+                        Vin = selectedRow.Vin,
+                        Brand = selectedRow.Brand,
+                        Color = selectedRow.Color,
+                        Year = selectedRow.Year,
+                        Model = selectedRow.Model,
+                        Door = selectedRow.Door,
+                        Price = txtPrice,
+                        Dealership = MoveToDealerDealership.Text,
+                        DeliveryTime = txtDelivery
+                    };
+
+                    context.Vehicles.Add(newVehicle);
+                    
+                    //Handle the deletion from "warehouse_vehicles" tab
+                    context.WarehouseVehicle.Remove(selectedRow);
+
+                    //Save the changes and Update Datagrid
+                    context.SaveChanges();
+                    WarehouseVehiclesDataGrid.ItemsSource = context.WarehouseVehicle.ToList();
+                }
+
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Update Counter
+                RowCount = WarehouseVehiclesDataGrid.Items.Count;
+                WarehouseVehiclesCounter.Text = $"Current Saved Warehouse Vehicles: {RowCount}";
+
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
+                MoveToDealerPopup.IsOpen = false;
+
+                //Set text back to empty
+                MoveToDealerPrice.Text = "";
+                MoveToDealerDealership.Text = "";
+                MoveToDealerDeliveryDate.Text = "";
+                MoveToDealerDeliveryTime.Text = "";
+            }
+            catch (DbUpdateException ex)
+            {
+                // Handle specific database exceptions
+                if (ex.InnerException is SqlException sqlException)
+                {
+                    // Handle referential integrity constraint violation
+                    if (sqlException.Number == 547)
+                    {
+                        MessageBox.Show("Cannot move the item because it is referenced by other entities.", "Move Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"An error occurred while moving the item: {sqlException.Message}", "Move Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"An error occurred while moving the item: {ex.Message}", "Move Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                MessageBox.Show($"An error occurred while moving the item: {ex.Message}", "Move Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+            }
+        }
+
+        private void CancelMoveToDealerButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Clear Selection
+            selectedRows.Clear();
+
+            //Enable Controls
+            EnableControls();
+
+            //Disable scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Close Popup
+            MoveToDealerPopup.IsOpen = false;
+
+            //Set text back to empty
+            MoveToDealerPrice.Text = "";
+            MoveToDealerDealership.Text = "";
+            MoveToDealerDeliveryDate.Text = "";
+            MoveToDealerDeliveryTime.Text = "";
+        }
+        #endregion
+
+        #endregion
 
         #region Draggable Popups
 
@@ -519,6 +787,42 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
+        #region MoveToDealer Popup
+
+        private void MoveToDealerPopup_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                isDraggingPopup = true;
+                startPoint = e.GetPosition(MoveToDealerPopup);
+            }
+        }
+
+        private void MoveToDealerPopup_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDraggingPopup)
+            {
+                Point currentPoint = e.GetPosition(MoveToDealerPopup);
+                double offsetX = currentPoint.X - startPoint.X;
+                double offsetY = currentPoint.Y - startPoint.Y;
+
+                AddPopup.HorizontalOffset += offsetX;
+                AddPopup.VerticalOffset += offsetY;
+
+                startPoint = currentPoint;
+            }
+        }
+
+        private void MoveToDealerPopup_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                isDraggingPopup = false;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Search
@@ -536,7 +840,6 @@ namespace WorkshopDataModifier.MVVM.View
                         string txtVin = dataItem.Vin.ToString();
                         string txtYear = dataItem.Year.ToString();
                         string txtDoor = dataItem.Door.ToString();
-                        
                         string txtDeliveryTime = dataItem.DeliveryTime.ToString();
 
                         return txtVin.Contains(searchText) ||
@@ -574,7 +877,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         }
 
-        private void txtSearchWarehouseVehicles_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void SearchWarehouseVehicles_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (txtSearchWarehouseVehicles.Text == "Search in Warehouse...")
             {
@@ -583,31 +886,49 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        #region Date Filtering
+        #region Controls Control
 
-        private void DataFilterButton_Checked(object sender, RoutedEventArgs e)
+        //Disables all Controls
+        private void DisableControls()
         {
-            if (DayButton.IsChecked == true)
+            btnVehicles.IsHitTestVisible = false;
+            btnSoldVehicles.IsHitTestVisible = false;
+            btnAdd.IsHitTestVisible = false;
+            txtSearchWarehouseVehicles.IsHitTestVisible = false;
+            WarehouseVehiclesDataGrid.IsHitTestVisible = false;
+        }
+
+        //Enables all Controls
+        private void EnableControls()
+        {
+            btnVehicles.IsHitTestVisible = true;
+            btnSoldVehicles.IsHitTestVisible = true;
+            btnAdd.IsHitTestVisible = true;
+            txtSearchWarehouseVehicles.IsHitTestVisible = true;
+            WarehouseVehiclesDataGrid.IsHitTestVisible = true;
+        }
+        #endregion
+
+        #region Comboboxes
+
+        //Set ItemSourcesof ComboBoxes
+        private void Combobox_Options()
+        {
+            using (var context = new WarehouseVehiclesDbContext())
             {
+                var brandOptions = context.Brand.ToList();
+                var warehouseOptions = context.Warehouse.ToList();
+                var dealershipOptions = context.Dealership.ToList();
 
+                AddBrand.ItemsSource = brandOptions;
+                AddWarehouse.ItemsSource = warehouseOptions;
+
+                EditBrand.ItemsSource = brandOptions;
+                EditWarehouse.ItemsSource = warehouseOptions;
+
+                MoveToDealerDealership.ItemsSource = dealershipOptions;
+              
             }
-            else if (WeekButton.IsChecked == true)
-            {
-
-            }
-            else if (MonthButton.IsChecked == true)
-            {
-
-            }
-            else if (YearButton.IsChecked == true)
-            {
-
-            }
-            else if (InfButton.IsChecked == true)
-            {
-
-            }
-
         }
         #endregion
 
@@ -626,9 +947,11 @@ namespace WorkshopDataModifier.MVVM.View
             //Counter initializer
             RowCount = WarehouseVehiclesDataGrid.Items.Count;
             WarehouseVehiclesCounter.Text = $"Current Saved Warehouse Vehicles: {RowCount}";
+
+            //Setup Comboboxes
+            Combobox_Options();
         }
     }
-
 
 
     /// <summary>
@@ -636,7 +959,11 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public class WarehouseVehiclesDbContext : DbContext
     {
-        public DbSet<warehouse_vehicles> WarehouseVehicle { get; set; } //DbSet dla tabeli "customer"
+        public DbSet<warehouse_vehicles> WarehouseVehicle { get; set; }
+        public DbSet<brands> Brand { get; set; }
+        public DbSet<warehouse> Warehouse { get; set; }
+        public DbSet<vehicles> Vehicles { get; set; }
+        public DbSet<dealership> Dealership { get; set; }
 
         public WarehouseVehiclesDbContext() : base("DealershipCon")
         {
