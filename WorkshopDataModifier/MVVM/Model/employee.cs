@@ -23,8 +23,8 @@ namespace WorkshopDataModifier.MVVM.Model
             this.employee1 = new ObservableCollection<employee>();
         }
 
+        //Mark the selection
         private bool _isSelected;
-
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -34,6 +34,9 @@ namespace WorkshopDataModifier.MVVM.Model
                 OnPropertyChanged();
             }
         }
+
+        //Concated string representing the value in Combobox
+        public string EmpIDAndName => $"ID:{EmpID} {Name} {Surname}";
 
         public long EmpID { get; set; }
         public string Name { get; set; }

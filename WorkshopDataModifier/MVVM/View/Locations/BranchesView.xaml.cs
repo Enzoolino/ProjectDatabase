@@ -151,7 +151,11 @@ namespace WorkshopDataModifier.MVVM.View
                         branch_office selectedRow = context.Branch.Find(selectedRows[0].BranchID);
 
                         selectedRow.Location = EditLocation.Text;
-                        selectedRow.Phone = EditPhone.Text;
+
+                        if (EditPhone.Text != "")
+                            selectedRow.Phone = EditPhone.Text;
+                        else
+                            selectedRow.Phone = null;
                     }
                     else
                     {
@@ -164,6 +168,8 @@ namespace WorkshopDataModifier.MVVM.View
 
                             if (EditPhone.Text != "" && EditPhone.Text != null)
                                 selectedRow.Phone = EditPhone.Text;
+                            else
+                                selectedRow.Phone = null;
                         }
                     }
 
@@ -395,10 +401,21 @@ namespace WorkshopDataModifier.MVVM.View
             {
                 using (var context = new BranchesDbContext())
                 {
+                    string txtPhone;
+                    if (AddPhone.Text != "")
+                    {
+                        txtPhone = AddPhone.Text;
+                    }
+                    else
+                    {
+                        txtPhone = null;
+                    }
+
+
                     branch_office newBranch = new branch_office
                     {
                         Location = AddLocation.Text,
-                        Phone = AddPhone.Text
+                        Phone = txtPhone
                     };
 
                     context.Branch.Add(newBranch);

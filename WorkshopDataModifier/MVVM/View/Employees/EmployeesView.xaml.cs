@@ -161,7 +161,16 @@ namespace WorkshopDataModifier.MVVM.View
                     {
                         employee selectedRow = context.Employee.Find(selectedRows[0].EmpID);
 
-                        long txtSuperior = long.Parse(EditSuperior.Text);
+                        long? txtSuperior;
+                        if (EditSuperior.Text != "")
+                        {
+                            txtSuperior = long.Parse(EditSuperior.Text);
+                        }
+                        else
+                        {
+                            txtSuperior = null;
+                        }
+
                         int txtBranch = int.Parse(EditBranch.Text);
                         DateTime txtEmployDate = DateTime.Parse(EditEmployDate.Text + " " + EditEmployHour.Text);
 
@@ -169,7 +178,12 @@ namespace WorkshopDataModifier.MVVM.View
                         selectedRow.Surname = EditSurname.Text;
                         selectedRow.SuperiorID = txtSuperior;
                         selectedRow.BranchID = txtBranch;
-                        selectedRow.WorkLocation = EditLocation.Text;
+
+                        if (EditLocation.Text != "")
+                            selectedRow.WorkLocation = EditLocation.Text;
+                        else
+                            selectedRow.WorkLocation = null;
+
                         selectedRow.Position = EditPosition.Text;
                         selectedRow.EmployedDate = txtEmployDate;
                     }
@@ -187,12 +201,16 @@ namespace WorkshopDataModifier.MVVM.View
 
                             if (EditSuperior.Text != "" && EditSuperior.Text != null && long.TryParse(EditSuperior.Text, out long txtSuperior))
                                 selectedRow.SuperiorID = txtSuperior;
+                            else
+                                selectedRow.SuperiorID = null;
 
                             if (EditBranch.Text != "" && EditBranch.Text != null && int.TryParse(EditBranch.Text, out int txtBranch))
                                 selectedRow.BranchID = txtBranch;
 
                             if (EditLocation.Text != "" && EditLocation.Text != null)
                                 selectedRow.WorkLocation = EditLocation.Text;
+                            else
+                                selectedRow.WorkLocation = null;
 
                             if (EditPosition.Text != "" && EditPosition.Text != null)
                                 selectedRow.Position = EditPosition.Text;
@@ -456,7 +474,26 @@ namespace WorkshopDataModifier.MVVM.View
             {
                 using (var context = new EmployeesDbContext())
                 {
-                    long txtSuperior = long.Parse(AddSuperior.Text);
+                    long? txtSuperior;
+                    if (AddSuperior.Text != "")
+                    {
+                        txtSuperior = long.Parse(AddSuperior.Text);
+                    }
+                    else
+                    {
+                        txtSuperior = null;
+                    }
+
+                    string txtLocation;
+                    if (AddLocation.Text != "")
+                    {
+                        txtLocation = AddLocation.Text;
+                    }
+                    else
+                    {
+                        txtLocation = null;
+                    }
+
                     int txtBranch = int.Parse(AddBranch.Text);
                     DateTime txtEmployDate =  DateTime.Parse(AddEmployDate.Text + " " + AddEmployHour.Text);
 
@@ -466,7 +503,7 @@ namespace WorkshopDataModifier.MVVM.View
                         Surname = AddSurname.Text,
                         SuperiorID = txtSuperior,
                         BranchID = txtBranch,
-                        WorkLocation = AddLocation.Text,
+                        WorkLocation = txtLocation,
                         Position = AddPosition.Text,
                         EmployedDate = txtEmployDate
                     };
@@ -740,6 +777,11 @@ namespace WorkshopDataModifier.MVVM.View
                 var branchOptions = context.Branch.ToList();
                 var dealershipOptions = context.Dealership.ToList();
                 var positionOptions = context.Position.ToList();
+
+                //superiorOptions.Insert(0, new employee { EmpID = 0, Name = "EMPTY"});
+                //branchOptions.Insert(0, null);
+                //dealershipOptions.Insert(0, null);
+                //positionOptions.Insert(0, null);
 
 
                 AddSuperior.ItemsSource = superiorOptions;

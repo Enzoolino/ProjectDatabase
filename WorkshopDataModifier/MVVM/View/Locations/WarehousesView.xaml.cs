@@ -159,7 +159,10 @@ namespace WorkshopDataModifier.MVVM.View
                         selectedRow.Name = EditName.Text;
                         selectedRow.Location = EditLocation.Text;
                         selectedRow.BranchID = txtBranch;
-                        selectedRow.Phone = EditPhone.Text;
+                        if (EditPhone.Text != "")
+                            selectedRow.Phone = EditPhone.Text;
+                        else
+                            selectedRow.Phone = null;
                     }
                     else
                     {
@@ -420,12 +423,22 @@ namespace WorkshopDataModifier.MVVM.View
                 {
                     int txtBranch = int.Parse(AddBranch.Text);
 
+                    string txtPhone;
+                    if (AddPhone.Text != "")
+                    {
+                        txtPhone = AddPhone.Text;
+                    }
+                    else
+                    {
+                        txtPhone = null;
+                    }
+
                     warehouse newWarehouse = new warehouse
                     {
                         Name = AddName.Text,
                         Location = AddLocation.Text,
                         BranchID = txtBranch,
-                        Phone = AddPhone.Text
+                        Phone = txtPhone
                     };
 
                     context.Warehouse.Add(newWarehouse);
