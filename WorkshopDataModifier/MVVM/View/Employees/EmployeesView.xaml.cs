@@ -367,6 +367,9 @@ namespace WorkshopDataModifier.MVVM.View
                     //Update DataGrid to show changes
                     context.SaveChanges();
                     EmployeesDataGrid.ItemsSource = context.Employee.ToList();
+
+                    //Update Comboboxes
+                    Combobox_Options();
                 }
 
                 //Clear Selection
@@ -472,6 +475,9 @@ namespace WorkshopDataModifier.MVVM.View
                     context.SaveChanges();
 
                     EmployeesDataGrid.ItemsSource = context.Employee.ToList();
+
+                    //Update Comboboxes
+                    Combobox_Options();
                 }
 
                 //Update Counter
