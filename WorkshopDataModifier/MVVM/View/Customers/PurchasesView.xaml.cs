@@ -609,7 +609,13 @@ namespace WorkshopDataModifier.MVVM.View
         {
             using (var context = new PurchasesDbContext())
             {
-                var soldVehicleOptions = context.SoldVehicle.ToList();
+                var allSoldVehicles = context.SoldVehicle.ToList();
+
+                // Retrieve the list of already purchased VINs
+                var purchasedVins = context.Purchase.Select(p => p.Vin).ToList();
+
+                // Exclude the purchased VINs from the sold vehicle options
+                var soldVehicleOptions = allSoldVehicles.Where(sv => !purchasedVins.Contains(sv.Vin)).ToList();
 
                 AddVin.ItemsSource = soldVehicleOptions;
 

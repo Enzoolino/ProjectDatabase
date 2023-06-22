@@ -218,7 +218,8 @@
                                             BorderThickness="0 0 0 1.5"
                                             Name="AddDeliveryDate"
                                             Width="200"
-                                            Margin="0 15 0 0">
+                                            Margin="0 15 0 0"
+                                            SelectedDateChanged="DatePicker_SelectedDateChanged">
                                 </DatePicker>
                             </StackPanel>
 
@@ -232,7 +233,8 @@
                                                            BorderThickness="0 0 0 1.5"
                                                            Name="AddDeliveryTime"
                                                            Width="200"
-                                                           Margin="0 15 0 0">
+                                                           Margin="0 15 0 0"
+                                                           SelectedTimeChanged="TimePicker_SelectedTimeChanged">
                                 </materialDesign:TimePicker>
                             </StackPanel>
 
@@ -524,7 +526,8 @@
                                             BorderThickness="0 0 0 1.5"
                                             Name="EditDeliveryDate"
                                             Width="200"
-                                            Margin="0 15 0 0">
+                                            Margin="0 15 0 0"
+                                            SelectedDateChanged="DatePicker_SelectedDateChanged">
                                 </DatePicker>
                             </StackPanel>
 
@@ -538,7 +541,8 @@
                                                            BorderThickness="0 0 0 1.5"
                                                            Name="EditDeliveryTime"
                                                            Width="200"
-                                                           Margin="0 15 0 0">
+                                                           Margin="0 15 0 0"
+                                                           SelectedTimeChanged="TimePicker_SelectedTimeChanged">
                                 </materialDesign:TimePicker>
                             </StackPanel>
 

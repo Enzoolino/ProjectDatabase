@@ -699,8 +699,14 @@ namespace WorkshopDataModifier.MVVM.View
         {
             using (var context = new CustomersDbContext())
             {
-                var purchaseOptions = context.Purchase.ToList();
-                
+                var allPurchases = context.Purchase.ToList();
+
+                // Retrieve the list of already added Sins
+                var addedSins = context.Customer.Select(c => c.Sin).ToList();
+
+                // Exclude the added SINs from the purchase options
+                var purchaseOptions = allPurchases.Where(p => !addedSins.Contains(p.Sin)).ToList();
+
                 AddSin.ItemsSource = purchaseOptions;
                 
                 EditSin.ItemsSource = purchaseOptions;

@@ -181,7 +181,8 @@
                                             BorderThickness="0 0 0 1.5"
                                             Name="AddEmployDate"
                                             Width="200"
-                                            Margin="0 15 0 0">
+                                            Margin="0 15 0 0"
+                                            SelectedDateChanged="DatePicker_SelectedDateChanged">
                                 </DatePicker>
                             </StackPanel>
 
@@ -193,9 +194,10 @@
                                                            materialDesign:HintAssist.FloatingOffset="0, -20"
                                                            BorderBrush="#c5c8cc"
                                                            BorderThickness="0 0 0 1.5"
-                                                           Name="AddEmployHour"
+                                                           Name="AddEmployTime"
                                                            Width="200"
-                                                           Margin="0 15 0 0">
+                                                           Margin="0 15 0 0"
+                                                           SelectedTimeChanged="TimePicker_SelectedTimeChanged">
                                 </materialDesign:TimePicker>
                             </StackPanel>
 
@@ -446,7 +448,8 @@
                                             BorderThickness="0 0 0 1.5"
                                             Name="EditEmployDate"
                                             Width="200"
-                                            Margin="0 15 0 0">
+                                            Margin="0 15 0 0"
+                                            SelectedDateChanged="DatePicker_SelectedDateChanged">
                                 </DatePicker>
                             </StackPanel>
 
@@ -458,9 +461,10 @@
                                                            materialDesign:HintAssist.FloatingOffset="0, -20"
                                                            BorderBrush="#c5c8cc"
                                                            BorderThickness="0 0 0 1.5"
-                                                           Name="EditEmployHour"
+                                                           Name="EditEmployTime"
                                                            Width="200"
-                                                           Margin="0 15 0 0">
+                                                           Margin="0 15 0 0"
+                                                           SelectedTimeChanged="TimePicker_SelectedTimeChanged">
                                 </materialDesign:TimePicker>
                             </StackPanel>
 

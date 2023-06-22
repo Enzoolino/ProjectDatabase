@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WorkshopDataModifier.MVVM.Model;
+using MaterialDesignThemes.Wpf;
 
 namespace WorkshopDataModifier.MVVM.View
 {
@@ -613,7 +614,7 @@ namespace WorkshopDataModifier.MVVM.View
         }
         #endregion
 
-        #region Comboboxes
+        #region Comboboxes & DateTime Pickers
 
         //Set ItemSourcesof ComboBoxes
         private void Combobox_Options()
@@ -636,6 +637,43 @@ namespace WorkshopDataModifier.MVVM.View
             }
 
             EditYear.ItemsSource = years;
+        }
+
+        //Do not allow future dates
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DatePicker datePicker = (DatePicker)sender;
+
+            DateTime? selectedDate = datePicker.SelectedDate;
+
+            // Check if the selected date is in the future
+            if (selectedDate.HasValue && selectedDate.Value > DateTime.Now.Date)
+            {
+                // Set the selected date to the current date
+                datePicker.SelectedDate = DateTime.Now.Date;
+            }
+        }
+
+        //Do not allow future time
+        private void TimePicker_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            TimePicker timePicker = (TimePicker)sender;
+
+            DateTime? selectedTime = timePicker.SelectedTime;
+
+            if (selectedTime.HasValue)
+            {
+                // Get the current date and time
+                DateTime currentDateTime = DateTime.Now;
+
+                if (sender == EditSellTime)
+                {
+                    if (EditSellDate.SelectedDate == currentDateTime.Date && selectedTime.Value.TimeOfDay > currentDateTime.TimeOfDay)
+                    {
+                        EditSellTime.SelectedTime = currentDateTime;
+                    }
+                }
+            }
         }
         #endregion
 

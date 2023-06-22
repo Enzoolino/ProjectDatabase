@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
@@ -124,7 +125,7 @@ namespace WorkshopDataModifier.MVVM.View
                 EditLocation.Text = row.WorkLocation;
                 EditPosition.Text = row.Position;
                 EditEmployDate.Text = date;
-                EditEmployHour.Text = time;
+                EditEmployTime.Text = time;
 
                 EditPopup.IsOpen = true;
             }
@@ -172,7 +173,7 @@ namespace WorkshopDataModifier.MVVM.View
                         }
 
                         int txtBranch = int.Parse(EditBranch.Text);
-                        DateTime txtEmployDate = DateTime.Parse(EditEmployDate.Text + " " + EditEmployHour.Text);
+                        DateTime txtEmployDate = DateTime.Parse(EditEmployDate.Text + " " + EditEmployTime.Text);
 
                         selectedRow.Name = EditName.Text;
                         selectedRow.Surname = EditSurname.Text;
@@ -217,9 +218,9 @@ namespace WorkshopDataModifier.MVVM.View
 
                             if (EditEmployDate.Text != "" && EditEmployDate.Text != null)
                             {
-                                if (EditEmployHour.Text != "" && EditEmployHour.Text != null)
+                                if (EditEmployTime.Text != "" && EditEmployTime.Text != null)
                                 {
-                                    DateTime txtEmployDate = DateTime.Parse(EditEmployDate.Text + " " + EditEmployHour.Text);
+                                    DateTime txtEmployDate = DateTime.Parse(EditEmployDate.Text + " " + EditEmployTime.Text);
                                     selectedRow.EmployedDate = txtEmployDate;
                                 }
                                 else
@@ -257,7 +258,7 @@ namespace WorkshopDataModifier.MVVM.View
                 EditLocation.Text = "";
                 EditPosition.Text = "";
                 EditEmployDate.Text = "";
-                EditEmployHour.Text = "";
+                EditEmployTime.Text = "";
             }
             catch (DbEntityValidationException ex)
             {
@@ -303,7 +304,7 @@ namespace WorkshopDataModifier.MVVM.View
             EditLocation.Text = "";
             EditPosition.Text = "";
             EditEmployDate.Text = "";
-            EditEmployHour.Text = "";
+            EditEmployTime.Text = "";
         }
         #endregion
 
@@ -495,7 +496,7 @@ namespace WorkshopDataModifier.MVVM.View
                     }
 
                     int txtBranch = int.Parse(AddBranch.Text);
-                    DateTime txtEmployDate =  DateTime.Parse(AddEmployDate.Text + " " + AddEmployHour.Text);
+                    DateTime txtEmployDate =  DateTime.Parse(AddEmployDate.Text + " " + AddEmployTime.Text);
 
                     employee newEmployee = new employee
                     {
@@ -539,7 +540,7 @@ namespace WorkshopDataModifier.MVVM.View
                 AddLocation.Text = "";
                 AddPosition.Text = "";
                 AddEmployDate.Text = "";
-                AddEmployHour.Text = "";
+                AddEmployTime.Text = "";
             }
             catch (Exception ex)
             {
@@ -568,7 +569,7 @@ namespace WorkshopDataModifier.MVVM.View
             AddLocation.Text = "";
             AddPosition.Text = "";
             AddEmployDate.Text = "";
-            AddEmployHour.Text = "";
+            AddEmployTime.Text = "";
         }
 
         #endregion
@@ -793,6 +794,51 @@ namespace WorkshopDataModifier.MVVM.View
                 EditBranch.ItemsSource = branchOptions;
                 EditLocation.ItemsSource = dealershipOptions;
                 EditPosition.ItemsSource = positionOptions;
+            }
+        }
+
+        //Do not allow future dates
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DatePicker datePicker = (DatePicker)sender;
+
+            DateTime? selectedDate = datePicker.SelectedDate;
+
+            // Check if the selected date is in the future
+            if (selectedDate.HasValue && selectedDate.Value > DateTime.Now.Date)
+            {
+                // Set the selected date to the current date
+                datePicker.SelectedDate = DateTime.Now.Date;
+            }
+        }
+
+        //Do not allow future time
+        private void TimePicker_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            TimePicker timePicker = (TimePicker)sender;
+
+            DateTime? selectedTime = timePicker.SelectedTime;
+
+            if (selectedTime.HasValue)
+            {
+                // Get the current date and time
+                DateTime currentDateTime = DateTime.Now;
+
+                if (sender == EditEmployTime)
+                {
+                    if (EditEmployDate.SelectedDate == currentDateTime.Date && selectedTime.Value.TimeOfDay > currentDateTime.TimeOfDay)
+                    {
+                        EditEmployTime.SelectedTime = currentDateTime;
+                    }
+                }
+
+                if (sender == AddEmployTime)
+                {
+                    if (AddEmployDate.SelectedDate == currentDateTime.Date && selectedTime.Value.TimeOfDay > currentDateTime.TimeOfDay)
+                    {
+                        AddEmployTime.SelectedTime = currentDateTime;
+                    }
+                }
             }
         }
         #endregion
