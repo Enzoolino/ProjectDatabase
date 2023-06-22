@@ -930,6 +930,17 @@ namespace WorkshopDataModifier.MVVM.View
                 EditBrand.ItemsSource = brandOptions;
                 EditDealership.ItemsSource = dealershipOptions;
             }
+
+            int currentYear = DateTime.Now.Year;
+            List<int> years = new List<int>();
+
+            for (int year = currentYear; year >= 1900; year--)
+            {
+                years.Add(year);
+            }
+
+            AddYear.ItemsSource = years;
+            EditYear.ItemsSource = years;
         }
         #endregion
 
