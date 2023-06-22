@@ -54,6 +54,7 @@
                         <TextBlock Foreground="Black" Text="Add Window" 
                                    Margin="0 10 0 0" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
 
+                        <!--Input Boxes-->
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 30 0 0" HorizontalAlignment="Center">
 
                             <StackPanel Orientation="Horizontal">
@@ -92,7 +93,6 @@
 
                         </StackPanel>
 
-                        <!--Input Boxes-->
                         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
 
                             <StackPanel Orientation="Horizontal">
@@ -332,8 +332,8 @@
             </Popup>
 
             <!--Delete Popup Window-->
-            <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="475" Height="auto">
-                <Border Background="#ffffff" CornerRadius="5" Padding="10" BorderThickness="3" BorderBrush="DarkGray"
+            <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="475" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
+                <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="DeletePopup_MouseLeftButtonDown" MouseMove="DeletePopup_MouseMove" MouseLeftButtonUp="DeletePopup_MouseLeftButtonUp">
                     <StackPanel>
                         <!--Information-->

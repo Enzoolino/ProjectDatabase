@@ -27,6 +27,9 @@ namespace WorkshopDataModifier.MVVM.View
     {
         #region Counter of the current clients (dynamic)
         private int _rowCount;
+        /// <summary>
+        /// Counts number of items inside "customer" table
+        /// </summary>
         public int RowCount
         {
             get { return _rowCount; }
@@ -70,9 +73,11 @@ namespace WorkshopDataModifier.MVVM.View
         #region Data Modification
 
         //List of all selected rows (Initialized with button click)
-        static List<customer> selectedRows = new List<customer>(); 
-        
+        static List<customer> selectedRows = new List<customer>();
+
         #region Edit Section
+
+        //Button Click Handler - Sets up the rows for editing
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (customer rowData in CustomersDataGrid.Items)
@@ -104,7 +109,6 @@ namespace WorkshopDataModifier.MVVM.View
                 MultiEditionWarning.Visibility = Visibility.Collapsed;
 
                 EditSin.Text = row.Sin.ToString();
-                EditVin.Text = row.Vin.ToString();
                 EditName.Text = row.Name;
                 EditSurname.Text = row.Surname;
                 EditPhone.Text = row.Phone;
@@ -113,6 +117,9 @@ namespace WorkshopDataModifier.MVVM.View
             }
             else
             {
+                EditSin.IsHitTestVisible = false;
+                EditSin.Text = "Can't Multi Edit !";
+
                 EditPopup.DataContext = selectedRows;
                 MultiEditionWarning.Visibility = Visibility.Visible;
 
@@ -128,8 +135,17 @@ namespace WorkshopDataModifier.MVVM.View
                 MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
             }
 
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (EditPopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -146,24 +162,20 @@ namespace WorkshopDataModifier.MVVM.View
 
                         long txtSin = long.Parse(EditSin.Text);
                         int txtVin = int.Parse(EditVin.Text);
+                        DateTime txtAddTime = DateTime.Parse(EditAddTime.Text);
 
                         selectedRow.Sin = txtSin;
                         selectedRow.Vin = txtVin;
                         selectedRow.Name = EditName.Text;
                         selectedRow.Surname = EditSurname.Text;
                         selectedRow.Phone = EditPhone.Text;
+                        selectedRow.AddTime = txtAddTime;
                     }
                     else
                     {
                         foreach (customer dataRow in selectedRows)
                         {
                             customer selectedRow = context.Customer.Find(dataRow.Sin, dataRow.Vin);
-
-                            if (EditSin.Text != "" && EditSin.Text != null && long.TryParse(EditSin.Text, out long txtSin))
-                                selectedRow.Sin = txtSin;
-
-                            if (EditVin.Text != "" && EditVin.Text != null && int.TryParse(EditVin.Text, out int txtVin))
-                                selectedRow.Vin = txtVin;
 
                             if (EditName.Text != "" && EditName.Text != null)
                                 selectedRow.Name = EditName.Text;
@@ -176,25 +188,34 @@ namespace WorkshopDataModifier.MVVM.View
                         }
                     }
 
+                    //Update DataGrid to show changes
                     context.SaveChanges(); 
                     CustomersDataGrid.ItemsSource = context.Customer.ToList();
                 }
 
+                //Clear Selection
                 selectedRows.Clear();
 
+                //Disable Scrimming
                 MainContentWindow.Opacity = 1;
                 MainContentWindow.Background = Brushes.Transparent;
 
+                //Enable Controls
                 EnableControls();
 
+                //Close Popup
                 EditPopup.IsOpen = false;
 
+                //Set text back to empty
                 EditSin.Text = "";
                 EditVin.Text = "";
                 EditName.Text = "";
                 EditSurname.Text = "";
                 EditPhone.Text = "";
+                EditAddTime.Text = "";
 
+                //Set the Inputs back to normal
+                EditSin.IsHitTestVisible = true;
             }
             catch (DbEntityValidationException ex)
             {
@@ -219,24 +240,35 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelEditButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
             selectedRows.Clear();
 
+            //Disable Scrimming
             MainContentWindow.Opacity = 1;
             MainContentWindow.Background = Brushes.Transparent;
 
+            //Enable Controls
             EnableControls();
 
+            //Close Popup
             EditPopup.IsOpen = false;
 
+            //Set text back to empty
             EditVin.Text = "";
             EditSin.Text = "";
             EditName.Text = "";
             EditSurname.Text = "";
             EditPhone.Text = "";
+            EditAddTime.Text = "";
+
+            //Set the Inputs back to normal
+            EditSin.IsHitTestVisible = true;
         }
         #endregion
 
         #region Delete Section
+
+        //Button Click Handler - Sets up the rows for deletion
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             foreach (customer rowData in CustomersDataGrid.Items)
@@ -283,6 +315,7 @@ namespace WorkshopDataModifier.MVVM.View
             }
         }
 
+        //Button Click Handler - Updates database if everything correct
         private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -312,16 +345,22 @@ namespace WorkshopDataModifier.MVVM.View
                     CustomersDataGrid.ItemsSource = context.Customer.ToList();
                 }
 
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Update Counter
                 RowCount = CustomersDataGrid.Items.Count;
                 CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
 
-                EnableControls();
-
+                //Disable Scrimming
                 MainContentWindow.Opacity = 1;
                 MainContentWindow.Background = Brushes.Transparent;
 
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
                 DeletePopup.IsOpen = false;
-                selectedRows.Clear();
             }
             catch (DbUpdateException ex)
             {
@@ -352,19 +391,24 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            //Clear Selection
             selectedRows.Clear();
 
+            //Enable Controls
             EnableControls();
 
+            //Disable Scrimming
             MainContentWindow.Opacity = 1;
             MainContentWindow.Background = Brushes.Transparent;
 
+            //Close Popup
             DeletePopup.IsOpen = false;
         }
         #endregion
 
         #region Add Section
 
+        //Button Click Handler - Opens Row Adding Popup
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             //Enable Scrimming
@@ -373,11 +417,12 @@ namespace WorkshopDataModifier.MVVM.View
 
             //Disable Controls
             DisableControls();
-            
+
             //Open Popup
             AddPopup.IsOpen = true;
         }
 
+        //Button Click Handler - Adds row to the table if everything correct
         private void ConfirmAddButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -386,6 +431,7 @@ namespace WorkshopDataModifier.MVVM.View
                 {
                     long txtSin = long.Parse(AddSin.Text);
                     int txtVin = int.Parse(AddVin.Text);
+                    DateTime txtAddTime = DateTime.Parse(AddAddTime.Text);
 
                     customer newCustomer = new customer
                     {
@@ -394,7 +440,7 @@ namespace WorkshopDataModifier.MVVM.View
                         Name = AddName.Text,
                         Surname = AddSurname.Text,
                         Phone = AddPhone.Text,
-                        AddTime = DateTime.Now
+                        AddTime = txtAddTime
                 };
 
                     context.Customer.Add(newCustomer);
@@ -407,15 +453,23 @@ namespace WorkshopDataModifier.MVVM.View
                 RowCount = CustomersDataGrid.Items.Count;
                 CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
 
-                //Enable all other controls
-                EnableControls();
-
                 //Disable scrimming
                 MainContentWindow.Opacity = 1;
                 MainContentWindow.Background = Brushes.Transparent;
 
+                //Enable Controls
+                EnableControls();
+
                 //Close Popup
                 AddPopup.IsOpen = false;
+
+                //Set text back to empty
+                AddSin.Text = "";
+                AddVin.Text = "";
+                AddName.Text = "";
+                AddSurname.Text = "";
+                AddPhone.Text = "";
+                AddAddTime.Text = "";
             }
             catch (Exception ex)
             {
@@ -423,25 +477,27 @@ namespace WorkshopDataModifier.MVVM.View
             }
         }
 
+        //Button Click Handler - Closes the Adding Popup
         private void CancelAddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Disable scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            AddPopup.IsOpen = false;
+
             //Make the text values empty
             AddSin.Text = "";
             AddVin.Text = "";
             AddName.Text = "";
             AddSurname.Text = "";
             AddPhone.Text = "";
-
-            //Enable all other controls
-            EnableControls();
-
-            //Disable scrimming
-            MainContentWindow.Opacity = 1;
-            MainContentWindow.Background = Brushes.Transparent;
-
-            AddPopup.IsOpen = false;
+            AddAddTime.Text = "";
         }
-
         #endregion
 
         #endregion 
@@ -620,7 +676,6 @@ namespace WorkshopDataModifier.MVVM.View
 
         private void DisableControls()
         {
-            btnCustomer.IsHitTestVisible = false;
             btnPurchase.IsHitTestVisible = false;
             btnAdd.IsHitTestVisible = false;    
             txtSearchCustomers.IsHitTestVisible = false;
@@ -628,7 +683,6 @@ namespace WorkshopDataModifier.MVVM.View
         }
         private void EnableControls()
         {
-            btnCustomer.IsHitTestVisible = true;
             btnPurchase.IsHitTestVisible = true;
             btnAdd.IsHitTestVisible = true;
             txtSearchCustomers.IsHitTestVisible = true;
@@ -636,6 +690,52 @@ namespace WorkshopDataModifier.MVVM.View
         }
 
 
+        #endregion
+
+        #region Comboboxes
+
+        //Set ItemSources of ComboBoxes
+        private void Combobox_Options()
+        {
+            using (var context = new CustomersDbContext())
+            {
+                var purchaseOptions = context.Purchase.ToList();
+                
+                AddSin.ItemsSource = purchaseOptions;
+                
+                EditSin.ItemsSource = purchaseOptions;
+            }
+        }
+
+        //Automatically update the rows connected to each other
+        private void SinComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender == AddSin)
+            {
+                if (AddSin.SelectedItem is purchase selectedPurchase)
+                {
+                    AddVin.Text = selectedPurchase.Vin.ToString();
+
+                    DateTime? dataTime = selectedPurchase.PurchaseTime;
+                    string date = dataTime?.ToString("dd/MM/yyyy h:mm tt") ?? "No date";
+
+                    AddAddTime.Text = date;
+                }
+            }
+
+            if (sender == EditSin)
+            {
+                if (EditSin.SelectedItem is purchase selectedPurchase)
+                {
+                    EditVin.Text = selectedPurchase.Vin.ToString();
+
+                    DateTime? dataTime = selectedPurchase.PurchaseTime;
+                    string date = dataTime?.ToString("dd/MM/yyyy h:mm tt") ?? "No date";
+
+                    EditAddTime.Text = date;
+                }
+            }
+        }
         #endregion
 
 
@@ -652,6 +752,8 @@ namespace WorkshopDataModifier.MVVM.View
             RowCount = CustomersDataGrid.Items.Count;
             CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
 
+            //Setup Comboboxes
+            Combobox_Options();
         }
     }
 
@@ -660,7 +762,8 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public class CustomersDbContext : DbContext
     {
-        public DbSet<customer> Customer { get; set; } //DbSet dla tabeli "customer"
+        public DbSet<customer> Customer { get; set; } 
+        public DbSet<purchase> Purchase { get; set; }
 
         public CustomersDbContext() : base("DealershipCon")
         {

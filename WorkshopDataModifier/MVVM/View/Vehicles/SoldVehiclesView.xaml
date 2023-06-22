@@ -262,7 +262,7 @@
                                 </TextBox>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
                                 <fa:IconImage Icon="Warehouse" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                                     <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"

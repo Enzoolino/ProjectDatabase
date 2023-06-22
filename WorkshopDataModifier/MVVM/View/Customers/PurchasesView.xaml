@@ -12,7 +12,8 @@
              MouseDown="PurchasesWindow_MouseDown">
 
     <Border CornerRadius="0 10 10 0" Background="#26282B">
-        <Grid>
+        
+        <Grid x:Name="MainContentWindow">
             <!--Main Section-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -21,7 +22,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="61"/>
             </Grid.RowDefinitions>
 
 
@@ -47,6 +48,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <!--Title TextBox-->
@@ -54,41 +56,65 @@
                                    Margin="0 10 0 0" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
 
                         <!--Input Boxes-->
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 20 0 0" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 30 0 0" HorizontalAlignment="Center">
 
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
-                                <fa:IconImage Icon="CarBattery" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
-                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                         materialDesign:HintAssist.Hint="Vin"
-                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
-                                         materialDesign:HintAssist.FloatingOffset="0, -20"
-                                         BorderBrush="#c5c8cc"
-                                         BorderThickness="0 0 0 1.5"
-                                         Name="AddVin"
-                                         Width="200">
-                                </TextBox>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="CarBattery" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                          DisplayMemberPath="Vin"
+                                          materialDesign:HintAssist.Hint="Vin"
+                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                          materialDesign:HintAssist.FloatingOffset="0, -20"
+                                          BorderBrush="#c5c8cc"
+                                          BorderThickness="0 0 0 1.5"
+                                          Name="AddVin"
+                                          Width="200"
+                                          SelectionChanged="VinComboBox_SelectionChanged"
+                                          MaxDropDownHeight="166"
+                                          Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Margin="50 0 0 0">
-                                <fa:IconImage Icon="Building" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
-                                <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                          DisplayMemberPath="Name"
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="Building" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                           materialDesign:HintAssist.Hint="Dealership"
                                           materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
                                           materialDesign:HintAssist.FloatingOffset="0, -20"
                                           BorderBrush="#c5c8cc"
                                           BorderThickness="0 0 0 1.5"
                                           Name="AddDealership"
-                                          Width="200">
-                                </ComboBox>
-                                
+                                          Width="200"
+                                          IsHitTestVisible="False"
+                                          Margin="0 15 0 0">
+                                </TextBox>
                             </StackPanel>
                             
                         </StackPanel>
 
-                        
-                            <!--Option Buttons-->
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0" Grid.Row="2">
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
+                            
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="MoneyBillTransfer" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Purchase Time"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="AddPurchaseTime"
+                                         Width="200"
+                                         IsHitTestVisible="False"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <!--Option Buttons-->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0" Grid.Row="3">
                             <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
                                     FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmAddButton_Click"/>
                             <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
@@ -96,13 +122,12 @@
                         </StackPanel>
 
 
-
                     </Grid>
 
                 </Border>
             </Popup>
 
-            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 -1 10 10"/>
+            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 10 10 10"/>
 
             <!--Switch tabs Buttons-->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10 10 0 0" HorizontalAlignment="Left">
@@ -158,7 +183,7 @@
                     <DataGridTextColumn Header="Sin" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding Sin}"/>
                     <DataGridTextColumn Header="Vin" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding Vin}"/>
                     <DataGridTextColumn Header="Dealership" IsReadOnly="True" Width="*" Binding="{Binding Dealership}"/>
-                    <DataGridTextColumn Header="TimeStamp" IsReadOnly="True" Width="*" Binding="{Binding PurchaseTime}"/>
+                    <DataGridTextColumn Header="TimeStamp" IsReadOnly="True" Width="*" Binding="{Binding PurchaseTime, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
 
                     <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
@@ -188,48 +213,75 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <!--Title TextBox-->
-                        <TextBlock Foreground="Black" Text="Add Window" 
+                        <StackPanel Orientation="Vertical" Grid.Row="0">
+                            <TextBlock Foreground="Black" Text="Edit Window" 
                                    Margin="0 10 0 0" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
-                        <TextBlock Name="MultiEditionWarning" Foreground="Red" Text="Be careful while editing multiple rows at once !" 
-                                   FontSize="12" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0 0 0 30"/>
+                        </StackPanel>
 
                         <!--Input Boxes-->
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 20 0 0" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 30 0 0" HorizontalAlignment="Center">
 
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
-                                <fa:IconImage Icon="CarBattery" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
-                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                         materialDesign:HintAssist.Hint="Vin"
-                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
-                                         materialDesign:HintAssist.FloatingOffset="0, -20"
-                                         BorderBrush="#c5c8cc"
-                                         BorderThickness="0 0 0 1.5"
-                                         Name="EditVin"
-                                         Width="200">
-                                </TextBox>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="CarBattery" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                          DisplayMemberPath="Vin"
+                                          materialDesign:HintAssist.Hint="Vin"
+                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                          materialDesign:HintAssist.FloatingOffset="0, -20"
+                                          BorderBrush="#c5c8cc"
+                                          BorderThickness="0 0 0 1.5"
+                                          Name="EditVin"
+                                          Width="200"
+                                          SelectionChanged="VinComboBox_SelectionChanged"
+                                          MaxDropDownHeight="166"
+                                          Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Margin="50 0 0 0">
-                                <fa:IconImage Icon="Building" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
-                                <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                          DisplayMemberPath="Name"
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="Building" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                           materialDesign:HintAssist.Hint="Dealership"
                                           materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
                                           materialDesign:HintAssist.FloatingOffset="0, -20"
                                           BorderBrush="#c5c8cc"
                                           BorderThickness="0 0 0 1.5"
                                           Name="EditDealership"
-                                          Width="200">
-                                </ComboBox>
+                                          Width="200"
+                                          IsHitTestVisible="False"
+                                          Margin="0 15 0 0">
+                                </TextBox>
                             </StackPanel>
+                            
                         </StackPanel>
 
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="MoneyBillTransfer" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Purchase Time"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditPurchaseTime"
+                                         Width="200"
+                                         IsHitTestVisible="False"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
+
+                        </StackPanel>
 
                         <!--Option Buttons-->
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0" Grid.Row="2">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0" Grid.Row="3">
                             <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
                                     FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmEditButton_Click"/>
                             <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"

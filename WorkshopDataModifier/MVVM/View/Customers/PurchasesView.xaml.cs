@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using WorkshopDataModifier.MVVM.Model;
 
 namespace WorkshopDataModifier.MVVM.View
@@ -20,7 +21,11 @@ namespace WorkshopDataModifier.MVVM.View
     public partial class PurchasesView : UserControl
     {
         #region Counter of the current purchases (dynamic)
+
         private int _rowCount;
+        /// <summary>
+        /// Counts number of items inside "purchase" table
+        /// </summary>
         public int RowCount
         {
             get { return _rowCount; }
@@ -38,6 +43,398 @@ namespace WorkshopDataModifier.MVVM.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        #region Multi Select
+        private void SelectAllCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            bool isChecked = ((CheckBox)sender).IsChecked == true;
+
+            foreach (purchase row in PurchasesDataGrid.Items)
+            {
+                row.IsSelected = isChecked;
+            }
+        }
+
+        private void RowCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            DataGridRow row = (DataGridRow)PurchasesDataGrid.ItemContainerGenerator.ContainerFromItem(((FrameworkElement)sender).DataContext);
+            if (row != null)
+            {
+                purchase rowData = (purchase)row.Item;
+                rowData.IsSelected = ((CheckBox)sender).IsChecked == true;
+            }
+        }
+        #endregion
+
+        #region Data Modification
+
+        //List of all selected rows (Initialized with button click)
+        static List<purchase> selectedRows = new List<purchase>();
+
+        #region Edit Section
+
+        //Button Click Handler - Sets up the rows for editing
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (purchase rowData in PurchasesDataGrid.Items)
+            {
+                if (rowData.IsSelected)
+                {
+                    selectedRows.Add(rowData);
+                }
+            }
+
+            Button editButton = (Button)sender;
+            purchase row = (purchase)editButton.DataContext;
+
+            if (selectedRows.Count == 0)
+                selectedRows.Add(row);
+
+            if (!selectedRows.Contains(row))
+            {
+                selectedRows.Clear();
+                return;
+            }
+
+            if (selectedRows.Count == 0)
+            {
+                throw new Exception("Row was not selected or something went wrong");
+            }
+            else if (selectedRows.Count == 1)
+            {
+                EditVin.Text = row.Vin.ToString();
+                
+                EditPopup.IsOpen = true;
+            }
+            else
+            {
+                MessageBox.Show("This DataGrid can't be multi edited !", "Multi Edition Warning", MessageBoxButton.OK, MessageBoxImage.Information);
+                selectedRows.Clear();
+            }
+
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (EditPopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
+        }
+
+        //Button Click Handler - Updates database if everything correct
+        private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var context = new PurchasesDbContext())
+                {
+                    if (selectedRows.Count == 0)
+                    {
+                        throw new Exception("Row was not selected or something went wrong");
+                    }
+                    else if (selectedRows.Count == 1)
+                    {
+                        purchase selectedRow = context.Purchase.Find(selectedRows[0].Sin, selectedRows[0].Vin);
+
+                        int txtVin = int.Parse(EditVin.Text);
+                        DateTime txtPurchaseTime = DateTime.Parse(EditPurchaseTime.Text);
+
+                        selectedRow.Vin = txtVin;
+                        selectedRow.Dealership = EditDealership.Text;
+                        selectedRow.PurchaseTime = txtPurchaseTime;
+                    }
+
+                    //Update DataGrid to show changes
+                    context.SaveChanges();
+                    PurchasesDataGrid.ItemsSource = context.Purchase.ToList();
+                }
+
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
+                EditPopup.IsOpen = false;
+
+                //Set text back to empty
+                EditVin.Text = "";
+                EditDealership.Text = "";
+                EditPurchaseTime.Text = "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Handle validation errors
+                StringBuilder errorMessage = new StringBuilder();
+                foreach (var validationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        errorMessage.AppendLine($"Error: {validationError.ErrorMessage}");
+                    }
+                }
+
+                MessageBox.Show(errorMessage.ToString(), "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                // Handle other database errors
+                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void CancelEditButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Clear Selection
+            selectedRows.Clear();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            EditPopup.IsOpen = false;
+
+            //Set text back to empty
+            EditVin.Text = "";
+            EditDealership.Text = "";
+            EditPurchaseTime.Text = "";
+        }
+        #endregion
+
+        #region Delete Section
+
+        //Button Click Handler - Sets up the rows for deletion
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (purchase rowData in PurchasesDataGrid.Items)
+            {
+                if (rowData.IsSelected)
+                {
+                    selectedRows.Add(rowData);
+                }
+            }
+
+            Button removeButton = (Button)sender;
+            purchase row = (purchase)removeButton.DataContext;
+
+            if (selectedRows.Count == 0)
+                selectedRows.Add(row);
+
+            if (!selectedRows.Contains(row))
+            {
+                selectedRows.Clear();
+                return;
+            }
+
+            if (selectedRows.Count == 0)
+            {
+                throw new Exception("Row was not selected or something went wrong");
+            }
+            else if (selectedRows.Count == 1)
+            {
+                DeletePopup.IsOpen = true;
+            }
+            else
+            {
+                DeletePopup.DataContext = selectedRows;
+                DeletePopup.IsOpen = true;
+            }
+
+            //Enable Scrimming and Disable Controls if Popup is open
+            if (DeletePopup.IsOpen == true)
+            {
+                DisableControls();
+
+                MainContentWindow.Opacity = 0.5;
+                MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+            }
+        }
+
+        //Button Click Handler - Updates database if everything correct
+        private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var context = new PurchasesDbContext())
+                {
+                    if (selectedRows.Count == 0)
+                    {
+                        throw new Exception("Row was not selected or something went wrong");
+                    }
+                    else if (selectedRows.Count == 1)
+                    {
+                        purchase selectedRow = context.Purchase.Find(selectedRows[0].Sin, selectedRows[0].Vin);
+                        context.Purchase.Remove(selectedRow);
+                    }
+                    else
+                    {
+                        foreach (purchase dataRow in selectedRows)
+                        {
+                            purchase selectedRow = context.Purchase.Find(dataRow.Sin, dataRow.Vin);
+                            context.Entry(selectedRow).State = EntityState.Deleted;
+                        }
+                    }
+
+                    //Update DataGrid to show changes
+                    context.SaveChanges();
+                    PurchasesDataGrid.ItemsSource = context.Purchase.ToList();
+                }
+
+                //Clear Selection
+                selectedRows.Clear();
+
+                //Update Counter
+                RowCount = PurchasesDataGrid.Items.Count;
+                CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
+
+                //Disable Scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
+                DeletePopup.IsOpen = false;
+            }
+            catch (DbUpdateException ex)
+            {
+                // Handle specific database exceptions
+                if (ex.InnerException is SqlException sqlException)
+                {
+                    // Handle referential integrity constraint violation
+                    if (sqlException.Number == 547)
+                    {
+                        MessageBox.Show("Cannot delete the item because it is referenced by other entities.", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"An error occurred while deleting the item: {sqlException.Message}", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"An error occurred while deleting the item: {ex.Message}", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                MessageBox.Show($"An error occurred while deleting the item: {ex.Message}", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+            }
+        }
+
+        private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Clear Selection
+            selectedRows.Clear();
+
+            //Enable Controls
+            EnableControls();
+
+            //Disable Scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Close Popup
+            DeletePopup.IsOpen = false;
+        }
+        #endregion
+
+        #region Add Section
+
+        //Button Click Handler - Opens Row Adding Popup
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Enable Scrimming
+            MainContentWindow.Opacity = 0.5;
+            MainContentWindow.Background = new SolidColorBrush(Color.FromArgb(0xAA, 0x00, 0x00, 0x00));
+
+            //Disable Controls
+            DisableControls();
+
+            //Open Popup
+            AddPopup.IsOpen = true;
+        }
+
+        //Button Click Handler - Adds row to the table if everything correct
+        private void ConfirmAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var context = new PurchasesDbContext())
+                {
+                    int txtVin = int.Parse(AddVin.Text);
+                    DateTime txtPurchaseTime = DateTime.Parse(AddPurchaseTime.Text);
+
+                    purchase newPurchase = new purchase
+                    {
+                        Vin = txtVin,
+                        Dealership = AddDealership.Text,
+                        PurchaseTime = txtPurchaseTime 
+                    };
+
+                    context.Purchase.Add(newPurchase);
+                    context.SaveChanges();
+
+                    PurchasesDataGrid.ItemsSource = context.Purchase.ToList();
+                }
+
+                //Update Counter
+                RowCount = PurchasesDataGrid.Items.Count;
+                CustomersCounter.Text = $"Current Saved Purchases: {RowCount}";
+
+                //Disable scrimming
+                MainContentWindow.Opacity = 1;
+                MainContentWindow.Background = Brushes.Transparent;
+
+                //Enable Controls
+                EnableControls();
+
+                //Close Popup
+                AddPopup.IsOpen = false;
+
+                //Set text back to empty
+                AddVin.Text = "";
+                AddDealership.Text = "";
+                AddPurchaseTime.Text = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while adding the client: {ex.Message}", "Add Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+            }
+        }
+
+        private void CancelAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Disable scrimming
+            MainContentWindow.Opacity = 1;
+            MainContentWindow.Background = Brushes.Transparent;
+
+            //Enable Controls
+            EnableControls();
+
+            //Close Popup
+            AddPopup.IsOpen = false;
+
+            //Set text back to empty
+            AddVin.Text = "";
+            AddDealership.Text = "";
+            AddPurchaseTime.Text = "";
+        }
+        #endregion
+
+        #endregion 
 
         #region Draggable Popups
 
@@ -148,312 +545,6 @@ namespace WorkshopDataModifier.MVVM.View
 
         #endregion
 
-        #region Multi Select
-        private void SelectAllCheckBox_Click(object sender, RoutedEventArgs e)
-        {
-            bool isChecked = ((CheckBox)sender).IsChecked == true;
-
-            foreach (purchase row in PurchasesDataGrid.Items)
-            {
-                row.IsSelected = isChecked;
-            }
-        }
-
-        private void RowCheckBox_Click(object sender, RoutedEventArgs e)
-        {
-            DataGridRow row = (DataGridRow)PurchasesDataGrid.ItemContainerGenerator.ContainerFromItem(((FrameworkElement)sender).DataContext);
-            if (row != null)
-            {
-                purchase rowData = (purchase)row.Item;
-                rowData.IsSelected = ((CheckBox)sender).IsChecked == true;
-            }
-        }
-        #endregion
-
-        #region Data Modification
-
-        //List of all selected rows (Initialized with button click)
-        static List<purchase> selectedRows = new List<purchase>();
-
-        #region Edit Section
-        private void EditButton_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (purchase rowData in PurchasesDataGrid.Items)
-            {
-                if (rowData.IsSelected)
-                {
-                    selectedRows.Add(rowData);
-                }
-            }
-
-            Button editButton = (Button)sender;
-            purchase row = (purchase)editButton.DataContext;
-
-            if (selectedRows.Count == 0)
-                selectedRows.Add(row);
-
-            if (!selectedRows.Contains(row))
-            {
-                selectedRows.Clear();
-                return;
-            }
-
-            if (selectedRows.Count == 0)
-            {
-                throw new Exception("Row was not selected or something went wrong");
-            }
-            else if (selectedRows.Count == 1)
-            {
-                MultiEditionWarning.Visibility = Visibility.Collapsed;
-
-                EditVin.Text = row.Vin.ToString();
-                EditDealership.Text = row.Dealership;
-                
-                EditPopup.IsOpen = true;
-            }
-            else
-            {
-                EditPopup.DataContext = selectedRows;
-                MultiEditionWarning.Visibility = Visibility.Visible;
-
-                EditPopup.IsOpen = true;
-            }
-
-        }
-
-        private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                using (var context = new PurchasesDbContext())
-                {
-                    if (selectedRows.Count == 0)
-                    {
-                        throw new Exception("Row was not selected or something went wrong");
-                    }
-                    else if (selectedRows.Count == 1)
-                    {
-                        purchase selectedRow = context.Purchase.Find(selectedRows[0].Sin, selectedRows[0].Vin);
-
-                        int txtVin = int.Parse(EditVin.Text);
-
-                        selectedRow.Vin = txtVin;
-                        selectedRow.Dealership = EditDealership.Text;
-                    }
-                    else
-                    {
-                        foreach (purchase dataRow in selectedRows)
-                        {
-                            purchase selectedRow = context.Purchase.Find(dataRow.Sin, dataRow.Vin);
-
-                            if (EditVin.Text != "" && EditVin.Text != null && int.TryParse(EditVin.Text, out int txtVin))
-                                selectedRow.Vin = txtVin;
-
-                            if (EditDealership.Text != "" && EditDealership.Text != null)
-                                selectedRow.Dealership = EditDealership.Text;
-                        }
-                    }
-
-                    context.SaveChanges();
-                    PurchasesDataGrid.ItemsSource = context.Purchase.ToList();
-                }
-
-                EditPopup.IsOpen = false;
-
-                EditVin.Text = "";
-                EditDealership.Text = "";
-
-                selectedRows.Clear();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                // Handle validation errors
-                StringBuilder errorMessage = new StringBuilder();
-                foreach (var validationErrors in ex.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        errorMessage.AppendLine($"Error: {validationError.ErrorMessage}");
-                    }
-                }
-
-                MessageBox.Show(errorMessage.ToString(), "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception ex)
-            {
-                // Handle other database errors
-                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void CancelEditButton_Click(object sender, RoutedEventArgs e)
-        {
-            EditVin.Text = "";
-            EditDealership.Text = "";
-     
-            selectedRows.Clear();
-
-            EditPopup.IsOpen = false;
-        }
-        #endregion
-
-        #region Delete Section
-        private void RemoveButton_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (purchase rowData in PurchasesDataGrid.Items)
-            {
-                if (rowData.IsSelected)
-                {
-                    selectedRows.Add(rowData);
-                }
-            }
-
-            Button removeButton = (Button)sender;
-            purchase row = (purchase)removeButton.DataContext;
-
-            if (selectedRows.Count == 0)
-                selectedRows.Add(row);
-
-            if (!selectedRows.Contains(row))
-            {
-                selectedRows.Clear();
-                return;
-            }
-
-            if (selectedRows.Count == 0)
-            {
-                throw new Exception("Row was not selected or something went wrong");
-            }
-            else if (selectedRows.Count == 1)
-            {
-                DeletePopup.IsOpen = true;
-            }
-            else
-            {
-                DeletePopup.DataContext = selectedRows;
-                DeletePopup.IsOpen = true;
-            }
-        }
-
-        private void ConfirmRemoveButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                using (var context = new PurchasesDbContext())
-                {
-                    if (selectedRows.Count == 0)
-                    {
-                        throw new Exception("Row was not selected or something went wrong");
-                    }
-                    else if (selectedRows.Count == 1)
-                    {
-                        purchase selectedRow = context.Purchase.Find(selectedRows[0].Sin, selectedRows[0].Vin);
-                        context.Purchase.Remove(selectedRow);
-                    }
-                    else
-                    {
-                        foreach (purchase dataRow in selectedRows)
-                        {
-                            purchase selectedRow = context.Purchase.Find(dataRow.Sin, dataRow.Vin);
-                            context.Entry(selectedRow).State = EntityState.Deleted;
-                        }
-                    }
-
-                    //Update DataGrid to show changes
-                    context.SaveChanges();
-                    PurchasesDataGrid.ItemsSource = context.Purchase.ToList();
-                }
-
-                RowCount = PurchasesDataGrid.Items.Count;
-                CustomersCounter.Text = $"Current Saved Clients: {RowCount}";
-
-                DeletePopup.IsOpen = false;
-                selectedRows.Clear();
-            }
-            catch (DbUpdateException ex)
-            {
-                // Handle specific database exceptions
-                if (ex.InnerException is SqlException sqlException)
-                {
-                    // Handle referential integrity constraint violation
-                    if (sqlException.Number == 547)
-                    {
-                        MessageBox.Show("Cannot delete the item because it is referenced by other entities.", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
-                    }
-                    else
-                    {
-                        MessageBox.Show($"An error occurred while deleting the item: {sqlException.Message}", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show($"An error occurred while deleting the item: {ex.Message}", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle other exceptions
-                MessageBox.Show($"An error occurred while deleting the item: {ex.Message}", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
-            }
-        }
-
-        private void CancelRemoveButton_Click(object sender, RoutedEventArgs e)
-        {
-            selectedRows.Clear();
-            DeletePopup.IsOpen = false;
-        }
-        #endregion
-
-        #region Add Section
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddPopup.IsOpen = true;
-        }
-
-        private void ConfirmAddButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                using (var context = new PurchasesDbContext())
-                {
-                    int txtVin = int.Parse(AddVin.Text);
-
-                    purchase newPurchase = new purchase
-                    {
-                        Vin = txtVin,
-                        Dealership = AddDealership.Text,
-                        
-                    };
-
-                    context.Purchase.Add(newPurchase);
-                    context.SaveChanges();
-
-                    PurchasesDataGrid.ItemsSource = context.Purchase.ToList();
-                }
-
-                RowCount = PurchasesDataGrid.Items.Count;
-                CustomersCounter.Text = $"Current Saved Purchases: {RowCount}";
-                AddPopup.IsOpen = false;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred while adding the client: {ex.Message}", "Add Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
-            }
-        }
-
-        private void CancelAddButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddVin.Text = "";
-            AddDealership.Text = "";
-            
-            AddPopup.IsOpen = false;
-        }
-
-        #endregion
-
-        #endregion 
-
         #region Search
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -514,23 +605,53 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Comboboxes
 
-        private void DealershipCombobox_Options()
+        private void Combobox_Options()
         {
-            using (var context = new PurchasesDealershipsDbContext())
+            using (var context = new PurchasesDbContext())
             {
-                var options = context.Dealership.ToList();
-                AddDealership.ItemsSource = options;
-                EditDealership.ItemsSource = options;
+                var soldVehicleOptions = context.SoldVehicle.ToList();
+
+                AddVin.ItemsSource = soldVehicleOptions;
+
+                EditVin.ItemsSource = soldVehicleOptions;
             }
         }
 
+        //Automatically update the rows connected to each other
+        private void VinComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender == AddVin)
+            {
+                if (AddVin.SelectedItem is sold_vehicles selectedVehicle)
+                {
+                    AddDealership.Text = selectedVehicle.Dealership.ToString();
+
+                    DateTime? dataTime = selectedVehicle.SellTime;
+                    string date = dataTime?.ToString("dd/MM/yyyy h:mm tt") ?? "No date";
+
+                    AddPurchaseTime.Text = date;
+                }
+            }
+
+            if (sender == EditVin)
+            {
+                if (EditVin.SelectedItem is sold_vehicles selectedVehicle)
+                {
+                    EditVin.Text = selectedVehicle.Dealership.ToString();
+
+                    DateTime? dataTime = selectedVehicle.SellTime;
+                    string date = dataTime?.ToString("dd/MM/yyyy h:mm tt") ?? "No date";
+
+                    EditPurchaseTime.Text = date;
+                }
+            }
+        }
         #endregion
 
         #region Controls Control
         private void DisableControls()
         {
             btnCustomer.IsHitTestVisible = false;
-            btnPurchase.IsHitTestVisible = false;
             btnAdd.IsHitTestVisible = false;
             txtSearchPurchases.IsHitTestVisible = false;
             PurchasesDataGrid.IsHitTestVisible = false;
@@ -538,7 +659,6 @@ namespace WorkshopDataModifier.MVVM.View
         private void EnableControls()
         {
             btnCustomer.IsHitTestVisible = true;
-            btnPurchase.IsHitTestVisible = true;
             btnAdd.IsHitTestVisible = true;
             txtSearchPurchases.IsHitTestVisible = true;
             PurchasesDataGrid.IsHitTestVisible = true;
@@ -561,7 +681,7 @@ namespace WorkshopDataModifier.MVVM.View
             CustomersCounter.Text = $"Current Saved Purchases: {RowCount}";
 
             //Setup Comboboxes
-            DealershipCombobox_Options();
+            Combobox_Options();
         }
     }
 
@@ -572,22 +692,10 @@ namespace WorkshopDataModifier.MVVM.View
     public class PurchasesDbContext : DbContext
     {
         public DbSet<purchase> Purchase { get; set; }
+        public DbSet<sold_vehicles> SoldVehicle { get; set; }
 
         public PurchasesDbContext() : base("DealershipCon")
         {
         }
     }
-
-    /// <summary>
-    /// Gets context of dealership tab from the connected DataBase
-    /// </summary>
-    public class PurchasesDealershipsDbContext : DbContext
-    {
-        public DbSet<dealership> Dealership { get; set; }
-
-        public PurchasesDealershipsDbContext() : base("DealershipCon")
-        {
-        }
-    }
-
 }

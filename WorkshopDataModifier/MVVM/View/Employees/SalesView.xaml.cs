@@ -28,6 +28,7 @@ namespace WorkshopDataModifier.MVVM.View
     {
 
         #region Counter of the current clients (dynamic)
+
         private int _rowCount;
         /// <summary>
         /// Counts number of items inside "sales" table
@@ -672,7 +673,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Comboboxes
 
-        //Set ItemSourcesof ComboBoxes
+        //Set ItemSources of ComboBoxes
         private void Combobox_Options()
         {
             using (var context = new SalesDbContext())

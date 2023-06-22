@@ -22,7 +22,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="61"/>
             </Grid.RowDefinitions>
             
             <!--Page Title-->
@@ -55,22 +55,29 @@
                                    Margin="0 10 0 0" FontSize="20" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center"/>
 
                         <!--Input Boxes-->
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 20 0 0" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 30 0 0" HorizontalAlignment="Center">
 
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 0 10 0">
-                                <fa:IconImage Icon="Info" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
-                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                         materialDesign:HintAssist.Hint="Sin"
-                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
-                                         materialDesign:HintAssist.FloatingOffset="0, -20"
-                                         BorderBrush="#c5c8cc"
-                                         BorderThickness="0 0 0 1.5"
-                                         Name="AddSin"
-                                         Width="200"/>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Info" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="Sin"
+                                              materialDesign:HintAssist.Hint="Sin"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="AddSin"
+                                              Width="200"
+                                              SelectionChanged="SinComboBox_SelectionChanged"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="50 0 0 0">
-                                <fa:IconImage Icon="CarBattery" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="CarBattery" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Vin"
                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
@@ -78,15 +85,17 @@
                                          BorderBrush="#c5c8cc"
                                          BorderThickness="0 0 0 1.5"
                                          Name="AddVin"
-                                         Width="200"/>
+                                         Width="200"
+                                         IsHitTestVisible="False"
+                                         Margin="0 15 0 0"/>
                             </StackPanel>
 
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
 
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 0 10 0">
-                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Name"
                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
@@ -94,12 +103,13 @@
                                          BorderBrush="#c5c8cc"
                                          BorderThickness="0 0 0 1.5"
                                          Name="AddName"
-                                         Width="200"/>
+                                         Width="200"
+                                         Margin="0 15 0 0"/>
                             </StackPanel>
 
 
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="50 0 0 0">
-                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Surname"
                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
@@ -107,48 +117,65 @@
                                          BorderBrush="#c5c8cc"
                                          BorderThickness="0 0 0 1.5"
                                          Name="AddSurname"
-                                         Width="200"/>
+                                         Width="200"
+                                         Margin="0 15 0 0"/>
                             </StackPanel>
 
                         </StackPanel>
 
-                        <StackPanel Orientation="Vertical" Grid.Row="3" HorizontalAlignment="Center" Margin="15 30 0 0">
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0 30 0 0" HorizontalAlignment="Center">
 
                             <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="Phone" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 9 5 0"/>
+                                <fa:IconImage Icon="Phone" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                     materialDesign:HintAssist.Hint="Phone"
-                                     materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
-                                     materialDesign:HintAssist.FloatingOffset="0, -20"
-                                     BorderBrush="#c5c8cc"
-                                     BorderThickness="0 0 0 1.5"
-                                     Name="AddPhone"
-                                     Width="200"/>
+                                         materialDesign:HintAssist.Hint="Phone"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="AddPhone"
+                                         Width="200"
+                                         Margin="0 15 0 0"/>
                             </StackPanel>
-                        
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="PlusCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Add Time"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="AddAddTime"
+                                         Width="200"
+                                         IsHitTestVisible="False"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
+
+                        </StackPanel>
+
                         <!--Option Buttons-->
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0" Grid.Row="4">
                                 <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
                                     FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmAddButton_Click"/>
                                 <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
                                     FontFamily="/Fonts/#Poppins" Width="100" Click="CancelAddButton_Click"/>
                             </StackPanel>
-                        </StackPanel>
-
-                       
+                        
                     </Grid>
+                    
                 </Border>
             </Popup>
-            
-            
+
+            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 10 10 10"/>
+
             <!--Switch tabs Buttons-->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10 10 0 0" HorizontalAlignment="Left">
                 <RadioButton x:Name="btnCustomer" Content="Customers" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Background="#023E8A"/>
                 <RadioButton x:Name="btnPurchase" Content="Purchase" Style="{StaticResource MaterialDesignRaisedButton}" FontFamily="/Fonts/#Poppins" Margin="10 0 0 0" Background="#5F85DB"
                              Command="{Binding DataContext.PurchasesViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mainWindow:MainWindow}}}"/>
             </StackPanel>
-
-            <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 10 10 10"/>
 
             <!--Counter Title-->
             <TextBlock Name="CustomersCounter" Text="CustomersCounter" Grid.Row="4" FontSize="18" FontFamily="/Fonts/#Poppins"
@@ -198,7 +225,7 @@
                     <DataGridTextColumn Header="Name" IsReadOnly="True" Width="*" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="Surname" IsReadOnly="True" Width="*" Binding="{Binding Surname}"/>
                     <DataGridTextColumn Header="Phone" IsReadOnly="True" Width="*" Binding="{Binding Phone}"/>
-                    <DataGridTextColumn Header="TimeStamp" IsReadOnly="True" Width="*" Binding="{Binding AddTime}"/>
+                    <DataGridTextColumn Header="TimeStamp" IsReadOnly="True" Width="*" Binding="{Binding AddTime, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
 
                     <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
@@ -231,6 +258,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <!--Title TextBox-->
@@ -240,20 +268,29 @@
                                    FontSize="12" FontFamily="/Fonts/#Poppins" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0 0 0 30"/>
 
                         <!--Input Boxes-->
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 20 0 0" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 30 0 0" HorizontalAlignment="Center">
 
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 0 10 0">
-                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                         materialDesign:HintAssist.Hint="Sin"
-                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
-                                         materialDesign:HintAssist.FloatingOffset="0, -20"
-                                         BorderBrush="#c5c8cc"
-                                         BorderThickness="0 0 0 1.5"
-                                         Name="EditSin"
-                                         Width="200"/>
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Info" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                          DisplayMemberPath="Sin"
+                                          materialDesign:HintAssist.Hint="Sin"
+                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                          materialDesign:HintAssist.FloatingOffset="0, -20"
+                                          BorderBrush="#c5c8cc"
+                                          BorderThickness="0 0 0 1.5"
+                                          Name="EditSin"
+                                          Width="200"
+                                          SelectionChanged="SinComboBox_SelectionChanged"
+                                          MaxDropDownHeight="166"
+                                          Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
                             </StackPanel>
 
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="50 0 0 0">
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="CarBattery" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Vin"
                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
@@ -261,14 +298,18 @@
                                          BorderBrush="#c5c8cc"
                                          BorderThickness="0 0 0 1.5"
                                          Name="EditVin"
-                                         Width="200"/>
+                                         Width="200"
+                                         IsHitTestVisible="False"
+                                         Margin="0 15 0 0">
+                                </TextBox>
                             </StackPanel>
 
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
 
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 0 10 0">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Name"
                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
@@ -276,11 +317,13 @@
                                          BorderBrush="#c5c8cc"
                                          BorderThickness="0 0 0 1.5"
                                          Name="EditName"
-                                         Width="200"/>
+                                         Width="200"
+                                         Margin="0 15 0 0"/>
                             </StackPanel>
 
 
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="50 0 0 0">
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Surname"
                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
@@ -288,14 +331,16 @@
                                          BorderBrush="#c5c8cc"
                                          BorderThickness="0 0 0 1.5"
                                          Name="EditSurname"
-                                         Width="200"/>
+                                         Width="200"
+                                         Margin="0 15 0 0"/>
                             </StackPanel>
 
                         </StackPanel>
 
-                        <StackPanel Orientation="Vertical" Grid.Row="3" HorizontalAlignment="Center" Margin="15 30 0 0">
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0 30 0 0" HorizontalAlignment="Center">
 
                             <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Phone" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Phone"
                                          materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
@@ -303,20 +348,34 @@
                                          BorderBrush="#c5c8cc"
                                          BorderThickness="0 0 0 1.5"
                                          Name="EditPhone"
-                                         Width="200">
-                                </TextBox>
-                                <fa:IconImage Icon="Phone" Height="15" Width="15" HorizontalAlignment="Right" Foreground="Gray" Margin="5 13 0 0"/>
+                                         Width="200"
+                                         Margin="0 15 0 0"/>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">
-                                <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
-                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmEditButton_Click"/>
-                                <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
-                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelEditButton_Click"/>
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="PlusCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Add Time"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="EditAddTime"
+                                         Width="200"
+                                         IsHitTestVisible="False"
+                                         Margin="0 15 0 0">
+                                </TextBox>
                             </StackPanel>
+                            
                         </StackPanel>
 
-
+                        <!--Option Buttons-->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0" Grid.Row="4">
+                            <Button Content="Confirm" Style="{StaticResource ConfirmButtonTheme}" Margin="0 10 40 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="ConfirmEditButton_Click"/>
+                            <Button Content="Cancel" Style="{StaticResource GridRemoveButtonTheme}" Margin="0 10 0 0"
+                                    FontFamily="/Fonts/#Poppins" Width="100" Click="CancelEditButton_Click"/>
+                        </StackPanel>
 
                     </Grid>
 
@@ -324,7 +383,7 @@
             </Popup>
 
             <!--Delete Popup Window-->
-            <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="450" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
+            <Popup Name="DeletePopup" IsOpen="False" Placement="Center" AllowsTransparency="True" Width="475" Height="auto" materialDesign:ElevationAssist.Elevation="Dp24">
                 <Border Background="#ffffff" CornerRadius="10" Padding="10" BorderThickness="0 15 0 15" BorderBrush="#353741" 
                         MouseLeftButtonDown="DeletePopup_MouseLeftButtonDown" MouseMove="DeletePopup_MouseMove" MouseLeftButtonUp="DeletePopup_MouseLeftButtonUp">
                     <StackPanel>
