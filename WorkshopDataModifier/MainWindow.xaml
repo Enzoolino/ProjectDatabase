@@ -22,7 +22,7 @@
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <!--Left Menu-->
         <Border CornerRadius="10 0 0 10" MouseDown="Border_MouseDown" Background="#353941">
             <StackPanel>
@@ -84,15 +84,17 @@
                     </StackPanel>
                 </RadioButton>
 
-                <TextBlock Text="Admin Adjustments" 
+                <StackPanel x:Name="AdminSection">
+                    
+                    <TextBlock Text="Admin Adjustments" 
                            HorizontalAlignment="Left" 
                            Foreground="#F8F7F9"
                            FontSize="15"
                            Margin="40 20 0 0"
                            FontFamily="/Fonts/#Poppins"/>
 
-                <Separator Height="1.5" Margin="20 10" Background="#F3EFF5"/>
-
+                    <Separator Height="1.5" Margin="20 10" Background="#F3EFF5"/>
+                
                 <RadioButton Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding EmployeesViewCommand}"
                              Margin="0 15 0 0">
@@ -117,29 +119,35 @@
                         <TextBlock Text="Users" Style="{StaticResource MenuButtonTextTheme}"/>
                     </StackPanel>
                 </RadioButton>
+                
+                </StackPanel>
 
+            
+                <StackPanel Margin="0 20 0 0">
+                    
                 <TextBlock Text="Other" 
                            HorizontalAlignment="Left" 
                            Foreground="#F8F7F9"
                            FontSize="15"
-                           Margin="40 20 0 0"
+                           Margin="40 0 0 0"
                            FontFamily="/Fonts/#Poppins"/>
 
                 <Separator Height="1.5" Margin="20 10 20 15" Background="#F3EFF5"/>
 
-                <RadioButton Style="{StaticResource MenuButtonTheme}"
+                    <RadioButton Style="{StaticResource MenuButtonTheme}"
                              Click="LogoutButton_Click"
                              Margin="0 15 0 0">
-                    <StackPanel Orientation="Horizontal">
-                        <fa:IconImage Icon="PowerOff"  Style="{StaticResource MenuButtonIconTheme}"/>
-                        <TextBlock Text="Logout" Style="{StaticResource MenuButtonTextTheme}"/>
-                    </StackPanel>
-                </RadioButton>
-
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="PowerOff"  Style="{StaticResource MenuButtonIconTheme}"/>
+                            <TextBlock Text="Logout" Style="{StaticResource MenuButtonTextTheme}"/>
+                        </StackPanel>
+                    </RadioButton>
+                    
+                </StackPanel>
+                
             </StackPanel>
         </Border>
 
-        
         <ContentControl Grid.Column="1"
                         Content="{Binding CurrentView}"/>
 

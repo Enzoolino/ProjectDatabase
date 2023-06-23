@@ -104,6 +104,7 @@
     </ApplicationDefinition>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="Core\UserAccessManager.cs" />
     <Compile Include="MVVM\Model\branch_office.cs">
       <DependentUpon>DealershipModel.tt</DependentUpon>
     </Compile>

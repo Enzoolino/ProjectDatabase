@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WorkshopDataModifier.Core;
 using WorkshopDataModifier.MVVM.Model;
 
 namespace WorkshopDataModifier.MVVM.View
@@ -697,6 +698,7 @@ namespace WorkshopDataModifier.MVVM.View
         #endregion
 
 
+        byte accessLevel = UserAccessManager.AccessLevel;
         private WarehousesDbContext _dbContext;
         public WarehousesView()
         {
@@ -712,6 +714,13 @@ namespace WorkshopDataModifier.MVVM.View
 
             //Setup Comboboxes
             BranchCombobox_Options();
+
+            //Access Level Adjustments
+            if (accessLevel <= 2)
+            {
+                btnAdd.Visibility = Visibility.Collapsed;
+                OperationsColumn.Visibility = Visibility.Collapsed;
+            }
         }
     }
 

@@ -5,6 +5,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using WorkshopDataModifier.MVVM.View;
 using WorkshopDataModifier.MVVM.View.Login;
+using WorkshopDataModifier.Core;
 
 namespace WorkshopDataModifier
 {
@@ -13,23 +14,43 @@ namespace WorkshopDataModifier
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string userInitials;
-        private string userFullName;
-
-        public MainWindow(string initials, string fullname)
+        private string _userInitials;
+        private string _userFullName;
+        
+        public MainWindow(string initials, string fullname, byte userAccessLevel)
         {
             InitializeComponent();
 
             //Initialize the user
-            userInitials = initials;
-            userFullName = fullname;
+            _userInitials = initials;
+            _userFullName = fullname;
 
             // Set up the UI with the user's initials
-            Username_Initials.Text = userInitials;
-            Username_Full.Text = userFullName;
+            Username_Initials.Text = _userInitials;
+            Username_Full.Text = _userFullName;
+
+            // Adjust the visibility of MainWindow elements based on the access level
+            AdjustByAccessLevel(userAccessLevel);
+
+            //Save the access level
+            UserAccessManager.SetAccessLevel(userAccessLevel);
         }
 
+        //Set visibility of MainWindow based on AcessLevel
+        public void AdjustByAccessLevel(byte userAccessLevel)
+        {
+            if (userAccessLevel > 2)
+            {
+                AdminSection.Visibility = Visibility.Visible;
+                
+            }
+            else
+            {
+                AdminSection.Visibility = Visibility.Collapsed;
+            }
+        }
 
+        //Make the Window movable by border
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
@@ -38,29 +59,7 @@ namespace WorkshopDataModifier
             }
         }
 
-        private bool IsMaximized = false;
-        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ClickCount == 2)
-            {
-                if (IsMaximized)
-                {
-                    this.WindowState = WindowState.Normal;
-                    this.Width = 1280;
-                    this.Height = 740;
-
-                    IsMaximized = false;
-                }
-                else
-                {
-                    this.WindowState = WindowState.Maximized;
-
-                    IsMaximized = true;
-                }
-            }
-        }
-
-
+        //Logout and Open the login window
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
             //Open Login Window

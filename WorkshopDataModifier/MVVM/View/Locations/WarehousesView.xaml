@@ -178,7 +178,7 @@
                       RowStyle="{DynamicResource DataGridRowStyle1}"  Grid.Row="5">
 
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn CanUserResize="False" Width="auto">
+                    <DataGridTemplateColumn CanUserResize="False" Width="auto" >
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <CheckBox Name="SelectAllCheckBox" Style="{StaticResource CheckBoxStyle1}" Click="SelectAllCheckBox_Click"/>
@@ -196,7 +196,7 @@
                     <DataGridTextColumn Header="Branch" IsReadOnly="True" Width="*" Binding="{Binding BranchID}"/>
                     <DataGridTextColumn Header="Phone" IsReadOnly="True" Width="*" Binding="{Binding Phone}"/>
 
-                    <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
+                    <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto" x:Name="OperationsColumn">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

@@ -31,18 +31,20 @@ namespace WorkshopDataModifier.MVVM.View.Login
             _dbContext = new UsersDbContext();
         }
 
-
+        //Exit the application
         private void ExitApp(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
+        //Make the window movable
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
             DragMove();
         }
 
+        //Login into the application
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text;
@@ -51,7 +53,7 @@ namespace WorkshopDataModifier.MVVM.View.Login
             using (var context = new UsersDbContext())
             {
                 var user = context.users.FirstOrDefault(u => u.Username == username && u.Password == password);
-
+                
                 if (user != null)
                 {
                     // Get the employee associated with the user
@@ -61,8 +63,13 @@ namespace WorkshopDataModifier.MVVM.View.Login
                     string initials = GetInitials(employee.Name, employee.Surname);
                     string fullName = employee.Name + " " + employee.Surname;
 
-                    // Open Main Window
-                    MainWindow mainWindow = new MainWindow(initials, fullName);
+                    // Retrieve the user's access level
+                    byte userAccessLevel = user.AccessLevel;
+
+                    // Initialize MainWindow and pass the access level as a parameter
+                    MainWindow mainWindow = new MainWindow(initials, fullName, userAccessLevel);
+
+                    //Open MainWindow
                     mainWindow.Show();
 
                     // Close login tab
@@ -70,12 +77,12 @@ namespace WorkshopDataModifier.MVVM.View.Login
                 }
                 else
                 {
-                    MessageBox.Show("Invalid username or password.");
+                    MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-
         }
 
+        //Transfer name and surname into initials
         private string GetInitials(string name, string surname)
         {
             string initials = "";
@@ -89,8 +96,6 @@ namespace WorkshopDataModifier.MVVM.View.Login
             }
             return initials.ToUpper();
         }
-
-
     }
 
     /// <summary>

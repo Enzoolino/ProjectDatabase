@@ -193,7 +193,7 @@
                     <DataGridTextColumn Header="Branch" IsReadOnly="True" Width="*" Binding="{Binding BranchID}"/>
                     <DataGridTextColumn Header="Phone" IsReadOnly="True" Width="*" Binding="{Binding Phone}"/>
 
-                    <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
+                    <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto" x:Name="OperationsColumn">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

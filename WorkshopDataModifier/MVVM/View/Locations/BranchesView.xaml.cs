@@ -18,7 +18,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WorkshopDataModifier.Core;
+using WorkshopDataModifier.MVVM.ViewModel;
 using WorkshopDataModifier.MVVM.Model;
+using WorkshopDataModifier.MVVM.View.Login;
 
 namespace WorkshopDataModifier.MVVM.View
 {
@@ -657,6 +660,7 @@ namespace WorkshopDataModifier.MVVM.View
         #endregion
 
 
+        byte accessLevel = UserAccessManager.AccessLevel;
         private BranchesDbContext _dbContext;
         public BranchesView()
         {
@@ -669,9 +673,15 @@ namespace WorkshopDataModifier.MVVM.View
             //Counter initializer
             RowCount = BranchesDataGrid.Items.Count;
             BranchesCounter.Text = $"Current Saved Branches: {RowCount}";
+
+            //Access Level Adjustments
+            if (accessLevel <= 2)
+            {
+                btnAdd.Visibility = Visibility.Collapsed;
+                OperationsColumn.Visibility = Visibility.Collapsed;
+            }
         }
     }
-
 
 
     /// <summary>
