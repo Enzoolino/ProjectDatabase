@@ -400,9 +400,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Car1.jpg" />
-    <Resource Include="Images\Car4.jpg" />
     <Resource Include="Images\Car3.jpg" />
     <Resource Include="Images\Car2.jpg" />
+    <Resource Include="Images\Car4.jpg" />
+    <Resource Include="Images\Car5.jpg" />
+    <Resource Include="Images\Car6.jpg" />
     <Content Include="MVVM\Model\DealershipModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DealershipModel.edmx</DependentUpon>

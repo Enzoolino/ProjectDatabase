@@ -43,7 +43,7 @@
                 <uc:InfoCard x:Name="OpenedDealershipsCard" Grid.Column="1" Title="Opened Dealerships" Number="To implement" Icon="BuildingCircleCheck" Background1="#fd8a87" Background2="#f3ab92"
                                  EllipseBackground1="#fbd5a8" EllipseBackground2="#fdb89b"/>
 
-                <uc:InfoCard Grid.Column="2" Title="Employee of the Month" Number="Jack Ali, Harrison" Icon="Crown" Background1="#fc84cb" Background2="#fc8fae"
+                <uc:InfoCard Grid.Column="2" Title="Employee of the Month" Number="Jack Ali" Icon="Crown" Background1="#fc84cb" Background2="#fc8fae"
                                  EllipseBackground1="#fc8fae" EllipseBackground2="#ffabe6"/>
 
 
@@ -52,21 +52,25 @@
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Canvas x:Name="canvas" Grid.Column="1" Margin="65 0 0 0">
-                    <Image x:Name="image1" Source="/Images/Car1.jpg" Height="420" Width="300" Canvas.Left="0" Opacity="1">
+                <Canvas x:Name="canvas" Grid.Column="1" Margin="70 0 0 0">
+                    <Image x:Name="image1" Source="/Images/Car1.jpg" Height="420" Width="300" Canvas.Left="0" Opacity="0">
+                        <Image.Clip>
+                            <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0, 0, 280, 420" />
+                        </Image.Clip>
                         <Image.Triggers>
                             <EventTrigger RoutedEvent="Loaded">
                                 <BeginStoryboard>
                                     <Storyboard RepeatBehavior="Forever" FillBehavior="HoldEnd">
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
-                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0"/>
-                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.5"/>
-                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:1"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0"/>
+                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.5"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:8.2"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:18"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)">
                                             <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0"/>
@@ -77,15 +81,19 @@
                             </EventTrigger>
                         </Image.Triggers>
                     </Image>
-                    <Image x:Name="image2" Source="/Images/Car2.jpg" Height="420" Width="300" Canvas.Left="300" Opacity="1">
+                    <Image x:Name="image2" Source="/Images/Car2.jpg" Height="420" Width="300" Canvas.Left="300" Opacity="0">
+                        <Image.Clip>
+                            <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0, 0, 236, 420" />
+                        </Image.Clip>
                         <Image.Triggers>
                             <EventTrigger RoutedEvent="Loaded">
                                 <BeginStoryboard>
                                     <Storyboard RepeatBehavior="Forever" FillBehavior="HoldEnd">
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
-                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0"/>
-                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.5"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0"/>
                                             <LinearDoubleKeyFrame Value="1" KeyTime="0:0:1"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:8.5"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:18"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)">
                                             <LinearDoubleKeyFrame Value="300" KeyTime="0:0:0"/>
@@ -96,15 +104,19 @@
                             </EventTrigger>
                         </Image.Triggers>
                     </Image>
-                    <Image x:Name="image3" Source="/Images/Car3.jpg" Height="420" Width="300" Canvas.Left="600" Opacity="1">
+                    <Image x:Name="image3" Source="/Images/Car3.jpg" Height="420" Width="300" Canvas.Left="600" Opacity="0">
+                        <Image.Clip>
+                            <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0, 0, 280, 420" />
+                        </Image.Clip>
                         <Image.Triggers>
                             <EventTrigger RoutedEvent="Loaded">
                                 <BeginStoryboard>
                                     <Storyboard RepeatBehavior="Forever" FillBehavior="HoldEnd">
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
-                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0"/>
-                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.5"/>
-                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:1"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0"/>
+                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:1.5"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:8.8"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:18"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)">
                                             <LinearDoubleKeyFrame Value="600" KeyTime="0:0:0"/>
@@ -115,10 +127,80 @@
                             </EventTrigger>
                         </Image.Triggers>
                     </Image>
+
+                    <Image x:Name="image4" Source="/Images/Car4.jpg" Height="420" Width="300" Canvas.Left="0" Opacity="0">
+                        <Image.Clip>
+                            <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0, 0, 280, 420" />
+                        </Image.Clip>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" FillBehavior="HoldEnd">
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:9"/>
+                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:9.5"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:17.2"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)">
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:9"/>
+                                            <LinearDoubleKeyFrame Value="-65" KeyTime="0:0:18"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <Image x:Name="image5" Source="/Images/Car5.jpg" Height="420" Width="300" Canvas.Left="300" Opacity="0">
+                        <Image.Clip>
+                            <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0, 0, 236, 420" />
+                        </Image.Clip>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" FillBehavior="HoldEnd">
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:9"/>
+                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:10"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:17.5"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)">
+                                            <LinearDoubleKeyFrame Value="300" KeyTime="0:0:9"/>
+                                            <LinearDoubleKeyFrame Value="235" KeyTime="0:0:18"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <Image x:Name="image6" Source="/Images/Car6.jpg" Height="420" Width="300" Canvas.Left="600" Opacity="0">
+                        <Image.Clip>
+                            <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0, 0, 280, 420" />
+                        </Image.Clip>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" FillBehavior="HoldEnd">
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:9"/>
+                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:10.5"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:17.8"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)">
+                                            <LinearDoubleKeyFrame Value="600" KeyTime="0:0:9"/>
+                                            <LinearDoubleKeyFrame Value="535" KeyTime="0:0:18"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    
                 </Canvas>
                 
             </Grid>
-            
+
+            <TextBlock Text="Dealership 2023" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 15 5" Foreground="Gray"/>
+
         </Grid>
 
     </Border>
