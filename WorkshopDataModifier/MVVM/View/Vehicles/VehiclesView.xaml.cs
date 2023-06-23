@@ -573,10 +573,16 @@ namespace WorkshopDataModifier.MVVM.View
             vehicles row = (vehicles)moveToSoldButton.DataContext;
             selectedRows.Add(row);
 
+            //Set the employees context to only allow users from the same dealership as the car
+            using (var context = new VehiclesDbContext())
+            {
+                var employeesFromDealer = context.Employee.Where(em => em.WorkLocation == row.Dealership || em.WorkLocation == null).ToList();
+
+                MoveToSoldEmployee.ItemsSource = employeesFromDealer;
+            }
+
             //Open Popup
             MoveToSoldPopup.IsOpen = true;
-
-
         }
 
         private void ConfirmMoveToSoldButton_Click(object sender, RoutedEventArgs e)
@@ -958,15 +964,12 @@ namespace WorkshopDataModifier.MVVM.View
             {
                 var brandOptions = context.Brand.ToList();
                 var dealershipOptions = context.Dealership.ToList();
-                var employeeOptions = context.Employee.ToList();
-
+                
                 AddBrand.ItemsSource = brandOptions;
                 AddDealership.ItemsSource = dealershipOptions;
 
                 EditBrand.ItemsSource = brandOptions;
                 EditDealership.ItemsSource = dealershipOptions;
-
-                MoveToSoldEmployee.ItemsSource = employeeOptions;
             }
 
             int currentYear = DateTime.Now.Year;
