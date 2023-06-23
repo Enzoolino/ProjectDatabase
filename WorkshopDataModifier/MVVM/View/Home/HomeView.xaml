@@ -1,17 +1,20 @@
 ﻿<UserControl x:Class="WorkshopDataModifier.MVVM.View.HomeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WorkshopDataModifier.MVVM.View"
              xmlns:uc="clr-namespace:WorkshopDataModifier.UserControls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
              d:DesignHeight="740" d:DesignWidth="1030">
 
     <!--Main Section-->
     <Border CornerRadius="0 10 10 0" Background="#26282B">
-        
+
 
         <Grid>
             <Grid.RowDefinitions>
@@ -21,8 +24,11 @@
             </Grid.RowDefinitions>
 
             <!--Top Menu-->
-            <TextBlock Text="Welcome, Babaluga" FontSize="26" Foreground="#ccd7ff" HorizontalAlignment="Left" Margin="50 35 0 20"/>
-
+            
+                <TextBlock Text="Welcome" FontSize="26" Foreground="#ffffff" HorizontalAlignment="Left" Margin="50 35 0 20" FontFamily="/Fonts/#Poppins"/>
+                <TextBlock x:Name="HomeDate" FontSize="26" Foreground="#ffffff" HorizontalAlignment="Right" Margin="0 35 70 20" FontFamily="/Fonts/#Poppins"/>
+            
+            
             <!--Info Card-->
             <Grid Grid.Row="1" Margin="50 20 15 40">
                 <Grid.ColumnDefinitions>
@@ -31,19 +37,90 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <uc:InfoCard Grid.Column="0" Title="Sold Vehicles" Number="To implement" Icon="CircleDollarToSlot" Background1="#827bff" Background2="#d9b5ff"
+                <uc:InfoCard x:Name="SoldVehiclesCard" Grid.Column="0" Title="Sold Vehicles" Number="To implement" Icon="CircleDollarToSlot" Background1="#827bff" Background2="#d9b5ff"
                                  EllipseBackground1="#b298fd" EllipseBackground2="#e4bbff"/>
 
-                <uc:InfoCard Grid.Column="1" Title="" Number="To implement" Icon="ListAlt" Background1="#fd8a87" Background2="#f3ab92"
+                <uc:InfoCard x:Name="OpenedDealershipsCard" Grid.Column="1" Title="Opened Dealerships" Number="To implement" Icon="BuildingCircleCheck" Background1="#fd8a87" Background2="#f3ab92"
                                  EllipseBackground1="#fbd5a8" EllipseBackground2="#fdb89b"/>
 
-                <uc:InfoCard Grid.Column="2" Title="Employee of the Month" Number="To implement" Icon="Crown" Background1="#fc84cb" Background2="#fc8fae"
+                <uc:InfoCard Grid.Column="2" Title="Employee of the Month" Number="Jack Ali, Harrison" Icon="Crown" Background1="#fc84cb" Background2="#fc8fae"
                                  EllipseBackground1="#fc8fae" EllipseBackground2="#ffabe6"/>
 
 
             </Grid>
+
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Canvas x:Name="canvas" Grid.Column="1" Margin="65 0 0 0">
+                    <Image x:Name="image1" Source="/Images/Car1.jpg" Height="420" Width="300" Canvas.Left="0" Opacity="1">
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" FillBehavior="HoldEnd">
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.5"/>
+                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)">
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0"/>
+                                            <LinearDoubleKeyFrame Value="-65" KeyTime="0:0:9"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <Image x:Name="image2" Source="/Images/Car2.jpg" Height="420" Width="300" Canvas.Left="300" Opacity="1">
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" FillBehavior="HoldEnd">
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.5"/>
+                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)">
+                                            <LinearDoubleKeyFrame Value="300" KeyTime="0:0:0"/>
+                                            <LinearDoubleKeyFrame Value="235" KeyTime="0:0:9"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <Image x:Name="image3" Source="/Images/Car3.jpg" Height="420" Width="300" Canvas.Left="600" Opacity="1">
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" FillBehavior="HoldEnd">
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0"/>
+                                            <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.5"/>
+                                            <LinearDoubleKeyFrame Value="1" KeyTime="0:0:1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)">
+                                            <LinearDoubleKeyFrame Value="600" KeyTime="0:0:0"/>
+                                            <LinearDoubleKeyFrame Value="535" KeyTime="0:0:9"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Canvas>
+                
+            </Grid>
+            
         </Grid>
-        
+
     </Border>
 
 </UserControl>
