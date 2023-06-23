@@ -608,6 +608,28 @@
                         <!--Input Boxes-->
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 30 0 0" HorizontalAlignment="Center">
 
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Briefcase" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="EmpID"
+                                              materialDesign:HintAssist.Hint="Employee"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="MoveToSoldEmployee"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </StackPanel>
+
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
+
                             <StackPanel Orientation="Horizontal" >
                                 <fa:IconImage Icon="Calendar" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
                                 <DatePicker Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
@@ -618,7 +640,8 @@
                                             BorderThickness="0 0 0 1.5"
                                             Name="MoveToSoldDate"
                                             Width="200"
-                                            Margin="0 15 0 0">
+                                            Margin="0 15 0 0"
+                                            SelectedDateChanged="DatePicker_SelectedDateChanged">
                                 </DatePicker>
                             </StackPanel>
 
@@ -632,10 +655,10 @@
                                                            BorderThickness="0 0 0 1.5"
                                                            Name="MoveToSoldTime"
                                                            Width="200"
-                                                           Margin="0 15 0 0">
+                                                           Margin="0 15 0 0"
+                                                           SelectedTimeChanged="TimePicker_SelectedTimeChanged">
                                 </materialDesign:TimePicker>
                             </StackPanel>
-
 
                         </StackPanel>
 

@@ -10,13 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WorkshopDataModifier.MVVM.Model;
 using MaterialDesignThemes.Wpf;
 
@@ -580,6 +575,8 @@ namespace WorkshopDataModifier.MVVM.View
 
             //Open Popup
             MoveToSoldPopup.IsOpen = true;
+
+
         }
 
         private void ConfirmMoveToSoldButton_Click(object sender, RoutedEventArgs e)
@@ -592,7 +589,6 @@ namespace WorkshopDataModifier.MVVM.View
 
                     //Handle the addition to "sold_vehicles" tab
                     DateTime txtSellTime = DateTime.Parse(MoveToSoldDate.Text + " " + MoveToSoldTime.Text);
-
                     sold_vehicles newSoldVehicle = new sold_vehicles
                     {
                         Vin = selectedRow.Vin,
@@ -607,6 +603,28 @@ namespace WorkshopDataModifier.MVVM.View
                     };
 
                     context.SoldVehicle.Add(newSoldVehicle);
+
+                    //Handle the addition to "purchase" tab
+                    purchase newPurchase = new purchase
+                    {
+                        Vin = newSoldVehicle.Vin,
+                        Dealership = newSoldVehicle.Dealership,
+                        PurchaseTime = newSoldVehicle.SellTime
+                    };
+
+                    context.Purchase.Add(newPurchase);
+
+                    //Handle the addition to "sell" tab
+                    long txtEmployee = long.Parse(MoveToSoldEmployee.Text);
+                    sell newSale = new sell
+                    {
+                        Sin = newPurchase.Sin,
+                        Vin = newPurchase.Vin,
+                        EmpID = txtEmployee,
+                        SellTime = newPurchase.PurchaseTime
+                    };
+
+                    context.Sale.Add(newSale);
 
                     //Handle the deletion from "vehicles" tab
                     context.Vehicle.Remove(selectedRow);
@@ -634,6 +652,7 @@ namespace WorkshopDataModifier.MVVM.View
                 MoveToSoldPopup.IsOpen = false;
 
                 //Set text back to empty
+                MoveToSoldEmployee.Text = "";
                 MoveToSoldDate.Text = "";
                 MoveToSoldTime.Text = "";
             }
@@ -680,6 +699,7 @@ namespace WorkshopDataModifier.MVVM.View
             MoveToSoldPopup.IsOpen = false;
 
             //Set text back to empty
+            MoveToSoldEmployee.Text = "";
             MoveToSoldDate.Text = "";
             MoveToSoldTime.Text = "";
         }
@@ -920,16 +940,19 @@ namespace WorkshopDataModifier.MVVM.View
         //Set ItemSourcesof ComboBoxes
         private void Combobox_Options()
         {
-            using (var context = new WarehouseVehiclesDbContext())
+            using (var context = new VehiclesDbContext())
             {
                 var brandOptions = context.Brand.ToList();
                 var dealershipOptions = context.Dealership.ToList();
+                var employeeOptions = context.Employee.ToList();
 
                 AddBrand.ItemsSource = brandOptions;
                 AddDealership.ItemsSource = dealershipOptions;
 
                 EditBrand.ItemsSource = brandOptions;
                 EditDealership.ItemsSource = dealershipOptions;
+
+                MoveToSoldEmployee.ItemsSource = employeeOptions;
             }
 
             int currentYear = DateTime.Now.Year;
@@ -986,6 +1009,14 @@ namespace WorkshopDataModifier.MVVM.View
                         AddDeliveryTime.SelectedTime = currentDateTime;
                     }
                 }
+
+                if (sender == MoveToSoldTime)
+                {
+                    if (MoveToSoldDate.SelectedDate == currentDateTime.Date && selectedTime.Value.TimeOfDay > currentDateTime.TimeOfDay)
+                    {
+                        MoveToSoldTime.SelectedTime = currentDateTime;
+                    }
+                }
             }
         }
         #endregion
@@ -1019,6 +1050,9 @@ namespace WorkshopDataModifier.MVVM.View
         public DbSet<sold_vehicles> SoldVehicle { get; set; }
         public DbSet<brands> Brand { get; set; }
         public DbSet<dealership> Dealership { get; set; }
+        public DbSet<purchase> Purchase { get; set; }
+        public DbSet<employee> Employee { get; set; }
+        public DbSet<sell> Sale { get; set; }
 
         public VehiclesDbContext() : base("DealershipCon")
         {

@@ -27,7 +27,7 @@
                                VerticalAlignment="Center"
                                IsHitTestVisible="False"
                                Panel.ZIndex="1"
-                               Margin="10 0 0 0"
+                               Margin="17 0 0 0"
                                FontFamily="/Fonts/#Poppins"/>
 
                         <ScrollViewer x:Name="PART_ContentHost"
