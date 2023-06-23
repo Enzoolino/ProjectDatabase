@@ -704,7 +704,7 @@ namespace WorkshopDataModifier.MVVM.View
                 // Retrieve the list of already added Sins
                 var addedSins = context.Customer.Select(c => c.Sin).ToList();
 
-                // Exclude the added SINs from the purchase options
+                // Exclude the added Sins from the purchase options
                 var purchaseOptions = allPurchases.Where(p => !addedSins.Contains(p.Sin)).ToList();
 
                 AddSin.ItemsSource = purchaseOptions;
