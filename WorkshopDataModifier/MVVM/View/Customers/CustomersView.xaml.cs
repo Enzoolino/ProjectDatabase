@@ -3,18 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Data.Entity;
 using System.Globalization;
 using System.ComponentModel;
 using System.Windows.Input;
-using WorkshopDataModifier.Core;
 using System.Data.Entity.Validation;
 using System.Text;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
-using System.Windows.Controls.Primitives;
-using System.Collections.Specialized;
 using System.Windows.Media;
 using WorkshopDataModifier.MVVM.Model;
 
