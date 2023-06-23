@@ -3,9 +3,8 @@
 
     <Style x:Key="GridRemoveButtonTheme" TargetType="Button" BasedOn="{StaticResource GridEditButtonTheme}">
         <Setter Property="Background" Value="#d32f2f"/>
-        <Setter Property="BorderBrush" Value="#b71c1c"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
         
-
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#f44336"/>

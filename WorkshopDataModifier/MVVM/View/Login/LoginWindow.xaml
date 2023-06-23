@@ -23,17 +23,6 @@
                                          StaysOpen="True" Height="25">
                     <StackPanel>
 
-                        <StackPanel Margin="16 10 0 6" Orientation="Horizontal" HorizontalAlignment="Center">
-                            
-                            <TextBlock VerticalAlignment="Center" Text="Admin Mode" FontFamily="/Fonts/#Poppins"/>
-                            <ToggleButton x:Name="becomeAdmin" Cursor="Hand"  Margin="12 0 8 0">
-                                <ToolTipService.ToolTip>
-                                    <TextBlock Text="Become administrator" FontFamily="/Fonts/#Poppins"/>
-                                </ToolTipService.ToolTip>
-                            </ToggleButton>
-                                          
-                        </StackPanel>
-
                         <Button x:Name="btnHelp" Margin="0 8 0 0" Content="Help" FontFamily="/Fonts/#Poppins">
                             <ToolTipService.ToolTip>
                                 <TextBlock Text="Having trouble logging in ?" FontFamily="/Fonts/#Poppins"/>

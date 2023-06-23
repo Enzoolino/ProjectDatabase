@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="ConfirmButtonTheme" TargetType="Button">
-        <Setter Property="Background" Value="Green"/>
-        <Setter Property="BorderBrush" Value="Green"/>
+        <Setter Property="Background" Value="#57CC99"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Foreground" Value="#ffffff"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -21,7 +21,7 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="SeaGreen"/>
+                <Setter Property="Background" Value="#80ED99"/>
             </Trigger>
         </Style.Triggers>
 
