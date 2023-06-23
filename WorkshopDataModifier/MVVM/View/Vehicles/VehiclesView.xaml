@@ -597,6 +597,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <!--Title TextBox-->
@@ -625,10 +626,62 @@
                                     </ComboBox>
                                 </ScrollViewer>
                             </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Customer Name"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="MoveToSoldCustomerName"
+                                         Width="200"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              DisplayMemberPath="EmpID"
+                                              materialDesign:HintAssist.Hint="Customer Surname"
+                                              materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                              materialDesign:HintAssist.FloatingOffset="0, -20"
+                                              BorderBrush="#c5c8cc"
+                                              BorderThickness="0 0 0 1.5"
+                                              Name="MoveToSoldCustomerSurname"
+                                              Width="200"
+                                              MaxDropDownHeight="166"
+                                              Margin="0 15 0 0">
+                                    </ComboBox>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
+                                <fa:IconImage Icon="Phone" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="Customer Phone"
+                                         materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
+                                         materialDesign:HintAssist.FloatingOffset="0, -20"
+                                         BorderBrush="#c5c8cc"
+                                         BorderThickness="0 0 0 1.5"
+                                         Name="MoveToSoldCustomerPhone"
+                                         Width="200"
+                                         Margin="0 15 0 0">
+                                </TextBox>
+                            </StackPanel>
+
+
                         </StackPanel>
 
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0 30 0 0" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0 30 0 0" HorizontalAlignment="Center">
 
                             <StackPanel Orientation="Horizontal" >
                                 <fa:IconImage Icon="Calendar" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
@@ -662,7 +715,7 @@
 
                         </StackPanel>
 
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="3">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="4">
 
                             <!--Option Buttons-->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 40 0 0">

@@ -614,6 +614,19 @@ namespace WorkshopDataModifier.MVVM.View
 
                     context.Purchase.Add(newPurchase);
 
+                    //Handle the addition to "customer" tab
+                    customer newCustomer = new customer
+                    {
+                        Sin = newPurchase.Sin,
+                        Vin = newPurchase.Vin,
+                        Name = MoveToSoldCustomerName.Text,
+                        Surname = MoveToSoldCustomerSurname.Text,
+                        Phone = MoveToSoldCustomerPhone.Text,
+                        AddTime = newPurchase.PurchaseTime
+                    };
+
+                    context.Customer.Add(newCustomer);
+
                     //Handle the addition to "sell" tab
                     long txtEmployee = long.Parse(MoveToSoldEmployee.Text);
                     sell newSale = new sell
@@ -626,6 +639,7 @@ namespace WorkshopDataModifier.MVVM.View
 
                     context.Sale.Add(newSale);
 
+                    
                     //Handle the deletion from "vehicles" tab
                     context.Vehicle.Remove(selectedRow);
 
@@ -1053,7 +1067,7 @@ namespace WorkshopDataModifier.MVVM.View
         public DbSet<purchase> Purchase { get; set; }
         public DbSet<employee> Employee { get; set; }
         public DbSet<sell> Sale { get; set; }
-
+        public DbSet<customer> Customer { get; set; }
         public VehiclesDbContext() : base("DealershipCon")
         {
         }
