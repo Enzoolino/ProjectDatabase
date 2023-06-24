@@ -647,9 +647,7 @@
 
                             <StackPanel Orientation="Horizontal">
                                 <fa:IconImage Icon="UserCircle" Height="15" Width="15" HorizontalAlignment="Left" Foreground="Gray" Margin="0 24 5 0"/>
-                                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                    <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                              DisplayMemberPath="EmpID"
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                               materialDesign:HintAssist.Hint="Customer Surname"
                                               materialDesign:HintAssist.FontFamily="{StaticResource MaterialDesignFont}"
                                               materialDesign:HintAssist.FloatingOffset="0, -20"
@@ -657,10 +655,8 @@
                                               BorderThickness="0 0 0 1.5"
                                               Name="MoveToSoldCustomerSurname"
                                               Width="200"
-                                              MaxDropDownHeight="166"
                                               Margin="0 15 0 0">
-                                    </ComboBox>
-                                </ScrollViewer>
+                                </TextBox>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="60 0 0 0">
