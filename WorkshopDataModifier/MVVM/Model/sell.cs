@@ -13,10 +13,15 @@ namespace WorkshopDataModifier.MVVM.Model
     using System.Collections.ObjectModel;
     using WorkshopDataModifier.Core;
 
+    /// <summary>
+    /// Represents a sell.
+    /// </summary>
     public partial class sell : ObservableObject
     {
         private bool _isSelected;
-
+        /// <summary>
+        /// Part of multiselect function that indicates whether the sell is selected.
+        /// </summary>
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -26,13 +31,40 @@ namespace WorkshopDataModifier.MVVM.Model
                 OnPropertyChanged();
             }
         }
-
+        /// <summary>
+        /// Gets or sets the Serial Identification Number (SIN) associated with the sell.
+        /// </summary>
+        /// <remarks>
+        /// Composite primary key
+        /// </remarks>
         public long Sin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the VIN (Vehicle Identification Number) associated with the sell.
+        /// </summary>
+        /// <remarks>
+        /// Composite primary key
+        /// </remarks>
         public int Vin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the employee ID associated with the sell.
+        /// </summary>
         public long EmpID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sell time.
+        /// </summary>
         public Nullable<System.DateTime> SellTime { get; set; }
-    
+
+        /// <summary>
+        /// Gets or sets the associated employee.
+        /// </summary>
         public virtual employee employee { get; set; }
+
+        /// <summary>
+        /// Gets or sets the associated purchase.
+        /// </summary>
         public virtual purchase purchase { get; set; }
     }
 }

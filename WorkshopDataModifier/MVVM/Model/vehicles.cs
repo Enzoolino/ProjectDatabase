@@ -13,10 +13,15 @@ namespace WorkshopDataModifier.MVVM.Model
     using System.Collections.ObjectModel;
     using WorkshopDataModifier.Core;
 
+    /// <summary>
+    /// Represents a vehicle.
+    /// </summary>
     public partial class vehicles : ObservableObject
     {
         private bool _isSelected;
-
+        /// <summary>
+        /// Part of multiselect function that indicates whether the vehicle is selected.
+        /// </summary>
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -27,17 +32,62 @@ namespace WorkshopDataModifier.MVVM.Model
             }
         }
 
+        /// <summary>
+        /// Gets or sets the VIN (Vehicle Identification Number) of the vehicle.
+        /// </summary>
+        /// <remarks>
+        /// Primary key
+        /// </remarks>
         public int Vin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the brand of the vehicle.
+        /// </summary>
         public string Brand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the color of the vehicle.
+        /// </summary>
         public string Color { get; set; }
+
+        /// <summary>
+        /// Gets or sets the production year of the vehicle.
+        /// </summary>
         public Nullable<int> Year { get; set; }
+
+        /// <summary>
+        /// Gets or sets the model of the vehicle.
+        /// </summary>
         public string Model { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of doors of the vehicle.
+        /// </summary>
         public Nullable<byte> Door { get; set; }
+
+        /// <summary>
+        /// Gets or sets the price of the vehicle.
+        /// </summary>
         public Nullable<decimal> Price { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dealership associated with the vehicle.
+        /// </summary>
         public string Dealership { get; set; }
+
+        /// <summary>
+        /// Gets or sets the delivery time of the vehicle.
+        /// </summary>
         public Nullable<System.DateTime> DeliveryTime { get; set; }
-    
+
+        /// <summary>
+        /// Gets or sets the associated brand of the vehicle.
+        /// </summary>
         public virtual brands brands { get; set; }
+
+        /// <summary>
+        /// Gets or sets the associated dealership of the vehicle.
+        /// </summary>
         public virtual dealership dealership1 { get; set; }
     }
 }

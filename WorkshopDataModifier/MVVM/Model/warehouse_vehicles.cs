@@ -13,10 +13,15 @@ namespace WorkshopDataModifier.MVVM.Model
     using System.Collections.ObjectModel;
     using WorkshopDataModifier.Core;
 
+    /// <summary>
+    /// Represents a vehicle in a warehouse.
+    /// </summary>
     public partial class warehouse_vehicles : ObservableObject
     {
         private bool _isSelected;
-
+        /// <summary>
+        /// Part of multiselect function that indicates whether the warehouse_vehicle is selected.
+        /// </summary>
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -27,16 +32,57 @@ namespace WorkshopDataModifier.MVVM.Model
             }
         }
 
+        /// <summary>
+        /// Gets or sets the VIN (Vehicle Identification Number) of the warehouse vehicle.
+        /// </summary>
+        /// <remarks>
+        /// Primary key
+        /// </remarks>
         public int Vin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the brand of the warehouse vehicle.
+        /// </summary>
         public string Brand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the color of the warehouse vehicle.
+        /// </summary>
         public string Color { get; set; }
+
+        /// <summary>
+        /// Gets or sets the production year of the warehouse vehicle.
+        /// </summary>
         public Nullable<int> Year { get; set; }
+
+        /// <summary>
+        /// Gets or sets the model of the warehouse vehicle.
+        /// </summary>
         public string Model { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of doors of the warehouse vehicle.
+        /// </summary>
         public Nullable<byte> Door { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the warehouse associated with the vehicle.
+        /// </summary>
         public string Warehouse { get; set; }
+
+        /// <summary>
+        /// Gets or sets the delivery time of the warehouse vehicle.
+        /// </summary>
         public Nullable<System.DateTime> DeliveryTime { get; set; }
-    
+
+        /// <summary>
+        /// Gets or sets the associated brand of the warehouse vehicle.
+        /// </summary>
         public virtual brands brands { get; set; }
+
+        /// <summary>
+        /// Gets or sets the associated warehouse of the warehouse vehicle.
+        /// </summary>
         public virtual warehouse warehouse1 { get; set; }
     }
 }

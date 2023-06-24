@@ -13,8 +13,15 @@ namespace WorkshopDataModifier.MVVM.Model
     using System.Collections.ObjectModel;
     using WorkshopDataModifier.Core;
 
+
+    /// <summary>
+    /// Represents a warehouse.
+    /// </summary>
     public partial class warehouse : ObservableObject
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="warehouse"/> class.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public warehouse()
         {
@@ -22,7 +29,9 @@ namespace WorkshopDataModifier.MVVM.Model
         }
 
         private bool _isSelected;
-
+        /// <summary>
+        /// Part of multiselect function that indicates whether the warehouse is selected.
+        /// </summary>
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -33,12 +42,37 @@ namespace WorkshopDataModifier.MVVM.Model
             }
         }
 
+        /// <summary>
+        /// Gets or sets the name of the warehouse.
+        /// </summary>
+        /// <remarks>
+        /// Primary key
+        /// </remarks>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the warehouse.
+        /// </summary>
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the associated branch office.
+        /// </summary>
         public Nullable<int> BranchID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the phone number of the warehouse.
+        /// </summary>
         public string Phone { get; set; }
-    
+
+        /// <summary>
+        /// Gets or sets the associated branch office of the warehouse.
+        /// </summary>
         public virtual branch_office branch_office { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of warehouse vehicles associated with the warehouse.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<warehouse_vehicles> warehouse_vehicles { get; set; }
     }

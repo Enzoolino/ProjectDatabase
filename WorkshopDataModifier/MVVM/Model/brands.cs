@@ -13,8 +13,14 @@ namespace WorkshopDataModifier.MVVM.Model
     using System.Collections.ObjectModel;
     using WorkshopDataModifier.Core;
 
+    /// <summary>
+    /// Represents a brand.
+    /// </summary>
     public partial class brands : ObservableObject
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="brands"/> class.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public brands()
         {
@@ -23,7 +29,9 @@ namespace WorkshopDataModifier.MVVM.Model
         }
 
         private bool _isSelected;
-
+        /// <summary>
+        /// Part of multiselect function that indicates whether the brand is selected.
+        /// </summary>
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -34,10 +42,23 @@ namespace WorkshopDataModifier.MVVM.Model
             }
         }
 
+        /// <summary>
+        /// Gets or sets the name of the brand.
+        /// </summary>
+        /// <remarks>
+        /// Primary key
+        /// </remarks>
         public string Name { get; set; }
-    
+
+        /// <summary>
+        /// Gets or sets the collection of associated vehicles for the brand.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<vehicles> vehicles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of associated warehouse vehicles for the brand.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<warehouse_vehicles> warehouse_vehicles { get; set; }
     }

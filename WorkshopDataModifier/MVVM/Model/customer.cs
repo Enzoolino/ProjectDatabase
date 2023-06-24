@@ -13,10 +13,15 @@ namespace WorkshopDataModifier.MVVM.Model
     using System.Collections.ObjectModel;
     using WorkshopDataModifier.Core;
 
+    /// <summary>
+    /// Represents a customer.
+    /// </summary>
     public partial class customer : ObservableObject
     {
         private bool _isSelected;
-
+        /// <summary>
+        /// Part of multiselect function that indicates whether the customer is selected.
+        /// </summary>
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -27,13 +32,45 @@ namespace WorkshopDataModifier.MVVM.Model
             }
         }
 
+        /// <summary>
+        /// Gets or sets the Serial Identification Number (SIN) of the customer.
+        /// </summary>
+        /// <remarks>
+        /// Composite primary key.
+        /// </remarks>
         public long Sin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Vehicle Identification Number (VIN) of the customer.
+        /// </summary>
+        /// <remarks>
+        /// Composite primary key.
+        /// </remarks>
         public int Vin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the customer.
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the surname of the customer.
+        /// </summary>
         public string Surname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the phone number of the customer.
+        /// </summary>
         public string Phone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date and time when the customer was added.
+        /// </summary>
         public Nullable<System.DateTime> AddTime { get; set; }
-    
+
+        /// <summary>
+        /// Gets or sets the associated purchase for the customer.
+        /// </summary>
         public virtual purchase purchase { get; set; }
     }
 }

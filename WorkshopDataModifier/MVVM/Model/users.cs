@@ -13,10 +13,15 @@ namespace WorkshopDataModifier.MVVM.Model
     using System.Collections.ObjectModel;
     using WorkshopDataModifier.Core;
 
+    /// <summary>
+    /// Represents a user in the system.
+    /// </summary>
     public partial class users : ObservableObject
     {
         private bool _isSelected;
-
+        /// <summary>
+        /// Part of multiselect function that indicates whether the user is selected.
+        /// </summary>
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -27,13 +32,42 @@ namespace WorkshopDataModifier.MVVM.Model
             }
         }
 
+        /// <summary>
+        /// Gets or sets the ID of the user.
+        /// </summary>
+        /// <remarks>
+        /// Primary key
+        /// </remarks>
         public long ID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the username of the user.
+        /// </summary>
         public string Username { get; set; }
+
+        /// <summary>
+        /// Gets or sets the password of the user.
+        /// </summary>
         public string Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets the access level of the user.
+        /// </summary>
         public byte AccessLevel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the owner of the user(account).
+        /// </summary>
         public Nullable<long> Owner { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date and time when the user was added.
+        /// </summary>
         public Nullable<System.DateTime> AddTime { get; set; }
-    
+
+        /// <summary>
+        /// Gets or sets the associated employee of the user.
+        /// </summary>
         public virtual employee employee { get; set; }
     }
 }

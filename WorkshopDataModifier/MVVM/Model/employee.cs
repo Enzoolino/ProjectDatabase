@@ -13,8 +13,14 @@ namespace WorkshopDataModifier.MVVM.Model
     using System.Collections.ObjectModel;
     using WorkshopDataModifier.Core;
 
+    /// <summary>
+    /// Represents an employee.
+    /// </summary>
     public partial class employee : ObservableObject
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="employee"/> class.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public employee()
         {
@@ -23,8 +29,10 @@ namespace WorkshopDataModifier.MVVM.Model
             this.employee1 = new ObservableCollection<employee>();
         }
 
-        //Mark the selection
         private bool _isSelected;
+        /// <summary>
+        /// Part of multiselect function that indicates whether the employee is selected.
+        /// </summary>
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -35,27 +43,85 @@ namespace WorkshopDataModifier.MVVM.Model
             }
         }
 
-        //Concated string representing the value in Combobox
-        public string EmpIDAndName => $"ID:{EmpID} {Name} {Surname}";
-
+        /// <summary>
+        /// Gets or sets the ID for the employee.
+        /// </summary>
+        /// <remarks>
+        /// Auto-Incrementing primary key
+        /// </remarks>
         public long EmpID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the employee.
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the surname of the employee.
+        /// </summary>
         public string Surname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the superior employee.
+        /// </summary>
         public Nullable<long> SuperiorID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the associated branch office.
+        /// </summary>
         public Nullable<int> BranchID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the work location of the employee.
+        /// </summary>
         public string WorkLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the position of the employee.
+        /// </summary>
         public string Position { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date when the employee was employed.
+        /// </summary>
         public Nullable<System.DateTime> EmployedDate { get; set; }
-    
+
+        /// <summary>
+        /// Gets or sets the associated branch office for the employee.
+        /// </summary>
         public virtual branch_office branch_office { get; set; }
+
+        /// <summary>
+        /// Gets or sets the associated dealership for the employee.
+        /// </summary>
         public virtual dealership dealership { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of associated users for the employee.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<users> users { get; set; }
+
+        /// <summary>
+        /// Gets or sets the associated position for the employee.
+        /// </summary>
         public virtual position position1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of associated sell transactions for the employee.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<sell> sell { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of associated subordinate employees for the employee.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<employee> employee1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the superior employee for the employee.
+        /// </summary>
         public virtual employee employee2 { get; set; }
     }
 }

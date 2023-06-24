@@ -13,10 +13,15 @@ namespace WorkshopDataModifier.MVVM.Model
     using System.Collections.ObjectModel;
     using WorkshopDataModifier.Core;
 
+    /// <summary>
+    /// Represents a purchase.
+    /// </summary>
     public partial class purchase : ObservableObject
     {
         private bool _isSelected;
-
+        /// <summary>
+        /// Part of multiselect function that indicates whether the purchase is selected.
+        /// </summary>
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -26,14 +31,51 @@ namespace WorkshopDataModifier.MVVM.Model
                 OnPropertyChanged();
             }
         }
+
+        /// <summary>
+        /// Gets or sets the Serial Identification Number (SIN) associated with the purchase.
+        /// </summary>
+        /// <remarks>
+        /// Auto-Incrementing composite primary key
+        /// </remarks>
         public long Sin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the VIN (Vehicle Identification Number) associated with the purchase.
+        /// </summary>
+        /// <remarks>
+        /// Composite primary key
+        /// </remarks>
         public int Vin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dealership name associated with the purchase.
+        /// </summary>
         public string Dealership { get; set; }
+
+        /// <summary>
+        /// Gets or sets the purchase time.
+        /// </summary>
         public Nullable<System.DateTime> PurchaseTime { get; set; }
-    
+
+        /// <summary>
+        /// Gets or sets the associated customer.
+        /// </summary>
         public virtual customer customer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the associated dealership.
+        /// </summary>
         public virtual dealership dealership1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the associated sold vehicles.
+        /// </summary>
         public virtual sold_vehicles sold_vehicles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the associated sell.
+        /// </summary>
         public virtual sell sell { get; set; }
     }
 }

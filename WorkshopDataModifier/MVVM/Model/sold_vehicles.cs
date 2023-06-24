@@ -13,8 +13,15 @@ namespace WorkshopDataModifier.MVVM.Model
     using System.Collections.ObjectModel;
     using WorkshopDataModifier.Core;
 
+
+    /// <summary>
+    /// Represents a sold vehicle.
+    /// </summary>
     public partial class sold_vehicles : ObservableObject
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="sold_vehicles"/> class.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public sold_vehicles()
         {
@@ -22,7 +29,9 @@ namespace WorkshopDataModifier.MVVM.Model
         }
 
         private bool _isSelected;
-
+        /// <summary>
+        /// Part of multiselect function that indicates whether the sold_vehicle is selected.
+        /// </summary>
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -33,16 +42,57 @@ namespace WorkshopDataModifier.MVVM.Model
             }
         }
 
+        /// <summary>
+        /// Gets or sets the VIN (Vehicle Identification Number) of the sold vehicle.
+        /// </summary>
+        /// <remarks>
+        /// Primary key
+        /// </remarks>
         public int Vin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the brand of the sold vehicle.
+        /// </summary>
         public string Brand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the color of the sold vehicle.
+        /// </summary>
         public string Color { get; set; }
+
+        /// <summary>
+        /// Gets or sets the production year of the sold vehicle.
+        /// </summary>
         public Nullable<int> Year { get; set; }
+
+        /// <summary>
+        /// Gets or sets the model of the sold vehicle.
+        /// </summary>
         public string Model { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of doors of the sold vehicle.
+        /// </summary>
         public Nullable<byte> Door { get; set; }
+
+        /// <summary>
+        /// Gets or sets the price of the sold vehicle.
+        /// </summary>
         public Nullable<decimal> Price { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dealership associated with the sold vehicle.
+        /// </summary>
         public string Dealership { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sell time of the vehicle.
+        /// </summary>
         public Nullable<System.DateTime> SellTime { get; set; }
-    
+
+        /// <summary>
+        /// Gets or sets the associated purchases.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<purchase> purchase { get; set; }
     }

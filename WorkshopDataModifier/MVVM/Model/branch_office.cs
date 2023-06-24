@@ -13,8 +13,14 @@ namespace WorkshopDataModifier.MVVM.Model
     using System.Collections.ObjectModel;
     using WorkshopDataModifier.Core;
 
+    /// <summary>
+    /// Represents a branch office.
+    /// </summary>
     public partial class branch_office : ObservableObject
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="branch_office"/> class.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public branch_office()
         {
@@ -25,6 +31,9 @@ namespace WorkshopDataModifier.MVVM.Model
 
         private bool _isSelected;
 
+        /// <summary>
+        /// Part of multiselect function that indicates whether the branch_office is selected.
+        /// </summary>
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -35,14 +44,39 @@ namespace WorkshopDataModifier.MVVM.Model
             }
         }
 
+        /// <summary>
+        /// Gets or sets the ID of the branch office.
+        /// </summary>
+        /// <remarks>
+        /// Auto-Incrementing primary key
+        /// </remarks>
         public int BranchID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the branch office.
+        /// </summary>
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets the phone number of the branch office.
+        /// </summary>
         public string Phone { get; set; }
-    
+
+        /// <summary>
+        /// Gets or sets the collection of associated dealerships.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<dealership> dealership { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of associated employees.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<employee> employee { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of associated warehouses.
+        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ObservableCollection<warehouse> warehouse { get; set; }
     }
