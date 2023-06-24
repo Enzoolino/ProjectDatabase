@@ -113,7 +113,6 @@ namespace WorkshopDataModifier.MVVM.View
             else
             {
                 EditSin.IsHitTestVisible = false;
-                EditSin.Foreground = Brushes.Gray;
                 EditSin.Text = "Can't Multi Edit !";
 
                 EditPopup.DataContext = selectedRows;
@@ -194,7 +193,6 @@ namespace WorkshopDataModifier.MVVM.View
 
                 //Set the Inputs back to normal
                 EditSin.IsHitTestVisible = true;
-                EditSin.Foreground = Brushes.Black;
             }
             catch (DbEntityValidationException ex)
             {
@@ -240,7 +238,6 @@ namespace WorkshopDataModifier.MVVM.View
 
             //Set the Inputs back to normal
             EditSin.IsHitTestVisible = true;
-            EditSin.Foreground = Brushes.Black;
         }
         #endregion
 

@@ -22,8 +22,8 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public partial class EmployeesView : UserControl
     {
-
         #region Counter of the current clients (dynamic)
+
         private int _rowCount;
         /// <summary>
         /// Counts number of items inside "employee" table
@@ -681,6 +681,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Search
 
+        //Dynamic search binded to TextChanged
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtSearchEmployees.Text != "Search in Employees...")
@@ -699,7 +700,7 @@ namespace WorkshopDataModifier.MVVM.View
                         }
                         else
                         {
-                            txtSuperior = "null";
+                            txtSuperior = "snull";
                         }
 
                         string txtWorkLocation;
@@ -709,7 +710,7 @@ namespace WorkshopDataModifier.MVVM.View
                         }
                         else
                         {
-                            txtWorkLocation= "null";
+                            txtWorkLocation= "lnull";
                         }
                         
                         //Normal no string values handling

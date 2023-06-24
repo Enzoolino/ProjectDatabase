@@ -114,7 +114,6 @@ namespace WorkshopDataModifier.MVVM.View
             else
             {
                 EditName.IsHitTestVisible = false;
-                EditName.Foreground = Brushes.Gray;
                 EditName.Text = "Can't Multi Edit !";
 
                 EditPopup.DataContext = selectedRows;
@@ -204,7 +203,6 @@ namespace WorkshopDataModifier.MVVM.View
 
                 //Set the Inputs back to normal
                 EditName.IsHitTestVisible = true;
-                EditName.Foreground = Brushes.Black;
             }
             catch (DbEntityValidationException ex)
             {
