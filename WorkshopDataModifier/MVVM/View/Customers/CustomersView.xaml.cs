@@ -104,6 +104,10 @@ namespace WorkshopDataModifier.MVVM.View
             {
                 MultiEditionWarning.Visibility = Visibility.Collapsed;
 
+                //Update the combobox ItemsSource
+                purchaseOptionsEdit = allPurchases.Where(p => !addedSins.Contains(p.Sin) || row.Sin == p.Sin).ToList();
+                EditSin.ItemsSource = purchaseOptionsEdit;
+
                 EditSin.Text = row.Sin.ToString();
                 EditName.Text = row.Name;
                 EditSurname.Text = row.Surname;
@@ -690,18 +694,25 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Comboboxes
 
+        //Lists for external use
+        List<purchase> allPurchases;
+        List<long> addedSins;
+        List<purchase> purchaseOptionsEdit;
+
         //Set ItemSources of ComboBoxes
         private void Combobox_Options()
         {
             using (var context = new CustomersDbContext())
             {
-                var allPurchases = context.Purchase.ToList();
+                //List of all purchases
+                allPurchases = context.Purchase.ToList();
 
                 // Retrieve the list of already added Sins
-                var addedSins = context.Customer.Select(c => c.Sin).ToList();
+                addedSins = context.Customer.Select(c => c.Sin).ToList();
 
                 // Exclude the added Sins from the purchase options
                 var purchaseOptions = allPurchases.Where(p => !addedSins.Contains(p.Sin)).ToList();
+                purchaseOptionsEdit = allPurchases.Where(p => !addedSins.Contains(p.Sin)).ToList();
 
                 AddSin.ItemsSource = purchaseOptions;
                 
