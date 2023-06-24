@@ -601,7 +601,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         private BrandsDbContext _dbContext;
         /// <summary>
-        /// Main constructor of BrandsView UserControl
+        /// Main constructor of BrandsView UserControl.
         /// </summary>
         public BrandsView()
         {
