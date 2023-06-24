@@ -281,7 +281,7 @@
                     <DataGridTextColumn Header="Branch" IsReadOnly="True" Width="*" Binding="{Binding BranchID}"/>
                     <DataGridTextColumn Header="Location" IsReadOnly="True" Width="*" Binding="{Binding WorkLocation}"/>
                     <DataGridTextColumn Header="Position" IsReadOnly="True" Width="*" Binding="{Binding Position}"/>
-                    <DataGridTextColumn Header="EmployDate" IsReadOnly="True" Width="*" Binding="{Binding EmployedDate, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
+                    <DataGridTextColumn Header="Employ Date" IsReadOnly="True" Width="*" Binding="{Binding EmployedDate, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
 
                     <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>

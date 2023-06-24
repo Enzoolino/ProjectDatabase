@@ -318,7 +318,7 @@ ALTER TABLE [employee] ADD CONSTRAINT [Superior] FOREIGN KEY ([SuperiorID]) REFE
 GO
 
 ALTER TABLE [employee] ADD CONSTRAINT [WorkerLocation] FOREIGN KEY ([WorkLocation]) REFERENCES
-[dealership] ([Name]) ON UPDATE CASCADE ON DELETE CASCADE
+[dealership] ([Name]) ON UPDATE CASCADE ON DELETE CASCADE --
 GO
 
 ALTER TABLE [employee] ADD CONSTRAINT [PositionName] FOREIGN KEY ([Position]) REFERENCES

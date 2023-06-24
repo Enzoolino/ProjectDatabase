@@ -226,7 +226,7 @@
                     <DataGridTextColumn Header="Name" IsReadOnly="True" Width="*" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="Surname" IsReadOnly="True" Width="*" Binding="{Binding Surname}"/>
                     <DataGridTextColumn Header="Phone" IsReadOnly="True" Width="*" Binding="{Binding Phone}"/>
-                    <DataGridTextColumn Header="TimeStamp" IsReadOnly="True" Width="*" Binding="{Binding AddTime, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
+                    <DataGridTextColumn Header="Add Time" IsReadOnly="True" Width="*" Binding="{Binding AddTime, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
 
                     <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>

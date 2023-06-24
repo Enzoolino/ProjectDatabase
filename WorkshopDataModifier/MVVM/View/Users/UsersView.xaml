@@ -194,7 +194,7 @@
                     <DataGridTextColumn Header="Password" IsReadOnly="True" Width="*" Binding="{Binding Password}"/>
                     <DataGridTextColumn Header="AccessLevel" IsReadOnly="True" Width="*" Binding="{Binding AccessLevel}"/>
                     <DataGridTextColumn Header="Owner" IsReadOnly="True" Width="*" Binding="{Binding Owner}"/>
-                    <DataGridTextColumn Header="TimeStamp" IsReadOnly="True" Width="*" Binding="{Binding AddTime, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
+                    <DataGridTextColumn Header="Add Time" IsReadOnly="True" Width="*" Binding="{Binding AddTime, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
                     
                     <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>

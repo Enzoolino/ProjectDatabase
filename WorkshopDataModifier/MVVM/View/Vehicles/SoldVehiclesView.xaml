@@ -94,7 +94,7 @@
                     <DataGridTextColumn Header="Door" IsReadOnly="True" Width="*" Binding="{Binding Door}"/>
                     <DataGridTextColumn Header="Price" IsReadOnly="True" Width="*" Binding="{Binding Price}"/>
                     <DataGridTextColumn Header="Dealership" IsReadOnly="True" Width="*" Binding="{Binding Dealership}"/>
-                    <DataGridTextColumn Header="Delivery" IsReadOnly="True" Width="*" Binding="{Binding SellTime, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
+                    <DataGridTextColumn Header="Sell Time" IsReadOnly="True" Width="*" Binding="{Binding SellTime, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
 
                     <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
