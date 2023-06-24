@@ -707,8 +707,11 @@ namespace WorkshopDataModifier.MVVM.View
         #endregion
 
 
-        byte accessLevel = UserAccessManager.AccessLevel;
+        byte accessLevel = UserAccessManager.AccessLevel; //Get the access level
         private DealershipsDbContext _dbContext;
+        /// <summary>
+        /// Main constructor of DealershipsView UserControl.
+        /// </summary>
         public DealershipsView()
         {
             InitializeComponent();
@@ -735,13 +738,23 @@ namespace WorkshopDataModifier.MVVM.View
 
 
     /// <summary>
-    /// Gets context of "dealership" tab from the connected DataBase
+    /// Represents the context of the dealership tab from the connected database.
     /// </summary>
     public class DealershipsDbContext : DbContext
     {
+        /// <summary>
+        /// Gets or sets the DbSet of dealership.
+        /// </summary>
         public DbSet<dealership> Dealership { get; set; }
-        public DbSet<branch_office> Branch { get; set; }    
 
+        /// <summary>
+        /// Gets or sets the DbSet of branch.
+        /// </summary>
+        public DbSet<branch_office> Branch { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DealershipsDbContext"/> class using the specified connection string.
+        /// </summary>
         public DealershipsDbContext() : base("DealershipCon")
         {
         }

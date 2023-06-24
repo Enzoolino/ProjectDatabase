@@ -852,6 +852,9 @@ namespace WorkshopDataModifier.MVVM.View
         #endregion
 
         private EmployeesDbContext _dbContext;
+        /// <summary>
+        /// Main constructor of EmployeesView UserControl.
+        /// </summary>
         public EmployeesView()
         {
             InitializeComponent();
@@ -870,15 +873,33 @@ namespace WorkshopDataModifier.MVVM.View
     }
 
     /// <summary>
-    /// Gets context of "employee" tab from the connected DataBase
+    /// Represents the context of the employee tab from the connected database.
     /// </summary>
     public class EmployeesDbContext : DbContext
     {
+        /// <summary>
+        /// Gets or sets the DbSet of employee.
+        /// </summary>
         public DbSet<employee> Employee { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of branch_office.
+        /// </summary>
         public DbSet<branch_office> Branch { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of dealership.
+        /// </summary>
         public DbSet<dealership> Dealership { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of position.
+        /// </summary>
         public DbSet<position> Position { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EmployeesDbContext"/> class using the specified connection string.
+        /// </summary>
         public EmployeesDbContext() : base("DealershipCon")
         {
         }

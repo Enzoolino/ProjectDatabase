@@ -619,12 +619,18 @@ namespace WorkshopDataModifier.MVVM.View
 
 
     /// <summary>
-    /// Gets context of brands tab from the connected DataBase
+    /// Represents the context of the brands tab from the connected database.
     /// </summary>
     public class BrandsDbContext : DbContext
     {
-        public DbSet<brands> Brand { get; set; } //DbSet for table "brands"
+        /// <summary>
+        /// Gets or sets the DbSet of brands.
+        /// </summary>
+        public DbSet<brands> Brand { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BrandsDbContext"/> class using the specified connection string.
+        /// </summary>
         public BrandsDbContext() : base("DealershipCon")
         {
         }

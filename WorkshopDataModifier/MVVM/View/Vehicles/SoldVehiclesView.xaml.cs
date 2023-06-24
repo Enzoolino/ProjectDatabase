@@ -671,7 +671,9 @@ namespace WorkshopDataModifier.MVVM.View
 
 
         private SoldVehiclesDbContext _dbContext;
-
+        /// <summary>
+        /// Main constructor of SoldVehiclesView UserControl.
+        /// </summary>
         public SoldVehiclesView()
         {
             InitializeComponent();
@@ -691,14 +693,28 @@ namespace WorkshopDataModifier.MVVM.View
 
 
     /// <summary>
-    /// Gets context of sold vahicles tab from the connected DataBase
+    /// Represents the context of the sold_vehicles tab from the connected database.
     /// </summary>
     public class SoldVehiclesDbContext : DbContext
     {
+        /// <summary>
+        /// Gets or sets the DbSet of sold_vehicles.
+        /// </summary>
         public DbSet<sold_vehicles> SoldVehicle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of brands.
+        /// </summary>
         public DbSet<brands> Brand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of dealership.
+        /// </summary>
         public DbSet<dealership> Dealership { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SoldVehiclesDbContext"/> class using the specified connection string.
+        /// </summary>
         public SoldVehiclesDbContext() : base("DealershipCon")
         {
         }

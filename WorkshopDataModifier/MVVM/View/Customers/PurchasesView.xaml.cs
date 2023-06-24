@@ -686,6 +686,9 @@ namespace WorkshopDataModifier.MVVM.View
 
 
         private PurchasesDbContext _dbContext;
+        /// <summary>
+        /// Main constructor of PurchasesView UserControl.
+        /// </summary>
         public PurchasesView()
         {
             InitializeComponent();
@@ -709,9 +712,19 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public class PurchasesDbContext : DbContext
     {
+        /// <summary>
+        /// Gets or sets the DbSet of purchase.
+        /// </summary>
         public DbSet<purchase> Purchase { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of sold_vehicles.
+        /// </summary>
         public DbSet<sold_vehicles> SoldVehicle { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PurchasesDbContext"/> class using the specified connection string.
+        /// </summary>
         public PurchasesDbContext() : base("DealershipCon")
         {
         }

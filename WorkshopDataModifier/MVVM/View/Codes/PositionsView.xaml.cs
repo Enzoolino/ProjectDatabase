@@ -600,6 +600,9 @@ namespace WorkshopDataModifier.MVVM.View
 
 
         private PositionsDbContext _dbContext;
+        /// <summary>
+        /// Main constructor of PositionsView UserControl
+        /// </summary>
         public PositionsView()
         {
             InitializeComponent();
@@ -616,12 +619,18 @@ namespace WorkshopDataModifier.MVVM.View
 
 
     /// <summary>
-    /// Gets context of position tab from the connected DataBase
+    /// Represents the context of the position tab from the connected database.
     /// </summary>
     public class PositionsDbContext : DbContext
     {
+        /// <summary>
+        /// Gets or sets the DbSet of position.
+        /// </summary>
         public DbSet<position> Position { get; set; } //DbSet for table "position"
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PositionsDbContext"/> class using the specified connection string.
+        /// </summary>
         public PositionsDbContext() : base("DealershipCon")
         {
         }

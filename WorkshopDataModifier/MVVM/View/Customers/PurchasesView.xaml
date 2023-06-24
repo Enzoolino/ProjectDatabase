@@ -159,7 +159,7 @@
                          GotKeyboardFocus="SearchPurchases_GotKeyboardFocus"/>
             </Grid>
 
-            <!--Customers DataGrid-->
+            <!--Purchases DataGrid-->
             <DataGrid Name="PurchasesDataGrid"
                       Style="{DynamicResource DataGridStyle1}" 
                       CellStyle="{DynamicResource DataGridCellStyle1}" 

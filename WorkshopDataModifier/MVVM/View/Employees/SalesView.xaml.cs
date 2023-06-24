@@ -734,6 +734,9 @@ namespace WorkshopDataModifier.MVVM.View
 
 
         private SalesDbContext _dbContext;
+        /// <summary>
+        /// Main constructor of SalesView UserControl.
+        /// </summary>
         public SalesView()
         {
             InitializeComponent();
@@ -752,14 +755,28 @@ namespace WorkshopDataModifier.MVVM.View
     }
 
     /// <summary>
-    /// Gets context of sell tab from the connected DataBase
+    /// Represents the context of the sell tab from the connected database.
     /// </summary>
     public class SalesDbContext : DbContext
     {
-        public DbSet<sell> Sale { get; set; } 
+        /// <summary>
+        /// Gets or sets the DbSet of sell.
+        /// </summary>
+        public DbSet<sell> Sale { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of purchase.
+        /// </summary>
         public DbSet<purchase> Purchase { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of employee.
+        /// </summary>
         public DbSet<employee> Employee { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SalesDbContext"/> class using the specified connection string.
+        /// </summary>
         public SalesDbContext() : base("DealershipCon")
         {
         }

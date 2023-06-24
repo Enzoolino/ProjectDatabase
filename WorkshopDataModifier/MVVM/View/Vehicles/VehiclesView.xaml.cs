@@ -1036,7 +1036,9 @@ namespace WorkshopDataModifier.MVVM.View
         #endregion
 
         private VehiclesDbContext _dbContext;
-
+        /// <summary>
+        /// Main constructor of VehiclesView UserControl.
+        /// </summary>
         public VehiclesView()
         {
             InitializeComponent();
@@ -1056,18 +1058,53 @@ namespace WorkshopDataModifier.MVVM.View
 
 
     /// <summary>
-    /// Gets context of vehicles tab from the connected DataBase
+    /// Represents the context of the vehicles tab from the connected database.
     /// </summary>
     public class VehiclesDbContext : DbContext
     {
+        /// <summary>
+        /// Gets or sets the DbSet of vehicles.
+        /// </summary>
         public DbSet<vehicles> Vehicle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of sold_vehicles.
+        /// </summary>
         public DbSet<sold_vehicles> SoldVehicle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of brands.
+        /// </summary>
         public DbSet<brands> Brand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of dealership.
+        /// </summary>
         public DbSet<dealership> Dealership { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of purchase.
+        /// </summary>
         public DbSet<purchase> Purchase { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of employee.
+        /// </summary>
         public DbSet<employee> Employee { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of sell.
+        /// </summary>
         public DbSet<sell> Sale { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of customer.
+        /// </summary>
         public DbSet<customer> Customer { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VehiclesDbContext"/> class using the specified connection string.
+        /// </summary>
         public VehiclesDbContext() : base("DealershipCon")
         {
         }

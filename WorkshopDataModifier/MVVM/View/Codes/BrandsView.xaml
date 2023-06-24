@@ -118,7 +118,7 @@
                          GotKeyboardFocus="SearchBrands_GotKeyboardFocus"/>
             </Grid>
 
-            <!--Sold Vehicles DataGrid-->
+            <!--Brands DataGrid-->
             <DataGrid Name="BrandsDataGrid"
                       Style="{DynamicResource DataGridStyle1}" 
                       CellStyle="{DynamicResource DataGridCellStyle1}" 

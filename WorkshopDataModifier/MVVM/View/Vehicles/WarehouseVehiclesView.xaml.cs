@@ -982,7 +982,9 @@ namespace WorkshopDataModifier.MVVM.View
 
 
         private WarehouseVehiclesDbContext _dbContext;
-
+        /// <summary>
+        /// Main constructor of WarehouseVehiclesView UserControl.
+        /// </summary>
         public WarehouseVehiclesView()
         {
             InitializeComponent();
@@ -1003,16 +1005,38 @@ namespace WorkshopDataModifier.MVVM.View
 
 
     /// <summary>
-    /// Gets context of warehouse_vahicles tab from the connected DataBase
+    /// Represents the context of the warehouse_vehicles tab from the connected database.
     /// </summary>
     public class WarehouseVehiclesDbContext : DbContext
     {
+        /// <summary>
+        /// Gets or sets the DbSet of warehouse_vehicles.
+        /// </summary>
         public DbSet<warehouse_vehicles> WarehouseVehicle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of brands.
+        /// </summary>
         public DbSet<brands> Brand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of warehouse.
+        /// </summary>
         public DbSet<warehouse> Warehouse { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of vehicles.
+        /// </summary>
         public DbSet<vehicles> Vehicles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of dealership.
+        /// </summary>
         public DbSet<dealership> Dealership { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WarehouseVehiclesDbContext"/> class using the specified connection string.
+        /// </summary>
         public WarehouseVehiclesDbContext() : base("DealershipCon")
         {
         }

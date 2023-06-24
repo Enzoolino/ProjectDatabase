@@ -676,6 +676,9 @@ namespace WorkshopDataModifier.MVVM.View
 
 
         private UsersDbContext _dbContext;
+        /// <summary>
+        /// Main constructor of UsersView UserControl.
+        /// </summary>
         public UsersView()
         {
             InitializeComponent();
@@ -694,13 +697,23 @@ namespace WorkshopDataModifier.MVVM.View
     }
 
     /// <summary>
-    /// Gets context of users tab from the connected DataBase
+    /// Represents the context of the users tab from the connected database.
     /// </summary>
     public class UsersDbContext : DbContext
     {
+        /// <summary>
+        /// Gets or sets the DbSet of users.
+        /// </summary>
         public DbSet<users> User { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet of employee.
+        /// </summary>
         public DbSet<employee> Employee { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsersDbContext"/> class using the specified connection string.
+        /// </summary>
         public UsersDbContext() : base("DealershipCon")
         {
         }

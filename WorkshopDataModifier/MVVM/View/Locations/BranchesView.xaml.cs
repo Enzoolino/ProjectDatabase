@@ -662,8 +662,11 @@ namespace WorkshopDataModifier.MVVM.View
         #endregion
 
 
-        byte accessLevel = UserAccessManager.AccessLevel;
+        byte accessLevel = UserAccessManager.AccessLevel; // Get access level
         private BranchesDbContext _dbContext;
+        /// <summary>
+        /// Main constructor of BranchesView UserControl.
+        /// </summary>
         public BranchesView()
         {
             InitializeComponent();
@@ -687,12 +690,18 @@ namespace WorkshopDataModifier.MVVM.View
 
 
     /// <summary>
-    /// Gets context of warehouse_vahicles tab from the connected DataBase
+    /// Represents the context of the branch_office tab from the connected database.
     /// </summary>
     public class BranchesDbContext : DbContext
     {
-        public DbSet<branch_office> Branch { get; set; } //DbSet dla tabeli "branch_office"
+        /// <summary>
+        /// Gets or sets the DbSet of branch_office.
+        /// </summary>
+        public DbSet<branch_office> Branch { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BranchesDbContext"/> class using the specified connection string.
+        /// </summary>
         public BranchesDbContext() : base("DealershipCon")
         {
         }
