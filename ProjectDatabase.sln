@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkshopDataModifier", "Wor
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkshopDataModifier", "WorkshopDataModifier", "{5175F8B9-0345-4CE3-8938-2FBC81857DD9}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WorkshopDataModifier_Setup", "WorkshopDataModifier_Setup\WorkshopDataModifier_Setup.vdproj", "{98C07B1E-D030-4F7B-8205-32912AA473F9}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WorkshopDataModifier_Setup", "WorkshopDataModifier_Setup\WorkshopDataModifier_Setup.vdproj", "{18D6FFD7-8066-429C-80C9-2C322BD7F76B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,15 +19,15 @@ Global
 		{5AD69CE2-64C8-4F80-8C84-23EC83B55008}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AD69CE2-64C8-4F80-8C84-23EC83B55008}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AD69CE2-64C8-4F80-8C84-23EC83B55008}.Release|Any CPU.Build.0 = Release|Any CPU
-		{98C07B1E-D030-4F7B-8205-32912AA473F9}.Debug|Any CPU.ActiveCfg = Debug
-		{98C07B1E-D030-4F7B-8205-32912AA473F9}.Release|Any CPU.ActiveCfg = Release
+		{18D6FFD7-8066-429C-80C9-2C322BD7F76B}.Debug|Any CPU.ActiveCfg = Debug
+		{18D6FFD7-8066-429C-80C9-2C322BD7F76B}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5AD69CE2-64C8-4F80-8C84-23EC83B55008} = {5175F8B9-0345-4CE3-8938-2FBC81857DD9}
-		{98C07B1E-D030-4F7B-8205-32912AA473F9} = {5175F8B9-0345-4CE3-8938-2FBC81857DD9}
+		{18D6FFD7-8066-429C-80C9-2C322BD7F76B} = {5175F8B9-0345-4CE3-8938-2FBC81857DD9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49E11D63-79E3-48C3-9C06-3940BA9E739C}
