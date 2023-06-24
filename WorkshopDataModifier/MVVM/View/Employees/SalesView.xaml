@@ -199,7 +199,7 @@
                     <DataGridTextColumn Header="Sin" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding Sin}"/>
                     <DataGridTextColumn Header="Vin" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding Vin}"/>
                     <DataGridTextColumn Header="Employee" IsReadOnly="True" Width="*" Binding="{Binding EmpID}"/>
-                    <DataGridTextColumn Header="SellTime" IsReadOnly="True" Width="*" Binding="{Binding SellTime, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
+                    <DataGridTextColumn Header="Sell Time" IsReadOnly="True" Width="*" Binding="{Binding SellTime, StringFormat=\{0:dd/MM/yyyy h:mm tt\}}"/>
 
                     <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>

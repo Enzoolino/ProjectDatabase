@@ -102,7 +102,11 @@ namespace WorkshopDataModifier.MVVM.View
             }
             else if (selectedRows.Count == 1)
             {
+                soldVehicleOptionsEdit = allSoldVehicles.Where(sv => !purchasedVins.Contains(sv.Vin) || row.Vin == sv.Vin).ToList();
+                EditVin.ItemsSource = soldVehicleOptionsEdit;
+
                 EditVin.Text = row.Vin.ToString();
+                EditDealership.Text = row.Dealership.ToString();
                 
                 EditPopup.IsOpen = true;
             }
@@ -605,17 +609,25 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Comboboxes
 
+        //Lists for external use
+        List<sold_vehicles> allSoldVehicles;
+        List<int> purchasedVins;
+        List<sold_vehicles> soldVehicleOptionsEdit;
+
+        //Set ItemSources of ComboBoxes
         private void Combobox_Options()
         {
             using (var context = new PurchasesDbContext())
             {
-                var allSoldVehicles = context.SoldVehicle.ToList();
+                //List of all sold vehicles
+                allSoldVehicles = context.SoldVehicle.ToList();
 
                 // Retrieve the list of already purchased VINs
-                var purchasedVins = context.Purchase.Select(p => p.Vin).ToList();
+                purchasedVins = context.Purchase.Select(p => p.Vin).ToList();
 
                 // Exclude the purchased VINs from the sold vehicle options
                 var soldVehicleOptions = allSoldVehicles.Where(sv => !purchasedVins.Contains(sv.Vin)).ToList();
+                soldVehicleOptionsEdit = allSoldVehicles.Where(sv => !purchasedVins.Contains(sv.Vin)).ToList();
 
                 AddVin.ItemsSource = soldVehicleOptions;
 

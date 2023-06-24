@@ -22,8 +22,8 @@ namespace WorkshopDataModifier.MVVM.View
     /// </summary>
     public partial class EmployeesView : UserControl
     {
-
         #region Counter of the current clients (dynamic)
+
         private int _rowCount;
         /// <summary>
         /// Counts number of items inside "employee" table
@@ -681,29 +681,49 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Search
 
+        //Dynamic search binded to TextChanged
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtSearchEmployees.Text != "Search in Employees...")
             {
-
                 string searchText = txtSearchEmployees.Text.ToLower();
-
 
                 EmployeesDataGrid.Items.Filter = item =>
                 {
                     if (item is employee dataItem)
                     {
-                        string txtSuperior = dataItem.SuperiorID.ToString();
+                        //Nullable values handling
+                        string txtSuperior;
+                        if (dataItem.SuperiorID != null)
+                        {
+                            txtSuperior = dataItem.SuperiorID.ToString();
+                        }
+                        else
+                        {
+                            txtSuperior = "snull";
+                        }
+
+                        string txtWorkLocation;
+                        if (dataItem.WorkLocation != null)
+                        {
+                            txtWorkLocation = dataItem.WorkLocation.ToString();
+                        }
+                        else
+                        {
+                            txtWorkLocation= "lnull";
+                        }
+                        
+                        //Normal no string values handling
                         string txtBranch = dataItem.BranchID.ToString();
                         string txtEmployedDate = dataItem.EmployedDate.ToString();
 
                         return dataItem.Name.ToLower().Contains(searchText) ||
                                dataItem.Surname.ToLower().Contains(searchText) ||
-                               txtSuperior.Contains(searchText) ||
-                               txtBranch.Contains(searchText) ||
-                               dataItem.WorkLocation.Contains(searchText) ||
-                               dataItem.Position.Contains(searchText) ||
-                               txtEmployedDate.Contains(searchText);
+                               txtSuperior.ToLower().Contains(searchText) ||
+                               txtBranch.ToLower().Contains(searchText) ||
+                               txtWorkLocation.ToLower().Contains(searchText) ||
+                               dataItem.Position.ToLower().Contains(searchText) ||
+                               txtEmployedDate.ToLower().Contains(searchText);
                     }
 
                     return false;
@@ -772,12 +792,6 @@ namespace WorkshopDataModifier.MVVM.View
                 var branchOptions = context.Branch.ToList();
                 var dealershipOptions = context.Dealership.ToList();
                 var positionOptions = context.Position.ToList();
-
-                //superiorOptions.Insert(0, new employee { EmpID = 0, Name = "EMPTY"});
-                //branchOptions.Insert(0, null);
-                //dealershipOptions.Insert(0, null);
-                //positionOptions.Insert(0, null);
-
 
                 AddSuperior.ItemsSource = superiorOptions;
                 AddBranch.ItemsSource = branchOptions;

@@ -115,7 +115,6 @@ namespace WorkshopDataModifier.MVVM.View
             else
             {
                 EditName.IsHitTestVisible = false;
-                EditName.Foreground = Brushes.Gray;
                 EditName.Text = "Can't Multi Edit !";
 
                 EditPopup.DataContext = selectedRows;
@@ -207,7 +206,6 @@ namespace WorkshopDataModifier.MVVM.View
 
                 //Set the Inputs back to normal
                 EditName.IsHitTestVisible = true;
-                EditName.Foreground = Brushes.Black;
             }
             catch (DbEntityValidationException ex)
             {
@@ -606,6 +604,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Search
 
+        //Dynamic search binded to TextChanged
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtSearchDealerships.Text != "Search in Dealerships...")
@@ -616,12 +615,24 @@ namespace WorkshopDataModifier.MVVM.View
                 {
                     if (item is dealership dataItem)
                     {
+                        //Nullable values handling
+                        string txtPhone;
+                        if (dataItem.Phone != null)
+                        {
+                            txtPhone = dataItem.Phone.ToString();
+                        }
+                        else
+                        {
+                            txtPhone = "pnull";
+                        }
+
+                        //Normal no string values handling
                         string txtBranch = dataItem.BranchID.ToString();
 
                         return dataItem.Name.ToLower().Contains(searchText) ||
                                dataItem.Location.ToLower().Contains(searchText) ||
                                txtBranch.Contains(searchText) ||
-                               dataItem.Phone.ToLower().Contains(searchText);
+                               txtPhone.ToLower().Contains(searchText);
                     }
 
                     return false;

@@ -575,7 +575,7 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Search
 
-        //Dynamic Search within TextBox
+        //Dynamic search binded to TextChanged
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtSearchBranches.Text != "Search in Branches...")
@@ -586,9 +586,20 @@ namespace WorkshopDataModifier.MVVM.View
                 {
                     if (item is branch_office dataItem)
                     {
+                        //Nullable values handling
+                        string txtPhone;
+                        if (dataItem.Phone != null)
+                        {
+                            txtPhone = dataItem.Phone.ToString();
+                        }
+                        else
+                        {
+                            txtPhone = "pnull";
+                        }
+
                         return dataItem.BranchID.ToString().Contains(searchText) ||
                                dataItem.Location.ToLower().Contains(searchText) ||
-                               dataItem.Phone.ToLower().Contains(searchText);      
+                               txtPhone.ToLower().Contains(searchText);      
                     }
 
                     return false;

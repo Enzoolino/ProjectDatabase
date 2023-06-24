@@ -91,6 +91,7 @@ namespace WorkshopDataModifier.MVVM.View
             if (selectedRows.Count == 0)
                 selectedRows.Add(row);
 
+
             if (!selectedRows.Contains(row))
             {
                 selectedRows.Clear();
@@ -105,6 +106,10 @@ namespace WorkshopDataModifier.MVVM.View
             {
                 MultiEditionWarning.Visibility = Visibility.Collapsed;
 
+                //Update the combobox ItemsSource
+                purchaseOptionsEdit = allPurchases.Where(p => !addedSins.Contains(p.Sin) || row.Sin == p.Sin).ToList();
+                EditSin.ItemsSource = purchaseOptionsEdit;
+
                 EditSin.Text = row.Sin.ToString();
                 EditEmployee.Text = row.EmpID.ToString();
                 
@@ -113,7 +118,6 @@ namespace WorkshopDataModifier.MVVM.View
             else
             {
                 EditSin.IsHitTestVisible = false;
-                EditSin.Foreground = Brushes.Gray;
                 EditSin.Text = "Can't Multi Edit !";
 
                 EditPopup.DataContext = selectedRows;
@@ -194,7 +198,6 @@ namespace WorkshopDataModifier.MVVM.View
 
                 //Set the Inputs back to normal
                 EditSin.IsHitTestVisible = true;
-                EditSin.Foreground = Brushes.Black;
             }
             catch (DbEntityValidationException ex)
             {
@@ -240,7 +243,6 @@ namespace WorkshopDataModifier.MVVM.View
 
             //Set the Inputs back to normal
             EditSin.IsHitTestVisible = true;
-            EditSin.Foreground = Brushes.Black;
         }
         #endregion
 
@@ -667,20 +669,29 @@ namespace WorkshopDataModifier.MVVM.View
 
         #region Comboboxes
 
+        //Lists for external use
+        List<purchase> allPurchases;
+        List<long> addedSins;
+        List<purchase> purchaseOptionsEdit;
+
         //Set ItemSources of ComboBoxes
         private void Combobox_Options()
         {
             using (var context = new SalesDbContext())
             {
-                var allPurchases = context.Purchase.ToList();
+                //List of all purchases
+                allPurchases = context.Purchase.ToList();
 
                 // Retrieve the list of already added Sins
-                var addedSins = context.Sale.Select(s => s.Sin).ToList();
+                addedSins = context.Sale.Select(s => s.Sin).ToList();
 
                 // Exclude the added Sins from the purchase options
                 var purchaseOptions = allPurchases.Where(p => !addedSins.Contains(p.Sin)).ToList();
+                purchaseOptionsEdit = allPurchases.Where(p => !addedSins.Contains(p.Sin)).ToList();
 
+                //List of all employees
                 var employeeOptions = context.Employee.ToList();
+
 
                 AddSin.ItemsSource = purchaseOptions;
                 AddEmployee.ItemsSource = employeeOptions;
